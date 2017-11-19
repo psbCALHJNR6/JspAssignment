@@ -6,6 +6,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="test.jsp">test bootstrap</a>
+        
+        
+        <jsp:forward page="login.jsp" />
     </body>
 </html>
