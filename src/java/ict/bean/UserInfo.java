@@ -16,6 +16,28 @@ public class UserInfo implements Serializable {
     private String username;
     private String password;
     private String role;
+    private String email;
+    private int id;
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
 
     public String getRole()
     {

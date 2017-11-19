@@ -132,6 +132,8 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         boolean isValid =db.isValidUser(username, password);
+        UserInfo uBean = db.queryUserByUsername(username);
+        
         
         String targetURL;
         
@@ -139,9 +141,18 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession(true);
             UserInfo bean = new UserInfo();
             bean.setUsername(username);
+            bean.setRole(uBean.getRole());
             
             session.setAttribute("userInfo", bean); //Save a userInfo in the session to represent user has logined
-            targetURL = "welcome.jsp";
+            if("ADMIN".equals(uBean.getRole())){
+                targetURL = "admin_main.jsp";
+            }else if("STUDENT".equals(uBean.getRole())){
+                targetURL = "student_main.jsp";
+            }else if("TEACHER".equals(uBean.getRole())){
+                targetURL = "teacher_main.jsp";
+            }else{
+                targetURL = "welcome.jsp";
+            }
         }else{
             targetURL = "loginError.jsp";
         }
