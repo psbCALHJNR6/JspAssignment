@@ -135,7 +135,7 @@ public class LoginController extends HttpServlet {
         
         String targetURL;
         
-        if(isValid){ //"abc".equals(username) && "123".equals(password)
+        if(isValid){ 
             HttpSession session = request.getSession(true);
             UserInfo bean = new UserInfo();
             bean.setUsername(username);

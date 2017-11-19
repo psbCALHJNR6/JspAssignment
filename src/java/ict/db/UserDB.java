@@ -48,7 +48,7 @@ public class UserDB {
         
         try{
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM USERINFO WHERE username=? and password=?";
+            String preQueryStatement = "SELECT * FROM user WHERE username=? and password=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, user);
             pStmnt.setString(2, pwd);
@@ -81,10 +81,11 @@ public class UserDB {
             cnnct = getConnection();
             stmnt = cnnct.createStatement();
 
-            String sql = "CREATE TABLE IF NOT EXISTS userInfo ("
+            String sql = "CREATE TABLE IF NOT EXISTS user ("
                     + "id varchar(5) NOT NULL, "
                     + "username varchar(25) NOT NULL, "
                     + "password varchar(25) NOT NULL, "
+                    + "role varchar(25) NOT NULL, "
                     + "PRIMARY KEY(id)"
                     + ")";
 
@@ -102,18 +103,18 @@ public class UserDB {
         }
     }
     
-    public boolean addUserInfo(String id, String user, String pwd){
+    public boolean addUserInfo(String user, String pwd, String role){
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
         
         try{
             cnnct = getConnection();
-            String preQueryStatement = "INSERT INTO userInfo (ID, USERNAME, PASSWORD) VALUES (?,?,?)";
+            String preQueryStatement = "INSERT INTO user (USERNAME, PASSWORD, ROLE) VALUES (?,?,?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, id);
-            pStmnt.setString(2, user);
-            pStmnt.setString(3, pwd);
+            pStmnt.setString(1, user);
+            pStmnt.setString(2, pwd);
+            pStmnt.setString(3, role);
             
             int rowCount = pStmnt.executeUpdate();
             
@@ -133,7 +134,7 @@ public class UserDB {
         return isSuccess;
     }
     
-    public String getUserRole(){
+    public String getUserRole(String id){
         //...........
         return "student";
     }
