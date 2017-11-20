@@ -29,6 +29,11 @@
         </div>
     </div>
     <span class="nav navbar-nav navbar-right navbar-text">
-        <% out.print(userInfo.getUsername() +", Logged in as " + userInfo.getRole()); %>
+        <% 
+            if(userInfo.getUsername() != null){
+                
+                out.print("<i class=\"fa fa-user\"></i>" + userInfo.getUsername() +", Logged in as " + userInfo.getRole()); 
+            }
+        %>
     </span>
 </nav>

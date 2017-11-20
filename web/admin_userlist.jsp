@@ -44,7 +44,7 @@
                     %>
                 </tbody>
             </table>
-
+                <a
             <a href="admin_createuser.jsp">Create new user</a>
         </div>
 
