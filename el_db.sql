@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2017-11-19 15:12:07
+-- 產生時間： 2017-11-20 15:05:47
 -- 伺服器版本: 10.1.22-MariaDB
 -- PHP 版本： 7.1.4
 
@@ -95,8 +95,8 @@ CREATE TABLE `result` (
 --
 
 CREATE TABLE `user` (
-  `id` varchar(16) NOT NULL,
-  `name` varchar(16) NOT NULL,
+  `id` int(16) NOT NULL,
+  `username` varchar(16) NOT NULL,
   `role` varchar(10) NOT NULL,
   `password` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -110,32 +110,44 @@ CREATE TABLE `user` (
 --
 ALTER TABLE `course`
   ADD PRIMARY KEY (`cid`),
-  ADD UNIQUE KEY `cid` (`cid`);
+  ADD UNIQUE KEY `cid` (`cid`),
+  ADD KEY `cid_2` (`cid`);
 
 --
 -- 資料表索引 `material`
 --
 ALTER TABLE `material`
-  ADD PRIMARY KEY (`mateID`);
+  ADD PRIMARY KEY (`mateID`),
+  ADD KEY `cid` (`cid`);
 
 --
 -- 資料表索引 `question`
 --
 ALTER TABLE `question`
-  ADD PRIMARY KEY (`questID`);
+  ADD PRIMARY KEY (`questID`),
+  ADD KEY `QID` (`QID`);
 
 --
 -- 資料表索引 `quiz`
 --
 ALTER TABLE `quiz`
-  ADD PRIMARY KEY (`QID`);
+  ADD PRIMARY KEY (`QID`),
+  ADD KEY `cid` (`cid`),
+  ADD KEY `QID` (`QID`);
+
+--
+-- 資料表索引 `result`
+--
+ALTER TABLE `result`
+  ADD KEY `QID` (`QID`),
+  ADD KEY `id` (`id`);
 
 --
 -- 資料表索引 `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`);
+  ADD KEY `id` (`id`);
 
 --
 -- 在匯出的資料表使用 AUTO_INCREMENT
@@ -160,7 +172,41 @@ ALTER TABLE `question`
 -- 使用資料表 AUTO_INCREMENT `quiz`
 --
 ALTER TABLE `quiz`
-  MODIFY `QID` int(8) NOT NULL AUTO_INCREMENT;COMMIT;
+  MODIFY `QID` int(8) NOT NULL AUTO_INCREMENT;
+--
+-- 使用資料表 AUTO_INCREMENT `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(16) NOT NULL AUTO_INCREMENT;
+--
+-- 已匯出資料表的限制(Constraint)
+--
+
+--
+-- 資料表的 Constraints `material`
+--
+ALTER TABLE `material`
+  ADD CONSTRAINT `material_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `course` (`cid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- 資料表的 Constraints `question`
+--
+ALTER TABLE `question`
+  ADD CONSTRAINT `question_ibfk_1` FOREIGN KEY (`QID`) REFERENCES `quiz` (`QID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- 資料表的 Constraints `quiz`
+--
+ALTER TABLE `quiz`
+  ADD CONSTRAINT `quiz_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `course` (`cid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- 資料表的 Constraints `result`
+--
+ALTER TABLE `result`
+  ADD CONSTRAINT `result_ibfk_1` FOREIGN KEY (`QID`) REFERENCES `quiz` (`QID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `result_ibfk_2` FOREIGN KEY (`id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
