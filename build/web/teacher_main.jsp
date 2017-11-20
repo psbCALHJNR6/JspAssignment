@@ -13,21 +13,50 @@
         <jsp:include page="import.jsp" />
     </head>
     <body>
-        
+
         <jsp:include page="navbar.jsp" />
-        
+
         <div class="container">
-            
+
             <ul>
-<!--                <li><h1><a href="getUser?action=list">Existing Users</a></h1></li>
-                <li><h1><a href="admin_createuser.jsp">Create User</a></h1></li>-->
+                <li><h1><a href="">Existing courses</a></h1></li>
+                <li><h1><a href="">Create Course</a></h1></li>
+                <li><h1><a href="">Existing quiz</a></h1></li>
+                <li><h1><a href="">Create Quiz</a></h1></li>
             </ul>
-            
-            
-            
-            
+
+
+
+
         </div>
-        
+
         <jsp:include page="footer.jsp" />
     </body>
 </html>
+
+
+
+
+<!--<div class="row">
+    <div class="col-md-12">
+        BOX
+        <div class="box">
+            BOX HEADER
+            <div class="box-header">
+                BOX TITLE
+                <div class="box-title pull-left">
+                    <p><i class="glyphicon glyphicon-book"></i></p>
+                    <p>title</p>
+                </div>
+            </div>
+            end: BOX HEADER
+            BOX CONTENT
+            <div class="box-content">
+                content
+
+            </div>
+            end: BOX CONTENT
+        </div>
+        end: BOX  
+    </div>
+</div>-->

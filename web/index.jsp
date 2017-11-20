@@ -22,7 +22,7 @@
                         <input type="text" class="form-control" name="username" maxlength="10" size="15" placeholder="Username">
                         </div>
                         <div class="form-group">
-                        <input type="text" name="password" class="form-control" maxlength="10" size="15" placeholder="password">
+                        <input type="password" name="password" class="form-control" maxlength="10" size="15" placeholder="password">
                         </div>
                         <div class="form-group">
                         <input type="submit" class="btn btn-success" value="Login">
