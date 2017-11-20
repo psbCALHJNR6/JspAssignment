@@ -95,7 +95,7 @@ CREATE TABLE `result` (
 --
 
 CREATE TABLE `user` (
-  `uid` varchar(16) NOT NULL,
+  `id` varchar(16) NOT NULL,
   `name` varchar(16) NOT NULL,
   `role` varchar(10) NOT NULL,
   `password` varchar(16) NOT NULL
