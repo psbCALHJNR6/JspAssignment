@@ -242,6 +242,40 @@ public class UserDB
         return uBean;
     }
     
+    public UserInfo queryUserByID(int id) {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        UserInfo uBean = null;
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM user WHERE id =?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, id);
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+
+            if (rs.next()) {
+                uBean = new UserInfo();
+                // set the record detail to the customer bean
+                uBean.setId(rs.getInt("id"));
+                uBean.setUsername(rs.getString("username"));
+                uBean.setPassword(rs.getString("password"));
+                uBean.setRole(rs.getString("role"));
+                uBean.setEmail(rs.getString("email"));
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return uBean;
+    }
+    
     public boolean updateUser(String id, String username,String password, String role, String email) {
         Connection connect = null;
         PreparedStatement pStmt = null;

@@ -59,6 +59,10 @@ public class UserController extends HttpServlet
         {
             deleteUser(req, resp);
         }
+        else if ("editform".equals(action))
+        {
+            editForm(req, resp);
+        }
 
 
     }
@@ -98,8 +102,7 @@ public class UserController extends HttpServlet
 
         boolean isSucces = db.addUser(username, password, role, email);
         
-        
-        showAllUser(req, resp);
+        resp.sendRedirect("getUser?action=list");	
     }
     
     protected void deleteUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -108,7 +111,24 @@ public class UserController extends HttpServlet
         db.deleteUser(id);
         
         
-        showAllUser(req, resp);
+        resp.sendRedirect("getUser?action=list");
+    }
+    
+    protected void editForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        int id = Integer.parseInt(req.getParameter("id"));
+        
+        UserInfo _userBean = new UserInfo();
+        _userBean = db.queryUserByID(id);
+        
+        String targetURL = "";
+        req.setAttribute("userDetail", _userBean);
+        targetURL = "admin_edituser.jsp";
+
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(req, resp);
+        
     }
     
     
