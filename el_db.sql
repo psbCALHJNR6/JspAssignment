@@ -84,7 +84,7 @@ CREATE TABLE `quiz` (
 
 CREATE TABLE `result` (
   `QID` int(8) NOT NULL,
-  `uid` int(8) NOT NULL,
+  `id` int(8) NOT NULL,
   `score` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -134,8 +134,8 @@ ALTER TABLE `quiz`
 -- 資料表索引 `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`uid`),
-  ADD UNIQUE KEY `uid` (`uid`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- 在匯出的資料表使用 AUTO_INCREMENT
