@@ -37,9 +37,9 @@
                             _user = userlist.get(i);
                             out.print("<tr><td>"
                                     + _user.getUsername() + "</td><td>"
-                                    + _user.getRole() + "Doe</td><td>"
+                                    + _user.getRole() + "</td><td>"
                                     + _user.getEmail() + "</td><td>"
-                                    + "<a href=\"getUser?action=delete&id=" + _user.getId() + "\">Delete</a></td></tr>");
+                                    + "<a href=\"getUser?action=editform&id=" +_user.getId()+ "\">Edit</a> <a href=\"getUser?action=delete&id=" + _user.getId() + "\">Delete</a> </td></tr>");
                         }
                     %>
                 </tbody>
@@ -47,7 +47,7 @@
                 <a
             <a href="admin_createuser.jsp">Create new user</a>
         </div>
-
+                
         <jsp:include page="footer.jsp" />
     </body>
 </html>

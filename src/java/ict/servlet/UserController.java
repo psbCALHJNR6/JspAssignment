@@ -63,6 +63,10 @@ public class UserController extends HttpServlet
         {
             editForm(req, resp);
         }
+        else if ("edituser".equals(action))
+        {
+            editUser(req, resp);
+        }
 
 
     }
@@ -130,6 +134,26 @@ public class UserController extends HttpServlet
         rd.forward(req, resp);
         
     }
+    
+    protected void editUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        int id = Integer.parseInt(req.getParameter("id"));
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String role = req.getParameter("role");
+        String email = req.getParameter("email");
+
+        
+        boolean isSuccess = false;
+        
+        isSuccess = db.updateUser(id, username, password, role, email);
+        
+        if(isSuccess){
+            resp.sendRedirect("getUser?action=editform&id="+id);
+        }
+    }
+    
+    
     
     
 

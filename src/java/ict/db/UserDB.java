@@ -276,23 +276,23 @@ public class UserDB
         return uBean;
     }
     
-    public boolean updateUser(String id, String username,String password, String role, String email) {
+    public boolean updateUser(int id, String username,String password, String role, String email) {
         Connection connect = null;
         PreparedStatement pStmt = null;
         boolean isSuccess = false;
 
-        try {
+        try {            
             connect = getConnection();
-            String preQueryStatement = "UPDATE user SET username = ?, role=?, password=?, email=? WHERE id =?";
+            String preQueryStatement = "update user set username = ?, role=?, password=?, email=? WHERE id =?";
             pStmt = connect.prepareStatement(preQueryStatement);
 
             pStmt.setString(1, username);
             pStmt.setString(2, role);
             pStmt.setString(3, password);
             pStmt.setString(4, email);
-            pStmt.setString(6, id);
-
-            if (pStmt.execute()) {
+            pStmt.setInt(5, id);
+            
+            if (pStmt.executeUpdate() >= 1) {
                 isSuccess = true;
             }
 
