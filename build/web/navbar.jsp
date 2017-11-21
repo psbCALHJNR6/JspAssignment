@@ -25,14 +25,14 @@
                     <a class="nav-link" href="#">Contact</a>
                 </li>
             </ul>
-
+            
         </div>
     </div>
     <span class="nav navbar-nav navbar-right navbar-text">
         <% 
             if(userInfo.getUsername() != null){
                 
-                out.print("<i class=\"fa fa-user\"></i>" + userInfo.getUsername() +", Logged in as " + userInfo.getRole()); 
+                out.print("<i class=\"fa fa-user\"></i>" + userInfo.getUsername() +", Logged in as " + userInfo.getRole() + "<a class=\"\" href=\"main?action=logout\"> Logout</a>"); 
             }
         %>
     </span>
