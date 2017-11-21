@@ -1,8 +1,4 @@
-<%-- 
-    Document   : login
-    Created on : Nov 14, 2017, 10:53:54 AM
-    Author     : a1
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
