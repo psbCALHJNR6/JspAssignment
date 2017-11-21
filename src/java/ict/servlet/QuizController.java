@@ -5,10 +5,13 @@
  */
 package ict.servlet;
 
+import javax.servlet.annotation.WebServlet;
+
 /**
  *
  * @author psb
  */
+@WebServlet(urlPatterns = {"/QuizController"})
 public class QuizController
 {
     
