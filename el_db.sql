@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2017-11-22 15:27:44
+-- 產生時間： 2017-11-22 15:48:38
 -- 伺服器版本: 10.1.22-MariaDB
 -- PHP 版本： 7.1.4
 
@@ -71,10 +71,11 @@ CREATE TABLE `question` (
 
 CREATE TABLE `quiz` (
   `QID` int(8) NOT NULL,
-  `duration` time(6) NOT NULL,
-  `startTime` time(6) NOT NULL,
-  `Date` date NOT NULL,
-  `cid` int(8) NOT NULL
+  `duration` int(3) NOT NULL,
+  `startDate` date NOT NULL,
+  `cid` int(8) NOT NULL,
+  `attemptTime` int(2) NOT NULL,
+  `endDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
