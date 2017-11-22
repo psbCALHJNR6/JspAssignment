@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2017-11-20 15:05:47
+-- 產生時間： 2017-11-22 14:58:16
 -- 伺服器版本: 10.1.22-MariaDB
 -- PHP 版本： 7.1.4
 
@@ -59,7 +59,8 @@ CREATE TABLE `question` (
   `optB` varchar(64) NOT NULL,
   `optC` varchar(64) NOT NULL,
   `optD` varchar(64) NOT NULL,
-  `ans` varchar(64) NOT NULL
+  `ans` varchar(64) NOT NULL,
+  `question` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
