@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2017-11-22 14:58:16
+-- 產生時間： 2017-11-22 15:27:44
 -- 伺服器版本: 10.1.22-MariaDB
 -- PHP 版本： 7.1.4
 
@@ -99,7 +99,8 @@ CREATE TABLE `user` (
   `id` int(16) NOT NULL,
   `username` varchar(16) NOT NULL,
   `role` varchar(10) NOT NULL,
-  `password` varchar(16) NOT NULL
+  `password` varchar(16) NOT NULL,
+  `email` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
