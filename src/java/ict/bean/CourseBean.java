@@ -11,6 +11,9 @@ import java.io.Serializable;
  *
  * @author hong
  */
-public class QuizInfo implements Serializable{
+public class CourseBean implements Serializable{
+    private int cid = 0;
+    private String cName= "";
+    
     
 }
