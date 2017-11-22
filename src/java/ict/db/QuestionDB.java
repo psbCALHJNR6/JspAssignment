@@ -8,6 +8,7 @@ package ict.db;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class QuestionDB {
@@ -34,6 +35,48 @@ public class QuestionDB {
         return DriverManager.getConnection(dburl, dbUser, dbPassword);
 
     }
+        public boolean createQuestion(String question,String optA,String optB,String optC,String optD,String ans){
+            boolean success = false;
+            Connection cnt = null;
+            PreparedStatement pre = null;
+            
+            
+            try
+        {
+            cnt = getConnection();
+            String preQueryStatement = "INSERT INTO question (question, optA, optB, optC,optD,ans) VALUES (?,?,?,?,?,?)";
+            pre = cnt.prepareStatement(preQueryStatement);
+            pre.setString(1, question);
+            pre.setString(2, optA);
+            pre.setString(3, optB);
+            pre.setString(4, optC);
+            pre.setString(5, optD);
+            pre.setString(6, ans);
+
+            int rowCount = pre.executeUpdate();
+
+            if (rowCount >= 1)
+            {
+                success = true;
+            }
+            pre.close();
+            cnt.close();
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+            
+            return success;
+        }
         
     
 }

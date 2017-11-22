@@ -13,6 +13,7 @@
         <div class="container">
         <form action="qController" method="post">
             <h1 class="my-4">Create question</h1>
+            <input type="hidden" name="action" value="create">
             <label for="qName">Question:</label><input type="text" class="form-control" name="qName" id="qName"> <br>
             <label for="optA">Option A</label><input type="text" class="form-control" name="optA" id="optA"> <br>
             <label for="optB">Option B</label><input type="text" class="form-control" name="optB" id="optB"> <br>

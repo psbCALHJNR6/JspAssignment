@@ -22,9 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name="QuestionController",urlPatterns = {"/qController"})
 public class QuestionController extends HttpServlet {
     QuestionDB db = null;
-    protected void doPost(HttpServletRequest req, HttpServletResponse res){
-        
-        
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+        processRequest(req,res);
     }
     @Override
     public void init(){
@@ -39,5 +38,26 @@ public class QuestionController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+        protected void processRequest(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException{
+             res.setContentType("text/html;charset=UTF-8");
+             String action = req.getParameter("action");
+             if("action".equals("create")){
+                 createQuestion(req,res);
+             }
+        }
+        
+        protected void createQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
+            String question = req.getParameter("question");
+            String optA = req.getParameter("optA");
+            String optB = req.getParameter("optB");
+            String optC = req.getParameter("optC");
+            String optD = req.getParameter("optD");
+            String ans = req.getParameter("ans");
+            
+            boolean isSuccess = db.createQuestion(question, optA, optB, optC, optD, ans);
+             
+        }
+        
 
 }
