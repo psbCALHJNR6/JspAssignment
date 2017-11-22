@@ -18,6 +18,7 @@ public class CourseDB {
      private String dburl = "";
     private String dbUser = "";
     private String dbPassword = "";
+    
     public CourseDB(String dburl, String dbUser, String dbPassword){
         this.dburl = dburl;
         this.dbUser = dbUser;
