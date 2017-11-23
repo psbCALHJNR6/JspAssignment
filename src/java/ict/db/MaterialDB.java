@@ -8,6 +8,7 @@ package ict.db;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -36,5 +37,45 @@ public class MaterialDB {
         }
         return DriverManager.getConnection(dburl, dbUser, dbPassword);
 
+    }
+        public boolean createMaterial(int cid,String mateName,String mateDesc){
+         boolean success = false;
+            Connection cnt = null;
+            PreparedStatement pre = null;
+            
+            
+            try
+        {
+            cnt = getConnection();
+            String preQueryStatement = "INSERT INTO material (cid,mateName,mateDesc) VALUES (?,?,?)";
+            pre = cnt.prepareStatement(preQueryStatement);
+            pre.setInt(1, cid);
+            pre.setString(2, mateName);
+            pre.setString(3, mateDesc);
+            
+
+            int rowCount = pre.executeUpdate();
+
+            if (rowCount >= 1)
+            {
+                success = true;
+            }
+            pre.close();
+            cnt.close();
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+            
+            return success;
     }
 }
