@@ -55,7 +55,7 @@ public class QuestionController extends HttpServlet {
         }
         
         protected void createQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
-            String question = req.getParameter("question");
+            String question = req.getParameter("qName");
             String optA = req.getParameter("optA");
             String optB = req.getParameter("optB");
             String optC = req.getParameter("optC");
