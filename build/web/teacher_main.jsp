@@ -23,6 +23,7 @@
                 <li><h1><a href="">Create Course</a></h1></li>
                 <li><h1><a href="">Existing quiz</a></h1></li>
                 <li><h1><a href="">Create Quiz</a></h1></li>
+                <li><h1><a href="">Material Management</a></h1></li>
             </ul>
 
 

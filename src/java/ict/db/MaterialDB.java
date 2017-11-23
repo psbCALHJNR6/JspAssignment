@@ -37,4 +37,10 @@ public class MaterialDB {
         return DriverManager.getConnection(dburl, dbUser, dbPassword);
 
     }
+        public boolean createMaterial(String dburl, String dbUser, String dbPassword){
+        this.dburl = dburl;
+        this.dbUser = dbUser;
+        this.dbPassword = dbPassword;
+        return true;
+    }
 }
