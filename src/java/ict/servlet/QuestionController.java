@@ -26,6 +26,12 @@ public class QuestionController extends HttpServlet {
         processRequest(req,res);
     }
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        processRequest(req, resp);
+
+    }
+    @Override
     public void init(){
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
@@ -42,9 +48,10 @@ public class QuestionController extends HttpServlet {
             throws ServletException, IOException{
              res.setContentType("text/html;charset=UTF-8");
              String action = req.getParameter("action");
-             if("action".equals("create")){
+
                  createQuestion(req,res);
-             }
+             
+             
         }
         
         protected void createQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
@@ -53,10 +60,11 @@ public class QuestionController extends HttpServlet {
             String optB = req.getParameter("optB");
             String optC = req.getParameter("optC");
             String optD = req.getParameter("optD");
-            String ans = req.getParameter("ans");
+            String ans = req.getParameter("corrAns");
             
             boolean isSuccess = db.createQuestion(question, optA, optB, optC, optD, ans);
-             
+            PrintWriter out = res.getWriter();
+            out.print(isSuccess);
         }
         
 

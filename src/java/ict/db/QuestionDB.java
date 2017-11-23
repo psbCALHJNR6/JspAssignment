@@ -44,14 +44,15 @@ public class QuestionDB {
             try
         {
             cnt = getConnection();
-            String preQueryStatement = "INSERT INTO question (question, optA, optB, optC,optD,ans) VALUES (?,?,?,?,?,?)";
+            String preQueryStatement = "INSERT INTO question (question,QID,optA, optB, optC,optD,ans) VALUES (?,?,?,?,?,?,?)";
             pre = cnt.prepareStatement(preQueryStatement);
             pre.setString(1, question);
-            pre.setString(2, optA);
-            pre.setString(3, optB);
-            pre.setString(4, optC);
-            pre.setString(5, optD);
-            pre.setString(6, ans);
+            pre.setInt(2,1);
+            pre.setString(3, optA);
+            pre.setString(4, optB);
+            pre.setString(5, optC);
+            pre.setString(6, optD);
+            pre.setString(7, ans);
 
             int rowCount = pre.executeUpdate();
 
@@ -74,6 +75,9 @@ public class QuestionDB {
         {
             ex.printStackTrace();
         }
+            catch(Exception e){
+                e.printStackTrace();
+            }
             
             return success;
         }
