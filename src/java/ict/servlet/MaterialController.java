@@ -53,7 +53,7 @@ public class MaterialController extends HttpServlet{
             String question = req.getParameter("question");
             String optA = req.getParameter("optA");
             String optB = req.getParameter("optB");
-            String optC = req.getParameter("optC");
+            int optC = Integer.parseInt(req.getParameter("optC"));
             String optD = req.getParameter("optD");
             String ans = req.getParameter("ans");
             
