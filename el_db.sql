@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2017-11-22 15:48:38
+-- 產生時間： 2017-11-24 14:15:39
 -- 伺服器版本: 10.1.22-MariaDB
 -- PHP 版本： 7.1.4
 
@@ -31,6 +31,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `course` (
   `cid` int(8) NOT NULL,
   `cname` varchar(16) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `courseregistration`
+--
+
+CREATE TABLE `courseregistration` (
+  `id` int(8) NOT NULL,
+  `cid` int(8) NOT NULL,
+  `uid` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -117,6 +129,12 @@ ALTER TABLE `course`
   ADD KEY `cid_2` (`cid`);
 
 --
+-- 資料表索引 `courseregistration`
+--
+ALTER TABLE `courseregistration`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 資料表索引 `material`
 --
 ALTER TABLE `material`
@@ -161,6 +179,11 @@ ALTER TABLE `user`
 --
 ALTER TABLE `course`
   MODIFY `cid` int(8) NOT NULL AUTO_INCREMENT;
+--
+-- 使用資料表 AUTO_INCREMENT `courseregistration`
+--
+ALTER TABLE `courseregistration`
+  MODIFY `id` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- 使用資料表 AUTO_INCREMENT `material`
 --
