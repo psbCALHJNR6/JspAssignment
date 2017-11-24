@@ -6,6 +6,7 @@
 package ict.servlet;
 
 import ict.bean.CourseBean;
+import ict.bean.UserInfo;
 import ict.db.CourseDB;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,6 +59,8 @@ public class CourseController extends HttpServlet
                 createCourse(request, response);
             }else if(action.equals("list")){
                 showAllCourse(request, response);
+            }else if(action.equals("coursedetail")){
+                courseDetail(request, response);
             }
         }
     }
@@ -81,6 +84,19 @@ public class CourseController extends HttpServlet
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
+    
+    protected void courseDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        ArrayList<UserInfo> _students = new ArrayList<UserInfo>();
+        String targetURL = "";
+        _students = db.getAllCourseStu(Integer.parseInt(request.getParameter("courseID")));
+        request.setAttribute("studentlist", _students);
+        targetURL = "teacher_coursedetail.jsp";
+        
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(request, response);
+    }
+    
     
     
 

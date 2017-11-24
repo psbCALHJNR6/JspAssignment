@@ -6,65 +6,79 @@
 package ict.bean;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  *
  * @author hong
  */
 public class QuizBean implements Serializable{
-    private int limitTime =0;
-    private int attTime =0;
-    private int QID =0;
-    private int CID =0 ;
-    private String sDate = "";
-    private String eDate =""; 
+    private int QID;
+    private int duration;
+    private String startDate;
+    private String endDate;
+    private int cid;
+    private int attemptTime;
 
-    public int getLimitTime() {
-        return limitTime;
-    }
-
-    public void setLimitTime(int limitTime) {
-        this.limitTime = limitTime;
-    }
-
-    public int getAttTime() {
-        return attTime;
-    }
-
-    public void setAttTime(int attTime) {
-        this.attTime = attTime;
-    }
-
-    public int getQID() {
+    public int getQID()
+    {
         return QID;
     }
 
-    public void setQID(int QID) {
+    public void setQID(int QID)
+    {
         this.QID = QID;
     }
 
-    public int getCID() {
-        return CID;
+    public int getDuration()
+    {
+        return duration;
     }
 
-    public void setCID(int CID) {
-        this.CID = CID;
+    public void setDuration(int duration)
+    {
+        this.duration = duration;
     }
 
-    public String getsDate() {
-        return sDate;
+    public String getStartDate()
+    {
+        return startDate;
     }
 
-    public void setsDate(String sDate) {
-        this.sDate = sDate;
+    public void setStartDate(String startDate)
+    {
+        this.startDate = startDate;
     }
 
-    public String geteDate() {
-        return eDate;
+    public String getEndDate()
+    {
+        return endDate;
     }
 
-    public void seteDate(String eDate) {
-        this.eDate = eDate;
+    public void setEndDate(String endDate)
+    {
+        this.endDate = endDate;
     }
+
+    public int getCid()
+    {
+        return cid;
+    }
+
+    public void setCid(int cid)
+    {
+        this.cid = cid;
+    }
+
+    public int getAttemptTime()
+    {
+        return attemptTime;
+    }
+
+    public void setAttemptTime(int attemptTime)
+    {
+        this.attemptTime = attemptTime;
+    }
+    
     
 }

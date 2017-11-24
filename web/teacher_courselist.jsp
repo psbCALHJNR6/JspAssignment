@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>User overview</title>
+        <title>Course overview</title>
         <jsp:include page="import.jsp" />
     </head>
     <body style="">
@@ -33,13 +33,13 @@
                             CourseBean _course = new CourseBean();
                             _course = courselist.get(i);
                             out.print("<tr><td>"
-                                    + _course.getcName() + "</td></tr>");
+                                    + "<a href=\"CourseController?action=coursedetail&courseID=" + _course.getCid() + "\"> " + _course.getcName() + "</a>" + "</td></tr>");
                         }
                     %>
                 </tbody>
             </table>
-                <a
-            <a href="teacher_createcourse.jsp">Create new user</a>
+                
+            <a href="teacher_createcourse.jsp">Create new course</a>
         </div>
                 
         <jsp:include page="footer.jsp" />

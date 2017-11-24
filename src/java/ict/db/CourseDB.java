@@ -6,6 +6,7 @@
 package ict.db;
 
 import ict.bean.CourseBean;
+import ict.bean.UserInfo;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -76,6 +77,42 @@ public class CourseDB
             ex.printStackTrace();
         }
         return cBean;
+    }
+    
+    public ArrayList<UserInfo> getAllCourseStu(int courseID){
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        UserInfo uBean = null;
+        ArrayList<UserInfo> _uBeans = new ArrayList<UserInfo>();
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT user.* FROM courseregistration, user where courseregistration.uid = user.id and courseregistration.cid = ?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, courseID);
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+
+            if (rs.next()) {
+                uBean = new UserInfo();
+                // set the record detail to the customer bean
+                uBean.setId(rs.getInt("id"));
+                uBean.setUsername(rs.getString("username"));
+                uBean.setRole(rs.getString("role"));
+                uBean.setEmail(rs.getString("email"));
+                _uBeans.add(uBean);
+                
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return _uBeans;
     }
     
     public ArrayList<CourseBean> getAllCourse()

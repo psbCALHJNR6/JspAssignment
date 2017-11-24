@@ -5,18 +5,24 @@
  */
 package ict.db;
 
+import ict.bean.QuizBean;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
  * @author hong
  */
-public class QuizDB {
-      private String dburl = "";
+public class QuizDB
+{
+
+    private String dburl = "";
     private String dbUser = "";
     private String dbPassword = "";
 
@@ -26,8 +32,8 @@ public class QuizDB {
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
     }
-    
-        public Connection getConnection() throws SQLException, IOException
+
+    public Connection getConnection() throws SQLException, IOException
     {
 //        System.setProperty("jdbc.drivers", "com.mysql.jdbc.Driver");
         try
@@ -41,30 +47,71 @@ public class QuizDB {
         return DriverManager.getConnection(dburl, dbUser, dbPassword);
 
     }
-       
-     public void CreateUserTable()
+    
+    public ArrayList<QuizBean> getAllQuiz()
     {
-        Statement stmnt = null;
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        QuizBean qBean = null;
+        ArrayList<QuizBean> _qBean = new ArrayList<QuizBean>();
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM quiz";
+            pStmt = connect.prepareStatement(preQueryStatement);
+
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+            while (rs.next()) {
+                qBean = new QuizBean();
+                // set the record detail to the user bean
+                
+                qBean.setQID(rs.getInt("QID"));
+                qBean.setDuration(rs.getInt("duration"));
+                qBean.setStartDate(rs.getString("startDate"));
+                qBean.setEndDate(rs.getString("endDate"));
+                qBean.setAttemptTime(rs.getInt("attemptTime"));
+                qBean.setCid(rs.getInt("cid"));
+                
+                _qBean.add(qBean);
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return _qBean;
+    }
+    
+    public boolean addQuiz(int duration, int attemptTime, String startDate, String endDate, int cid)
+    {
         Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
 
         try
         {
             cnnct = getConnection();
-            stmnt = cnnct.createStatement();
+            String preQueryStatement = "INSERT INTO quiz (duration, attemptTime, startDate, endDate, cid) VALUES (?,?,?,?,?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, duration);
+            pStmnt.setInt(2, attemptTime);
+            pStmnt.setString(3, startDate);
+            pStmnt.setString(4, endDate);
+            pStmnt.setInt(5, cid);
 
-            String sql = "CREATE TABLE IF NOT EXISTS user ("
-                    + "id varchar(5) NOT NULL, "
-                    + "username varchar(25) NOT NULL, "
-                    + "password varchar(25) NOT NULL, "
-                    + "role varchar(25) NOT NULL, "
-                    + "email varchar(255) NOT NULL, "
-                    + "PRIMARY KEY(id)"
-                    + ")";
+            int rowCount = pStmnt.executeUpdate();
 
-            stmnt.execute(sql);
-            stmnt.close();
+            if (rowCount >= 1)
+            {
+                isSuccess = true;
+            }
+            pStmnt.close();
             cnnct.close();
-
         }
         catch (SQLException ex)
         {
@@ -78,5 +125,9 @@ public class QuizDB {
         {
             ex.printStackTrace();
         }
+        return isSuccess;
     }
+    
+    
+
 }
