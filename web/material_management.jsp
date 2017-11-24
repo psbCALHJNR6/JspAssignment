@@ -1,9 +1,3 @@
-<%-- 
-    Document   : teacher_main
-    Created on : Nov 20, 2017, 10:54:29 PM
-    Author     : psb
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
