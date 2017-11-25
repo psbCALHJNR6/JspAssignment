@@ -3,7 +3,7 @@
     Created on : Nov 20, 2017, 10:54:29 PM
     Author     : psb
 --%>
-
+<%@page import = "ict.bean.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,7 +15,8 @@
     <body>
 
         <jsp:include page="navbar.jsp" />
-
+ <jsp:useBean id="courselist" scope="request" class="java.util.ArrayList<ict.bean.CourseBean>" />
+ 
         <div class="container">
 
             <ul>
@@ -26,7 +27,15 @@
                 <li><h1><a href="">Material Management</a></h1></li>
             </ul>
 
-
+ <%
+                        for (int i = 0; i < courselist.size(); i++)
+                        {
+                            CourseBean _course = new CourseBean();
+                            _course = courselist.get(i);
+                            out.print("<tr><td>"
+                                    + "<a href=\"CourseController?action=coursedetail&courseID=" + _course.getCid() + "\"> " + _course.getcName() + "</a>" + "</td></tr>");
+                        }
+                    %>
 
 
         </div>
@@ -101,9 +110,9 @@
         <form action="upload" method="POST">
      
         <div class="col-md-12 margin-bottom-30">
-            Course ID:<input type="text" id='cid'  value="1"disabled>
+            Course ID:<input type="text" id="cid" name="cid"value="1" readonly=readonly>
             <label for="exampleInputFile">File input</label>
-            <input type="file" id="exampleInputFile" name="file" > <br>
+            <input type="file" id="file" name="file" > <br>
             Name<input type="text" class="form-control" id="name" name="name"value="">
             Description<input type="text" class="form-control" id="desc" name="desc"value="">
             <button type="submit" class="btn btn-primary">Upload</button>

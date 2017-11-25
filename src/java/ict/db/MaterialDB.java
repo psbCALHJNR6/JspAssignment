@@ -5,11 +5,14 @@
  */
 package ict.db;
 
+import ict.bean.CourseBean;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -39,6 +42,7 @@ public class MaterialDB {
 
     }
         public boolean createMaterial(int cid,String mateName,String mateDesc){
+           
          boolean success = false;
             Connection cnt = null;
             PreparedStatement pre = null;
@@ -77,5 +81,37 @@ public class MaterialDB {
         }
             
             return success;
+    }
+        public ArrayList<CourseBean> getAllCourse()
+    {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        CourseBean cBean = null;
+        ArrayList<CourseBean> _cBean = new ArrayList<CourseBean>();
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM course";
+            pStmt = connect.prepareStatement(preQueryStatement);
+
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+            while (rs.next()) {
+                cBean = new CourseBean();
+                // set the record detail to the user bean
+                cBean.setCid(rs.getInt("cid"));
+                cBean.setcName(rs.getString("cname"));
+                _cBean.add(cBean);
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return _cBean;
     }
 }
