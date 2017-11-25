@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author hong
  */
-@WebServlet(name="MaterialController",urlPatterns = {"/mController"})
+@WebServlet(name="MaterialController",urlPatterns = {"/upload"})
 public class MaterialController extends HttpServlet{
     MaterialDB db=null;
        protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
@@ -45,19 +45,18 @@ public class MaterialController extends HttpServlet{
              res.setContentType("text/html;charset=UTF-8");
              String action = req.getParameter("action");
              if("action".equals("create")){
-                 createQuestion(req,res);
+                 createMaterial(req,res);
              }
         }
         
-        protected void createQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
-            String question = req.getParameter("question");
-            String optA = req.getParameter("optA");
-            String optB = req.getParameter("optB");
-            int optC = Integer.parseInt(req.getParameter("optC"));
-            String optD = req.getParameter("optD");
-            String ans = req.getParameter("ans");
+        protected void createMaterial(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
             
-            boolean isSuccess = db.createMaterial( optC, optD, ans);
+            String desc = req.getParameter("desc");
+            String name = req.getParameter("name");
+            int cid = Integer.parseInt(req.getParameter("id"));
+            
+            
+            boolean isSuccess = db.createMaterial( cid, name, desc);
              
         }
     
