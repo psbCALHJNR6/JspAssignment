@@ -88,6 +88,7 @@ CREATE TABLE `quiz` (
   `cid` int(8) NOT NULL,
   `attemptTime` int(2) NOT NULL,
   `endDate` date NOT NULL
+  `description` varchar(255) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
