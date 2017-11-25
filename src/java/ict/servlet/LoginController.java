@@ -142,6 +142,7 @@ public class LoginController extends HttpServlet {
             UserInfo bean = new UserInfo();
             bean.setUsername(username);
             bean.setRole(uBean.getRole());
+            bean.setId(uBean.getId());
             
             session.setAttribute("userInfo", bean); //Save a userInfo in the session to represent user has logined
             if("ADMIN".equals(uBean.getRole())){

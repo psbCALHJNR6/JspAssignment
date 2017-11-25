@@ -6,6 +6,7 @@
 package ict.servlet;
 
 import ict.bean.CourseBean;
+import ict.bean.QuizBean;
 import ict.db.CourseDB;
 import ict.db.QuizDB;
 import java.io.IOException;
@@ -67,6 +68,18 @@ public class QuizController extends HttpServlet
         {
             createQuiz(request, response);
         }
+        else if (action.equals("stuquizlist"))
+        {
+            studentQuizList(request, response);
+        }
+        else if (action.equals("editForm"))
+        {
+            editForm(request, response);
+        }
+        else if (action.equals("edit"))
+        {
+            editQuiz(request, response);
+        }
     }
 
     protected void createQuiz(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -77,15 +90,24 @@ public class QuizController extends HttpServlet
         String startDate = request.getParameter("startdate");
         String endDate = request.getParameter("enddate");
         int cid = Integer.parseInt(request.getParameter("cid"));
+        String description = request.getParameter("description");
 
-        boolean isSucces = db.addQuiz(duration, attemptTime, startDate, endDate, cid);
+        boolean isSucces = db.addQuiz(duration, attemptTime, startDate, endDate, cid, description);
 
         response.sendRedirect("QuizController?action=list");
     }
     
     protected void showAllQuiz(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        
+        ArrayList<QuizBean> _quizs = new ArrayList<QuizBean>();
+        String targetURL = "";
+        _quizs = db.getAllQuiz();
+        request.setAttribute("quizlist", _quizs);
+        targetURL = "teacher_quizlist.jsp";
+
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(request, response);
     }
     
     protected void createForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -100,6 +122,61 @@ public class QuizController extends HttpServlet
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
+    
+    protected void studentQuizList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        ArrayList<QuizBean> _quizs = new ArrayList<QuizBean>();
+        String targetURL = "";
+        request.setAttribute("quizlist", _quizs);
+        targetURL = "student_quizlist.jsp";
+        
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(request, response);
+    }
+    
+    protected void editForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        int id = Integer.parseInt(req.getParameter("id"));
+        
+        QuizBean _quizBean = new QuizBean();
+        _quizBean = db.queryQuizByID(id);
+        
+         ArrayList<CourseBean> _courses = new ArrayList<CourseBean>();
+        _courses = cdb.getAllCourse();
+        
+        String targetURL = "";
+        req.setAttribute("quizDetail", _quizBean);
+        req.setAttribute("courselist", _courses);
+        targetURL = "teacher_editquiz.jsp";
+
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(req, resp);
+        
+    }
+    
+    protected void editQuiz(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException
+    {
+        int id = Integer.parseInt(request.getParameter("qid"));
+        int duration = Integer.parseInt(request.getParameter("duration"));
+        int attemptTime = Integer.parseInt(request.getParameter("attemptime"));
+        String startDate = request.getParameter("startdate");
+        String endDate = request.getParameter("enddate");
+        int cid = Integer.parseInt(request.getParameter("cid"));
+        String description = request.getParameter("description");
+
+        
+        boolean isSuccess = false;
+        
+        isSuccess = db.updateQuiz(id, duration, attemptTime, startDate, endDate, cid, description);
+        
+        if(isSuccess){
+            resp.sendRedirect("QuizController?action=editForm&id="+id);
+        }
+    }
+    
+    
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

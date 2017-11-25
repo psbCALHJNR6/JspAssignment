@@ -19,6 +19,17 @@ public class QuizBean implements Serializable{
     private String endDate;
     private int cid;
     private int attemptTime;
+    private String description;
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
 
     public int getQID()
     {

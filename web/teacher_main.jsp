@@ -21,7 +21,7 @@
             <ul>
                 <li><h1><a href="CourseController?action=list">Existing courses</a></h1></li>
                 <li><h1><a href="teacher_createcourse.jsp">Create Course</a></h1></li>
-                <li><h1><a href="">Existing quiz</a></h1></li>
+                <li><h1><a href="QuizController?action=list">Existing quiz</a></h1></li>
                 <li><h1><a href="QuizController?action=createForm">Create Quiz</a></h1></li>
             </ul>
 

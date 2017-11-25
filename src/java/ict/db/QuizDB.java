@@ -71,6 +71,7 @@ public class QuizDB
                 qBean.setEndDate(rs.getString("endDate"));
                 qBean.setAttemptTime(rs.getInt("attemptTime"));
                 qBean.setCid(rs.getInt("cid"));
+                qBean.setDescription(rs.getString("description"));
                 
                 _qBean.add(qBean);
             }
@@ -87,7 +88,43 @@ public class QuizDB
         return _qBean;
     }
     
-    public boolean addQuiz(int duration, int attemptTime, String startDate, String endDate, int cid)
+    public QuizBean queryQuizByID(int id) {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        QuizBean qBean = null;
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM quiz WHERE QID =?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, id);
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+
+            if (rs.next()) {
+                qBean = new QuizBean();
+                // set the record detail to the customer bean
+                qBean.setQID(rs.getInt("QID"));
+                qBean.setDuration(rs.getInt("duration"));
+                qBean.setStartDate(rs.getString("startDate"));
+                qBean.setEndDate(rs.getString("endDate"));
+                qBean.setAttemptTime(rs.getInt("attemptTime"));
+                qBean.setCid(rs.getInt("cid"));
+                qBean.setDescription(rs.getString("description"));
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return qBean;
+    }
+    
+    public boolean addQuiz(int duration, int attemptTime, String startDate, String endDate, int cid, String description)
     {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -96,13 +133,14 @@ public class QuizDB
         try
         {
             cnnct = getConnection();
-            String preQueryStatement = "INSERT INTO quiz (duration, attemptTime, startDate, endDate, cid) VALUES (?,?,?,?,?)";
+            String preQueryStatement = "INSERT INTO quiz (duration, attemptTime, startDate, endDate, cid, description) VALUES (?,?,?,?,?,?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, duration);
             pStmnt.setInt(2, attemptTime);
             pStmnt.setString(3, startDate);
             pStmnt.setString(4, endDate);
             pStmnt.setInt(5, cid);
+            pStmnt.setString(6, description);
 
             int rowCount = pStmnt.executeUpdate();
 
@@ -127,6 +165,81 @@ public class QuizDB
         }
         return isSuccess;
     }
+    
+    public boolean updateQuiz(int id, int duration, int attemptTime, String startDate, String endDate, int cid, String description) {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        boolean isSuccess = false;
+
+        try {            
+            connect = getConnection();
+            String preQueryStatement = "UPDATE quiz set duration = ?, attemptTime=?, startDate=?, endDate=?, cid=?, description=? WHERE QID =?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+
+            pStmt.setInt(1, duration);
+            pStmt.setInt(2, attemptTime);
+            pStmt.setString(3, startDate);
+            pStmt.setString(4, endDate);
+            pStmt.setInt(5, cid);
+            pStmt.setString(6, description);
+            pStmt.setInt(7, id);
+            
+            if (pStmt.executeUpdate() >= 1) {
+                isSuccess = true;
+            }
+
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+//    public ArrayList<QuizBean> getStudentQuizList(int id)
+//    {
+//        Connection connect = null;
+//        PreparedStatement pStmt = null;
+//        QuizBean qBean = null;
+//        ArrayList<QuizBean> _qBean = new ArrayList<QuizBean>();
+//        try {
+//            connect = getConnection();
+//            String preQueryStatement = "SELECT * FROM quiz";
+//            pStmt = connect.prepareStatement(preQueryStatement);
+//
+//            ResultSet rs = null;
+//            rs = pStmt.executeQuery();
+//            while (rs.next()) {
+//                qBean = new QuizBean();
+//                // set the record detail to the user bean
+//                
+//                qBean.setQID(rs.getInt("QID"));
+//                qBean.setDuration(rs.getInt("duration"));
+//                qBean.setStartDate(rs.getString("startDate"));
+//                qBean.setEndDate(rs.getString("endDate"));
+//                qBean.setAttemptTime(rs.getInt("attemptTime"));
+//                qBean.setCid(rs.getInt("cid"));
+//                qBean.setDescription(rs.getString("description"));
+//                
+//                _qBean.add(qBean);
+//            }
+//            pStmt.close();
+//            connect.close();
+//        } catch (SQLException ex) {
+//            while (ex != null) {
+//                ex.printStackTrace();
+//                ex = ex.getNextException();
+//            }
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//        return _qBean;
+//    }
     
     
 

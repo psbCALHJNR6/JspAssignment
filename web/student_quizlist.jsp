@@ -1,6 +1,6 @@
 <%-- 
-    Document   : admin_main
-    Created on : Nov 19, 2017, 8:56:52 PM
+    Document   : student_quizlist
+    Created on : Nov 25, 2017, 12:09:53 AM
     Author     : psb
 --%>
 
@@ -13,15 +13,13 @@
         <jsp:include page="import.jsp" />
     </head>
     <body>
-        <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserInfo" />
         
         <jsp:include page="navbar.jsp" />
         
         <div class="container">
             
             <ul>
-                <li><h1><a href="">My Course</a></h1></li>
-                <li><h1><a href="QuizController?action=stuquizlist&id=<%= userInfo.getId() %>">My Quiz</a></h1></li>
+                
             </ul>
             
         </div>
