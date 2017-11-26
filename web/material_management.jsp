@@ -12,11 +12,34 @@
         <title>Teacher management</title>
         <jsp:include page="import.jsp" />
     </head>
+    
     <body>
 
         <jsp:include page="navbar.jsp" />
  <jsp:useBean id="courselist" scope="request" class="java.util.ArrayList<ict.bean.CourseBean>" />
- 
+
+ <script>
+        
+        function display(value){
+            document.getElementById("cid").value=value;
+            
+            <%
+                int id=1;
+    String course = request.getParameter("course");
+                for (int i = 0; i < courselist.size(); i++)
+                        {
+                            CourseBean _course = new CourseBean();
+                            _course = courselist.get(i);
+                          
+                            if(_course.getcName().equals(course)){
+                                id=_course.getCid();
+                              
+                            }
+                                
+                        }%>
+            
+        }
+    </script>
         <div class="container">
 
             <ul>
@@ -27,21 +50,21 @@
                 <li><h1><a href="">Material Management</a></h1></li>
             </ul>
 
- <%
-                        for (int i = 0; i < courselist.size(); i++)
-                        {
-                            CourseBean _course = new CourseBean();
-                            _course = courselist.get(i);
-                            out.print("<tr><td>"
-                                    + "<a href=\"CourseController?action=coursedetail&courseID=" + _course.getCid() + "\"> " + _course.getcName() + "</a>" + "</td></tr>");
-                        }
-                    %>
+
 
 
         </div>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
 <div class="col-md-12 margin-bottom-30">
-            Select Course<select><option></option></select>
+    Select Course<select id="course" name="course"onchange="display(this.value);"> <%
+                        for (int i = 0; i < courselist.size(); i++)
+                        {
+                            CourseBean _course = new CourseBean();
+                            _course = courselist.get(i);
+                            out.print("<option value='"+_course.getCid()+"'>"
+                                    +  _course.getcName() + "</option>");
+                        }
+                    %></select>
             </div>
 <div class="container">
     <div class="row">
@@ -66,9 +89,9 @@
                   <thead>
                     <tr>
                         <th><em class="fa fa-cog"></em></th>
-                        <th class="hidden-xs">ID</th>
+                       
                         <th>Name</th>
-                        <th>Email</th>
+                        <th>Description</th>
                     </tr> 
                   </thead>
                   <tbody>
@@ -78,7 +101,7 @@
                               <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
                             </td>
                             <td class="hidden-xs">1</td>
-                            <td>John Doe</td>
+                           
                             <td>johndoe@example.com</td>
                           </tr>
                         </tbody>
@@ -107,10 +130,10 @@
             </div>
 
 </div></div></div>
-        <form action="upload" method="POST">
+        <form action="MaterialController" method="POST" enctype="multipart/form-data">
      
         <div class="col-md-12 margin-bottom-30">
-            Course ID:<input type="text" id="cid" name="cid"value="1" readonly=readonly>
+            Course ID:<input type="text" id="cid" name="cid"value="<%=id%>" readonly=readonly>
             <label for="exampleInputFile">File input</label>
             <input type="file" id="file" name="file" > <br>
             Name<input type="text" class="form-control" id="name" name="name"value="">
