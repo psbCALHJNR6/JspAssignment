@@ -6,9 +6,12 @@ package ict.servlet;
  * and open the template in the editor.
  */
 
+import ict.bean.QuestionBean;
 import ict.db.QuestionDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,9 +47,9 @@ public class QuestionController extends HttpServlet {
             throws ServletException, IOException{
              res.setContentType("text/html;charset=UTF-8");
              String action = req.getParameter("action");
-             if("create".equals(action))
+             if(action.equals("create"))
                  createQuestion(req,res);
-             else if("list".equals(action))
+             else if(action.equals("list"))
                    showAllQuestion(req,res);
              
              
@@ -64,7 +67,14 @@ public class QuestionController extends HttpServlet {
             out.print(isSuccess);
         }
         protected void showAllQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
+            ArrayList<QuestionBean> _question = new ArrayList<QuestionBean>();
+            String targetURL = "question_view.jsp";
+            _question = db.getAllQuestion("1");
+            req.setAttribute("questionList",_question);
             
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/" + targetURL);
+            rd.forward(req, res);
         }
  }
         

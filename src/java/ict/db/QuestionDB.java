@@ -101,17 +101,13 @@ public class QuestionDB {
             rs = pStmt.executeQuery();
             while (rs.next()) {
                 qBean = new QuestionBean();
-                // set the record detail to the user bean
-                
-                
-                
+                qBean.setQuestID(rs.getString("questID"));
                 qBean.setQID(rs.getInt("QID"));
                 qBean.setOptA(rs.getString("optA"));
                 qBean.setOptB(rs.getString("optB"));
                 qBean.setOptC(rs.getString("optC"));
                 qBean.setQuestion(rs.getString("question"));
                 qBean.setAns(rs.getString("ans"));
-                
                 _qBean.add(qBean);
             }
             pStmt.close();
