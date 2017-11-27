@@ -11,6 +11,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Quiz</title>
         <jsp:include page="import.jsp" />
+        <script>
+            $(document).ready(function(){
+               $('#my-select').multiSelect(); 
+            });
+        </script>
     </head>
     <body>
         <jsp:useBean id="courselist" scope="request" class="java.util.ArrayList<ict.bean.CourseBean>" />
@@ -19,6 +24,12 @@
 
         <div class="container">
             <h2>Edit Quiz</h2>
+            <select multiple="multiple" id="my-select" name="my-select[]">
+      <option value='elem_1'>elem 1</option>
+      <option value='elem_2'>elem 2</option>
+      <option value='elem_3'>elem 3</option>
+      <option value='elem_4'>elem 4</option>
+    </select>
             <form class="form-horizontal" action="QuizController" method="post">
                 <input type="hidden" name="action" value="edit">
                 <input type="hidden" name="qid" value="<%= quizDetail.getQID()%>">
