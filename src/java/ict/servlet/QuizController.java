@@ -137,6 +137,7 @@ public class QuizController extends HttpServlet
     
     protected void editForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
+        
         int id = Integer.parseInt(req.getParameter("id"));
         
         QuizBean _quizBean = new QuizBean();
@@ -148,6 +149,7 @@ public class QuizController extends HttpServlet
         String targetURL = "";
         req.setAttribute("quizDetail", _quizBean);
         req.setAttribute("courselist", _courses);
+        //get quiz student..........
         targetURL = "teacher_editquiz.jsp";
 
         RequestDispatcher rd;

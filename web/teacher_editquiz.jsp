@@ -10,7 +10,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Quiz</title>
-        <jsp:include page="import.jsp" />
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/multi-select.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+        <script src="js/jquery.multi-select.js"></script>
     </head>
     <body>
         <jsp:useBean id="courselist" scope="request" class="java.util.ArrayList<ict.bean.CourseBean>" />
@@ -18,15 +22,16 @@
         <jsp:include page="navbar.jsp" />
 
         <div class="container">
+
             <h2>Edit Quiz</h2>
             <form class="form-horizontal" action="QuizController" method="post">
                 <input type="hidden" name="action" value="edit">
                 <input type="hidden" name="qid" value="<%= quizDetail.getQID()%>">
-                
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="desc">Description</label>
                     <div class="col-sm-12">          
-                        <input type="text" class="form-control" id="desc" placeholder="Enter Description" name="description" value="<%= quizDetail.getDescription() %>" required>
+                        <input type="text" class="form-control" id="desc" placeholder="Enter Description" name="description" value="<%= quizDetail.getDescription()%>" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -58,20 +63,33 @@
                     <div class="col-sm-12">
                         <select class="form-control" name="cid" id="cid" required>
                             <%
-                                
-                                for(int i = 0; i < courselist.size(); i++){
-                                    if(quizDetail.getCid() == courselist.get(i).getCid()){
-                                        out.print("<option selected value=\"" + courselist.get(i).getCid() + "\">" + courselist.get(i).getcName()+ "</option>");
-                                    }else{
-                                        out.print("<option value=\"" + courselist.get(i).getCid() + "\">" + courselist.get(i).getcName()+ "</option>");
+
+                                for (int i = 0; i < courselist.size(); i++)
+                                {
+                                    if (quizDetail.getCid() == courselist.get(i).getCid())
+                                    {
+                                        out.print("<option selected value=\"" + courselist.get(i).getCid() + "\">" + courselist.get(i).getcName() + "</option>");
                                     }
-                                    
+                                    else
+                                    {
+                                        out.print("<option value=\"" + courselist.get(i).getCid() + "\">" + courselist.get(i).getcName() + "</option>");
+                                    }
+
                                 }
                             %>
                         </select>
                     </div>
                 </div>
                 
+                        <h3>Add Student</h3>
+                <div class="form-group">
+                    <select multiple="multiple" class="form-control col-sm-2" id="student-select" name="student[]">
+                        <%
+                            
+                        %>
+                    </select>
+                </div>
+
                 <div class="form-group">        
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-default">Submit</button>
@@ -79,7 +97,12 @@
                 </div>
             </form>
         </div>
-
+<script type="text/javascript">
+  // run pre selected options
+  $(document).ready(function(){
+     $('#student-select').multiSelect(); 
+  });
+  </script>
         <jsp:include page="footer.jsp" />
     </body>
 </html>
