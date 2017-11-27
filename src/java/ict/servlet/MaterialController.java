@@ -65,16 +65,17 @@ public class MaterialController extends HttpServlet {
     protected void createMaterial(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         Part filePart = req.getPart("file"); // Retrieves <input type="file" name="file">
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-        String uploadPath = getServletContext().getRealPath("./") + File.separator + UPLOAD_DIRECTORY;
+        String uploadPath = getServletContext().getRealPath("/uu") + File.separator + fileName;
+        System.out.print(uploadPath);
         InputStream fileContent = filePart.getInputStream();
-        OutputStream out = new FileOutputStream(fileName);
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdir();
-        }
-        String filePath = uploadPath + File.separator + fileName;
-        File storeFile = new File(filePath);
+        OutputStream out = new FileOutputStream(new File(uploadPath));
+         int read = 0;
+        final byte[] bytes = new byte[1024];
 
+        while ((read = fileContent.read(bytes)) != -1) {
+            out.write(bytes, 0, read);
+        }
+        
         String desc = req.getParameter("desc");
         String name = req.getParameter("name");
         System.out.println(req.getParameter("cid"));
