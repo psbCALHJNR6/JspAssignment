@@ -48,9 +48,8 @@ public class QuestionController extends HttpServlet {
             throws ServletException, IOException{
              res.setContentType("text/html;charset=UTF-8");
              String action = req.getParameter("action");
-             if("create".equals(action))
+
                  createQuestion(req,res);
-             
              
              
         }
