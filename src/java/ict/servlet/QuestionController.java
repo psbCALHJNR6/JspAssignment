@@ -59,10 +59,9 @@ public class QuestionController extends HttpServlet {
             String optA = req.getParameter("optA");
             String optB = req.getParameter("optB");
             String optC = req.getParameter("optC");
-            String optD = req.getParameter("optD");
             String ans = req.getParameter("corrAns");
             
-            boolean isSuccess = db.createQuestion(question, optA, optB, optC, optD, ans);
+            boolean isSuccess = db.createQuestion(question, optA, optB, optC, ans);
             PrintWriter out = res.getWriter();
             out.print(isSuccess);
         }
