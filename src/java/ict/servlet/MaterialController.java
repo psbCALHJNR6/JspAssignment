@@ -61,7 +61,7 @@ public class MaterialController extends HttpServlet {
 
         System.out.println("MCp");
         showAllCourse(req, res);
-        showMaterial(req,res);
+        //showMaterial(req,res);
     }
 
     protected void createMaterial(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -84,6 +84,7 @@ public class MaterialController extends HttpServlet {
         int cid = Integer.parseInt(req.getParameter("cid"));
 
         boolean isSuccess = db.createMaterial(cid, fileName, desc);
+        //System.out.print(isSuccess);
         String redirectURL = "MaterialController?action=mlist";
         res.sendRedirect(redirectURL);
 
@@ -94,17 +95,23 @@ public class MaterialController extends HttpServlet {
         String targetURL = "";
         _courses = db.getAllCourse();
         request.setAttribute("courselist", _courses);
+        ArrayList<MaterialBean> _m = new ArrayList<MaterialBean>();
+//        //String targetURL = "";
+        //int id=Integer.parseInt(request.getParameter("id"));
+        _m = db.showAllMaterial();
+        request.setAttribute("matelist", _m);
         targetURL = "material_management.jsp";
 
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
+        
     }
      protected void showMaterial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<MaterialBean> _m = new ArrayList<MaterialBean>();
         String targetURL = "";
-        int id=Integer.parseInt(request.getParameter("id"));
-        _m = db.queryMaterialByCID(id);
+        //int id=Integer.parseInt(request.getParameter("id"));
+        _m = db.showAllMaterial();
         request.setAttribute("matelist", _m);
         targetURL = "material_management.jsp";
 

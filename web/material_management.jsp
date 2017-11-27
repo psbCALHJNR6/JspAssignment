@@ -12,7 +12,9 @@
         <title>Teacher management</title>
         <jsp:include page="import.jsp" />
     </head>
-    
+    <style>
+        .hh{visibility:"hidden";}
+    </style>>
     <body>
 
         <jsp:include page="navbar.jsp" />
@@ -22,8 +24,11 @@
         
         function display(value,frm){
             document.getElementById("cid").value=value;
-           frm.action="MaterialController?id="+value;
-    frm.submit();
+            //document.getElementById(value).style.visibility="hidden";
+            //document.getElementById(value).style.visibility="visible";
+            //window.location="MaterialController?id="+value;
+//           frm.action="MaterialController?id="+value;
+//    frm.submit();
           
             
         }
@@ -68,7 +73,7 @@
                     <h3 class="panel-title">Panel Heading</h3>
                   </div>
                   <div class="col col-xs-6 text-right">
-                    <button type="button" class="btn btn-sm btn-primary btn-create">Create New</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-create">View Material</button>
                   </div>
                 </div>
               </div>
@@ -85,15 +90,23 @@
                   <tbody>
          
                           
-         <tr>
-                            <td align="center">
-                              <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
-                              <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
-                            </td>
-                            <td class="hidden-xs">1</td>
+         
+                             <jsp:useBean id="matelist" scope="request" class="java.util.ArrayList<ict.bean.MaterialBean>" />
+                             <%
+                        for (int i = 0; i < matelist.size(); i++)
+                        {
+                            MaterialBean _mt = new MaterialBean();
+                            out.print("<tr id='"+_mt.getCid()+"' class='t'><td align='center'><a class='btn btn-default'><em class='fa fa-pencil'></em></a><a class='btn btn-danger'><em class='fa fa-trash'></em></a></td>");
+                            
+                            _mt = matelist.get(i);
+                            out.print("<td class='hidden-xs'>"
+                                    +  _mt.getMateName() + "</td>");
+                            out.print("<td>"
+                                    +  _mt.getMateDesc() + "</td><tr>");
+                        }
+                        %>
+                             
                            
-                            <td>johndoe@example.com</td>
-                          </tr>
                         </tbody>
                 </table>
             
@@ -123,7 +136,7 @@
         <form action="MaterialController" method="POST" enctype="multipart/form-data">
      
         <div class="col-md-12 margin-bottom-30">
-            Course ID:<input type="text" id="cid" name="cid"value="<%=request.getParameter("id")%>" readonly=readonly>
+            Course ID:<input type="text" id="cid" name="cid"value="" readonly=readonly>
             <label for="exampleInputFile">File input</label>
             <input type="file" id="file" name="file" > <br>
             

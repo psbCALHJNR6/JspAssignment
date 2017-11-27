@@ -22,6 +22,7 @@
             <ul>
                 <li><h1><a href="">My Course</a></h1></li>
                 <li><h1><a href="QuizController?action=stuquizlist&id=<%= userInfo.getId() %>">My Quiz</a></h1></li>
+                 <li><h1><a href="CourseController?action=courses">Courses</a></h1></li>
             </ul>
             
         </div>

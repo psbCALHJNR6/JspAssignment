@@ -128,12 +128,46 @@ public class MaterialDB {
             ResultSet rs = null;
             rs = pStmt.executeQuery();
 
-            if (rs.next()) {
+            while(rs.next()) {
                 mBean = new MaterialBean();
                 // set the record detail to the customer bean
                 mBean.setCid(rs.getInt("cid"));
                 mBean.setMateName(rs.getString("mateName"));
                 mBean.setMateDesc(rs.getString("mateDesc"));
+                _cBean.add(mBean);
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return _cBean;
+    }
+         public ArrayList<MaterialBean> showAllMaterial() {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        ArrayList<MaterialBean> _cBean = new ArrayList<MaterialBean>();
+        MaterialBean mBean = null;
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM material";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            //pStmt.setInt(1, id);
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+
+            while(rs.next()) {
+                mBean = new MaterialBean();
+                // set the record detail to the customer bean
+                mBean.setCid(rs.getInt("cid"));
+                mBean.setMateName(rs.getString("mateName"));
+                mBean.setMateDesc(rs.getString("mateDesc"));
+                //System.out.print(rs.getString("mateName"));
                 _cBean.add(mBean);
             }
             pStmt.close();
