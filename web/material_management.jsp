@@ -20,23 +20,11 @@
 
  <script>
         
-        function display(value){
+        function display(value,frm){
             document.getElementById("cid").value=value;
-            
-            <%
-                int id=1;
-    String course = request.getParameter("course");
-                for (int i = 0; i < courselist.size(); i++)
-                        {
-                            CourseBean _course = new CourseBean();
-                            _course = courselist.get(i);
-                          
-                            if(_course.getcName().equals(course)){
-                                id=_course.getCid();
-                              
-                            }
-                                
-                        }%>
+           frm.action="MaterialController?id="+value;
+    frm.submit();
+          
             
         }
     </script>
@@ -55,8 +43,8 @@
 
         </div>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-<div class="col-md-12 margin-bottom-30">
-    Select Course<select id="course" name="course"onchange="display(this.value);"> <%
+<div class="col-md-12 margin-bottom-30"><form>
+    Select Course<select id="course" name="course"onchange="display(this.value,this.form);"> <%
                         for (int i = 0; i < courselist.size(); i++)
                         {
                             CourseBean _course = new CourseBean();
@@ -64,7 +52,7 @@
                             out.print("<option value='"+_course.getCid()+"'>"
                                     +  _course.getcName() + "</option>");
                         }
-                    %></select>
+                        %></select></form>
             </div>
 <div class="container">
     <div class="row">
@@ -95,7 +83,9 @@
                     </tr> 
                   </thead>
                   <tbody>
-                          <tr>
+         
+                          
+         <tr>
                             <td align="center">
                               <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
                               <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
@@ -133,10 +123,10 @@
         <form action="MaterialController" method="POST" enctype="multipart/form-data">
      
         <div class="col-md-12 margin-bottom-30">
-            Course ID:<input type="text" id="cid" name="cid"value="<%=id%>" readonly=readonly>
+            Course ID:<input type="text" id="cid" name="cid"value="<%=request.getParameter("id")%>" readonly=readonly>
             <label for="exampleInputFile">File input</label>
             <input type="file" id="file" name="file" > <br>
-            Name<input type="text" class="form-control" id="name" name="name"value="">
+            
             Description<input type="text" class="form-control" id="desc" name="desc"value="">
             <button type="submit" class="btn btn-primary">Upload</button>
         </div>

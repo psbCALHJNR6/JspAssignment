@@ -10,6 +10,7 @@ package ict.servlet;
  * @author hong
  */
 import ict.bean.CourseBean;
+import ict.bean.MaterialBean;
 import ict.db.MaterialDB;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,6 +61,7 @@ public class MaterialController extends HttpServlet {
 
         System.out.println("MCp");
         showAllCourse(req, res);
+        showMaterial(req,res);
     }
 
     protected void createMaterial(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -77,11 +79,11 @@ public class MaterialController extends HttpServlet {
         }
         
         String desc = req.getParameter("desc");
-        String name = req.getParameter("name");
+        //String name = req.getParameter("name");
         System.out.println(req.getParameter("cid"));
         int cid = Integer.parseInt(req.getParameter("cid"));
 
-        boolean isSuccess = db.createMaterial(cid, name, desc);
+        boolean isSuccess = db.createMaterial(cid, fileName, desc);
         String redirectURL = "MaterialController?action=mlist";
         res.sendRedirect(redirectURL);
 
@@ -98,7 +100,18 @@ public class MaterialController extends HttpServlet {
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
+     protected void showMaterial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArrayList<MaterialBean> _m = new ArrayList<MaterialBean>();
+        String targetURL = "";
+        int id=Integer.parseInt(request.getParameter("id"));
+        _m = db.queryMaterialByCID(id);
+        request.setAttribute("matelist", _m);
+        targetURL = "material_management.jsp";
 
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(request, response);
+    }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -6,6 +6,7 @@
 package ict.db;
 
 import ict.bean.CourseBean;
+import ict.bean.MaterialBean;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -101,6 +102,39 @@ public class MaterialDB {
                 cBean.setCid(rs.getInt("cid"));
                 cBean.setcName(rs.getString("cname"));
                 _cBean.add(cBean);
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return _cBean;
+    }
+         public ArrayList<MaterialBean> queryMaterialByCID(int id) {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        ArrayList<MaterialBean> _cBean = new ArrayList<MaterialBean>();
+        MaterialBean mBean = null;
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM material WHERE cid =?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, id);
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+
+            if (rs.next()) {
+                mBean = new MaterialBean();
+                // set the record detail to the customer bean
+                mBean.setCid(rs.getInt("cid"));
+                mBean.setMateName(rs.getString("mateName"));
+                mBean.setMateDesc(rs.getString("mateDesc"));
+                _cBean.add(mBean);
             }
             pStmt.close();
             connect.close();
