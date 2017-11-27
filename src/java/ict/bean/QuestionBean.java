@@ -13,12 +13,23 @@ import java.io.Serializable;
  */
 public class QuestionBean implements Serializable{
     private String questID = "";
-    private String QID ="";
+    private int QID =0;
+    private String question = "";
+
+   
     private String optA = "";
     private String optB ="";
     private String optC="";
     private String ans = "";
 
+    
+     public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
     public String getQuestID() {
         return questID;
     }
@@ -27,11 +38,11 @@ public class QuestionBean implements Serializable{
         this.questID = questID;
     }
 
-    public String getQID() {
+    public int getQID() {
         return QID;
     }
 
-    public void setQID(String QID) {
+    public void setQID(int QID) {
         this.QID = QID;
     }
 

@@ -5,11 +5,15 @@
  */
 package ict.db;
 
+import ict.bean.QuestionBean;
+import ict.bean.QuizBean;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class QuestionDB {
     
@@ -81,6 +85,47 @@ public class QuestionDB {
             
             return success;
         }
-        
+        public ArrayList<QuestionBean> getAllQuestion (String qid)
+    {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        QuestionBean qBean = null;
+        ArrayList<QuestionBean> _qBean = new ArrayList<QuestionBean>();
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM question where QID = ?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setString(1,qid);
+
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+            while (rs.next()) {
+                qBean = new QuestionBean();
+                // set the record detail to the user bean
+                
+                
+                
+                qBean.setQID(rs.getInt("QID"));
+                qBean.setOptA(rs.getString("optA"));
+                qBean.setOptB(rs.getString("optB"));
+                qBean.setOptC(rs.getString("optC"));
+                qBean.setQuestion(rs.getString("question"));
+                qBean.setAns(rs.getString("ans"));
+                
+                _qBean.add(qBean);
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return _qBean;
+    }
+    
     
 }

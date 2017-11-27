@@ -39,10 +39,6 @@ public class QuestionController extends HttpServlet {
         db = new QuestionDB(dbUrl, dbUser, dbPassword);
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
         protected void processRequest(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException{
@@ -50,7 +46,8 @@ public class QuestionController extends HttpServlet {
              String action = req.getParameter("action");
              if("create".equals(action))
                  createQuestion(req,res);
-             
+             else if("list".equals(action))
+                   showAllQuestion(req,res);
              
              
         }
@@ -66,6 +63,10 @@ public class QuestionController extends HttpServlet {
             PrintWriter out = res.getWriter();
             out.print(isSuccess);
         }
+        protected void showAllQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
+            
+        }
+ }
         
 
-}
+
