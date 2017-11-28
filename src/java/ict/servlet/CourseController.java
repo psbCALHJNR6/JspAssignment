@@ -6,8 +6,10 @@
 package ict.servlet;
 
 import ict.bean.CourseBean;
+import ict.bean.MaterialBean;
 import ict.bean.UserInfo;
 import ict.db.CourseDB;
+import ict.db.MaterialDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CourseController extends HttpServlet
 {
     CourseDB db;
-
+    MaterialDB db2;
     @Override
     public void init() throws ServletException
     {
@@ -37,6 +39,7 @@ public class CourseController extends HttpServlet
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new CourseDB(dbUrl, dbUser, dbPassword);
+        db2= new MaterialDB(dbUrl, dbUser, dbPassword);
     }
 
     /**
@@ -80,8 +83,10 @@ public class CourseController extends HttpServlet
         int id=Integer.parseInt(request.getParameter("id"));
         ArrayList<CourseBean> _courses = new ArrayList<CourseBean>();
          _courses=db.getCourseforStu(id);
+         ArrayList<MaterialBean> _mate = new ArrayList<MaterialBean>();
         request.setAttribute("courses",_courses);
-        
+        _mate=db2.queryMaterialByCID(id);
+        request.setAttribute("mate",_mate);
         //response.sendRedirect("student_courses.jsp");
          RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + "student_courses.jsp");

@@ -164,7 +164,7 @@ public class CourseDB
                 // set the record detail to the user bean
                 cBean.setCid(rs.getInt("cid"));
                 cBean.setcName(rs.getString("cname"));
-                System.out.print(rs.getString("cname"));
+                //System.out.print(rs.getString("cname"));
                 _cBean.add(cBean);
             }
             

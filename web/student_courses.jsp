@@ -35,7 +35,7 @@
             %>
             </ul>
         </div>
-        
+        <a href="download.jsp">download the jsp file</a>
         <jsp:include page="footer.jsp" />
     </body>
 </html>
