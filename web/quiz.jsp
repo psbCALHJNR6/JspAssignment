@@ -57,6 +57,7 @@
     <body style="background-color: white" >
         <jsp:useBean id="quizDetail" scope="request" class="ict.bean.QuizBean" />
         <jsp:useBean id="quizQuestions" scope="request" class="java.util.ArrayList<ict.bean.QuestionBean>" />
+        <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserInfo" />
         <div class="">
             <!-- Stack the columns on mobile by making one full-width and the other half-width -->
             <div class="row">
@@ -82,7 +83,10 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <form action="" method="post" id="examForm">
+                            <form action="QuizController?" method="post" id="examForm">
+                                <input type="hidden" name="action" value="submitquiz">
+                                <input type="hidden" name="quizID" value="<%= quizDetail.getQID() %>">
+                                <input type="hidden" name="stuID" value="<%= userInfo.getId()  %>">
                                 <div class="tab-content">
                                     <!-- question content -->
                                     <input type="hidden" name="usedTime" id="usedTime" value="00:00:00">
