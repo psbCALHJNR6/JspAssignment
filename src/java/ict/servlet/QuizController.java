@@ -86,6 +86,10 @@ public class QuizController extends HttpServlet
         {
             startQuiz(request, response);
         }
+        else if (action.equals("submitquiz"))
+        {
+            submitQuiz(request, response);
+        }
     }
 
     protected void createQuiz(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -226,6 +230,11 @@ public class QuizController extends HttpServlet
         rd.forward(req, resp);
     }
     
+     private void submitQuiz(HttpServletRequest request, HttpServletResponse response)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -269,6 +278,8 @@ public class QuizController extends HttpServlet
     {
         return "Short description";
     }// </editor-fold>
+
+   
 
     
 
