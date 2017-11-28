@@ -85,6 +85,30 @@ public class QuestionDB {
             
             return success;
         }
+        public boolean deleteQuestion(String id){
+            boolean isSuccess = false;
+            Connection cnt = null;
+            PreparedStatement pre = null;
+            
+            try{
+                cnt = getConnection();
+                
+                String preQueString = "Delete from question where questID = ?;";
+                pre=cnt.prepareStatement(preQueString);
+                pre.setString(1, id);
+                int rowCount = pre.executeUpdate();
+                if (rowCount >= 1)
+            {
+                isSuccess = true;
+            }
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            
+            
+            return isSuccess;
+        }
         public ArrayList<QuestionBean> getAllQuestion (String qid)
     {
         Connection connect = null;

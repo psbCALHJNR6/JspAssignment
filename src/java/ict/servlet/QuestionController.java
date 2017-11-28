@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author hong
  */
-@WebServlet(name="QuestionController",urlPatterns = {"/qController"})
+@WebServlet(name="QuestionController",urlPatterns = {"/QuestionController"})
 public class QuestionController extends HttpServlet {
     QuestionDB db = null;
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
@@ -51,6 +51,9 @@ public class QuestionController extends HttpServlet {
                  createQuestion(req,res);
              else if(action.equals("list"))
                    showAllQuestion(req,res);
+             else if(action.equals("delete"))
+                 deleteQuestion(req,res);
+                 
              
              
         }
@@ -64,8 +67,17 @@ public class QuestionController extends HttpServlet {
             
             boolean isSuccess = db.createQuestion(question, optA, optB, optC, ans);
             PrintWriter out = res.getWriter();
-            out.print(isSuccess);
+            if(isSuccess)
+                out.print("<script type='text/javascript'>alert('Added successful');</script>");                
         }
+        protected void deleteQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
+            String id = req.getParameter("id");
+            boolean isSuccess = db.deleteQuestion(id);
+            PrintWriter out = res.getWriter();
+            if(isSuccess)
+                out.print("Delete successful");  
+        }
+
         protected void showAllQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
             ArrayList<QuestionBean> _question = new ArrayList<QuestionBean>();
             String targetURL = "question_view.jsp";
