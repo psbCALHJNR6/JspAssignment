@@ -8,7 +8,8 @@
 <!DOCTYPE html>
 <html>
     <%    
-  String filename = "Workshop6.pdf";   
+  String filename = "";   
+  filename=request.getParameter("file");
   String filepath = "../build/web/uu/";   
   response.setContentType("APPLICATION/OCTET-STREAM");   
   response.setHeader("Content-Disposition","attachment; filename=\"" + filename + "\"");   

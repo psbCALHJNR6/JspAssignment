@@ -85,7 +85,7 @@ public class CourseController extends HttpServlet
          _courses=db.getCourseforStu(id);
          ArrayList<MaterialBean> _mate = new ArrayList<MaterialBean>();
         request.setAttribute("courses",_courses);
-        _mate=db2.queryMaterialByCID(id);
+        _mate=db2.showAllMaterial();
         request.setAttribute("mate",_mate);
         //response.sendRedirect("student_courses.jsp");
          RequestDispatcher rd;
