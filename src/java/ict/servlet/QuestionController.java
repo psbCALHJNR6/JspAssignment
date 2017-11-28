@@ -53,9 +53,11 @@ public class QuestionController extends HttpServlet {
                    showAllQuestion(req,res);
              else if(action.equals("delete"))
                  deleteQuestion(req,res);
-                 
-             
-             
+             else if(action.equals("update"))
+                 updateQuestion(req,res);
+             else if(action.equals("view"))
+                 showOneQuestion(req,res);
+                     
         }
         
         protected void createQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
@@ -77,13 +79,26 @@ public class QuestionController extends HttpServlet {
             if(isSuccess)
                 out.print("Delete successful");  
         }
-
+        
+        protected void updateQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
+            
+        }
+        
+        protected void showOneQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
+            QuestionBean qBean = new QuestionBean();
+            String targetURL = "question_viewone.jsp";
+            qBean = db.getOneQuestion(req.getParameter("id"));
+            req.setAttribute("qBean", qBean);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/" + targetURL);
+            rd.forward(req, res);
+        }
+        
         protected void showAllQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
             ArrayList<QuestionBean> _question = new ArrayList<QuestionBean>();
             String targetURL = "question_view.jsp";
             _question = db.getAllQuestion("1");
             req.setAttribute("questionList",_question);
-            
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/" + targetURL);
             rd.forward(req, res);

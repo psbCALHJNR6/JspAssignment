@@ -109,6 +109,37 @@ public class QuestionDB {
             
             return isSuccess;
         }
+        
+        public QuestionBean getOneQuestion(String qid){
+            QuestionBean qBean =null;
+            Connection connect = null;
+            PreparedStatement pStmt = null;
+            try{
+                connect = getConnection();
+                String preQueString = "Select * from question where questID = ?;";
+                pStmt = connect.prepareStatement(preQueString);
+                pStmt.setString(1,qid);
+               
+                ResultSet rs = null;
+                rs=pStmt.executeQuery();
+                
+                qBean = new QuestionBean();
+                qBean.setQuestID(rs.getString("questID"));
+                qBean.setQID(rs.getInt("QID"));
+                qBean.setOptA(rs.getString("optA"));
+                qBean.setOptB(rs.getString("optB"));
+                qBean.setOptC(rs.getString("optC"));
+                qBean.setQuestion(rs.getString("question"));
+                qBean.setAns(rs.getString("ans"));
+                    
+                
+            }
+            
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            return qBean;
+        }
         public ArrayList<QuestionBean> getAllQuestion (String qid)
     {
         Connection connect = null;
