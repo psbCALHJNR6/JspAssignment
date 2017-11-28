@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import = "ict.bean.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,17 +14,47 @@
         <jsp:include page="import.jsp" />
     </head>
     <body>
-        
+
         <jsp:include page="navbar.jsp" />
-        
+
         <div class="container">
-            
-            <ul>
+            <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserInfo" />
+            <jsp:useBean id="quizlist" scope="request" class="java.util.ArrayList<ict.bean.QuizBean>" />
+
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Duration</th>
+                        <th>Attempt time</th>
+                        <th>Start</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        for (int i = 0; i < quizlist.size(); i++)
+                        {
+                            QuizBean _quiz = new QuizBean();
+                            _quiz = quizlist.get(i);
+                            out.print("<tr>"
+                                    + "<td>" + _quiz.getDescription() + "</td>"
+                                    + "<td>" + _quiz.getStartDate()+ "</td>"
+                                    + "<td>" + _quiz.getEndDate()+ "</td>"
+                                    + "<td>" + _quiz.getDuration()+ " minutes </td>"
+                                    + "<td>" + _quiz.getAttemptTime()+ "</td>"
+                                    + "<td>" + "<a href=\"QuizController?action=startquiz&stuID=" + userInfo.getId() + "&quizID=" + _quiz.getQID()+ "\">Start</a>" + "</td>"
+                                    + "</tr>");
+                        }
+                    %>
                 
-            </ul>
-            
+                </tbody>
+            </table>
+
         </div>
-        
+
         <jsp:include page="footer.jsp" />
     </body>
 </html>

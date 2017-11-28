@@ -19,6 +19,8 @@
     <body>
         <jsp:useBean id="courselist" scope="request" class="java.util.ArrayList<ict.bean.CourseBean>" />
         <jsp:useBean id="quizDetail" scope="request" class="ict.bean.QuizBean" />
+        <jsp:useBean id="quizstudent" scope="request" class="java.util.ArrayList<ict.bean.UserInfo>" />
+        <jsp:useBean id="nQuizstudent" scope="request" class="java.util.ArrayList<ict.bean.UserInfo>" />
         <jsp:include page="navbar.jsp" />
 
         <div class="container">
@@ -83,9 +85,16 @@
                 
                         <h3>Add Student</h3>
                 <div class="form-group">
-                    <select multiple="multiple" class="form-control col-sm-2" id="student-select" name="student[]">
+                    <select multiple="multiple" class="form-control" id="student-select" name="student">
                         <%
-                            
+                            for(int i = 0; i < quizstudent.size(); i++){
+                                out.print("<option selected value=\"" + quizstudent.get(i).getId() + "\">" + quizstudent.get(i).getUsername() + " - " + quizstudent.get(i).getEmail() +"</option>");
+                            }
+                        %>
+                        <%
+                            for(int i = 0; i < nQuizstudent.size(); i++){
+                                out.print("<option value=\"" + nQuizstudent.get(i).getId() + "\">" + nQuizstudent.get(i).getUsername() + " - " + nQuizstudent.get(i).getEmail() +"</option>");
+                            }
                         %>
                     </select>
                 </div>
@@ -100,7 +109,10 @@
 <script type="text/javascript">
   // run pre selected options
   $(document).ready(function(){
-     $('#student-select').multiSelect(); 
+     $('#student-select').multiSelect({
+         selectableHeader: "<div class='custom-header'>All Students</div>",
+        selectionHeader: "<div class='custom-header'>Quiz Students</div>",
+     }); 
   });
   </script>
         <jsp:include page="footer.jsp" />

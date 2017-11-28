@@ -6,7 +6,9 @@
 package ict.servlet;
 
 import ict.bean.CourseBean;
+import ict.bean.QuestionBean;
 import ict.bean.QuizBean;
+import ict.bean.UserInfo;
 import ict.db.CourseDB;
 import ict.db.QuizDB;
 import java.io.IOException;
@@ -80,6 +82,10 @@ public class QuizController extends HttpServlet
         {
             editQuiz(request, response);
         }
+        else if (action.equals("startquiz"))
+        {
+            startQuiz(request, response);
+        }
     }
 
     protected void createQuiz(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -127,6 +133,7 @@ public class QuizController extends HttpServlet
     {
         ArrayList<QuizBean> _quizs = new ArrayList<QuizBean>();
         String targetURL = "";
+        _quizs = db.getStudentQuiz(Integer.parseInt(request.getParameter("id")));
         request.setAttribute("quizlist", _quizs);
         targetURL = "student_quizlist.jsp";
         
@@ -150,6 +157,12 @@ public class QuizController extends HttpServlet
         req.setAttribute("quizDetail", _quizBean);
         req.setAttribute("courselist", _courses);
         //get quiz student..........
+        ArrayList<UserInfo> quizStudent = db.getQuizStudent(id);
+        req.setAttribute("quizstudent", quizStudent);
+        
+        ArrayList<UserInfo> nQuizStudent = db.queryUserByRole("STUDENT");
+        req.setAttribute("nQuizstudent", nQuizStudent);
+        
         targetURL = "teacher_editquiz.jsp";
 
         RequestDispatcher rd;
@@ -167,7 +180,19 @@ public class QuizController extends HttpServlet
         String endDate = request.getParameter("enddate");
         int cid = Integer.parseInt(request.getParameter("cid"));
         String description = request.getParameter("description");
-
+        String [] _stuIDs = request.getParameterValues("student");
+        
+        db.deleteAllStudent(id);
+        if(_stuIDs!=null){
+            
+            for(int i = 0; i < _stuIDs.length; i++){
+                int stuID = Integer.parseInt(_stuIDs[i]);
+                
+                if(!db.isQuizStudent(id, stuID)){
+                    db.addQuizStudent(id, stuID);
+                }
+            }
+        }
         
         boolean isSuccess = false;
         
@@ -176,6 +201,29 @@ public class QuizController extends HttpServlet
         if(isSuccess){
             resp.sendRedirect("QuizController?action=editForm&id="+id);
         }
+    }
+    
+    private void startQuiz(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        int quizID = Integer.parseInt(req.getParameter("quizID"));
+        int stuID = Integer.parseInt(req.getParameter("stuID"));
+        
+        ArrayList<QuestionBean> _questions = new ArrayList<QuestionBean>();
+        _questions = db.getQuizQuestions(quizID);
+        
+        QuizBean _quizBean = new QuizBean();
+        _quizBean = db.queryQuizByID(quizID);
+        
+        String targetURL = "";
+        req.setAttribute("quizDetail", _quizBean);
+        req.setAttribute("quizQuestions", _questions);
+        
+        
+        targetURL = "quiz.jsp";
+
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(req, resp);
     }
     
     
@@ -221,5 +269,7 @@ public class QuizController extends HttpServlet
     {
         return "Short description";
     }// </editor-fold>
+
+    
 
 }
