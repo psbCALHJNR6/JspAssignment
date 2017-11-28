@@ -85,6 +85,32 @@ public class QuestionDB {
             
             return success;
         }
+        public boolean updateQuestion(String questID,String question,String optA,String optB,String optC,String corrAns){
+            boolean isSuccess = false;
+            Connection cnt = null;
+            PreparedStatement pre = null;
+            
+            try{
+                cnt = getConnection();
+                String preQueString = "UPDATE question SET question=?,optA=?,optB=?,optC=?,corrAns=? where questID=?;";
+                pre=cnt.prepareStatement(preQueString);
+                pre.setString(1,question);
+                pre.setString(2, optA);
+                pre.setString(3,optB);
+                pre.setString(4,optC);
+                pre.setString(5,corrAns);
+                pre.setString(6,questID);
+                
+                int rowCount= pre.executeUpdate();
+                if(rowCount==1)
+                    isSuccess=true;
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            
+            return isSuccess;
+        }
         public boolean deleteQuestion(String id){
             boolean isSuccess = false;
             Connection cnt = null;
@@ -116,13 +142,15 @@ public class QuestionDB {
             PreparedStatement pStmt = null;
             try{
                 connect = getConnection();
-                String preQueString = "Select * from question where questID = ?;";
+                String preQueString = "SELECT * FROM question WHERE questID = ?;";
                 pStmt = connect.prepareStatement(preQueString);
                 pStmt.setString(1,qid);
+
                
                 ResultSet rs = null;
                 rs=pStmt.executeQuery();
-                
+                 
+               if(rs.next()) {
                 qBean = new QuestionBean();
                 qBean.setQuestID(rs.getString("questID"));
                 qBean.setQID(rs.getInt("QID"));
@@ -131,8 +159,10 @@ public class QuestionDB {
                 qBean.setOptC(rs.getString("optC"));
                 qBean.setQuestion(rs.getString("question"));
                 qBean.setAns(rs.getString("ans"));
-                    
-                
+            }
+            pStmt.close();
+            connect.close();
+            connect.close();
             }
             
             catch(Exception e){

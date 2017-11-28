@@ -77,4 +77,8 @@ public class QuestionBean implements Serializable{
     public void setAns(String ans) {
         this.ans = ans;
     }
+    
+    public String toString(){
+        return getQuestion()+"/"+getAns()+"/"+getOptA()+"/"+getOptB()+" "+getOptC();
+    }
 }
