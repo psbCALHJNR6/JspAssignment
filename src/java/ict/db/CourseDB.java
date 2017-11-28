@@ -114,8 +114,7 @@ public class CourseDB
         }
         return _uBeans;
     }
-    
-    public ArrayList<CourseBean> getAllCourse()
+     public ArrayList<CourseBean> getAllCourse()
     {
         Connection connect = null;
         PreparedStatement pStmt = null;
@@ -135,6 +134,46 @@ public class CourseDB
                 cBean.setcName(rs.getString("cname"));
                 _cBean.add(cBean);
             }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return _cBean;
+    }
+    public ArrayList<CourseBean> getCourseforStu(int id)
+    {System.out.print(id);
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        CourseBean cBean = null;
+        ArrayList<CourseBean> _cBean = new ArrayList<CourseBean>();
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM courseregistration,course WHERE courseregistration.cid=course.cid and courseregistration.uid=?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, id);
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+            while (rs.next()) {
+                cBean = new CourseBean();
+                // set the record detail to the user bean
+                cBean.setCid(rs.getInt("cid"));
+                cBean.setcName(rs.getString("cname"));
+                System.out.print(rs.getString("cname"));
+                _cBean.add(cBean);
+            }
+            
+            
+            
+            
+            
+            
+            
             pStmt.close();
             connect.close();
         } catch (SQLException ex) {

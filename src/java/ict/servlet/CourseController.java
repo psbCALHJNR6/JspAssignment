@@ -62,6 +62,10 @@ public class CourseController extends HttpServlet
             }else if(action.equals("coursedetail")){
                 courseDetail(request, response);
             }
+            else if(action.equals("courses")){
+                
+                courseForStudent(request, response);
+            }
         }
     }
     
@@ -72,7 +76,17 @@ public class CourseController extends HttpServlet
         
         response.sendRedirect("CourseController?action=list");	
     }
-    
+    protected void courseForStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        int id=Integer.parseInt(request.getParameter("id"));
+        ArrayList<CourseBean> _courses = new ArrayList<CourseBean>();
+         _courses=db.getCourseforStu(id);
+        request.setAttribute("courses",_courses);
+        
+        //response.sendRedirect("student_courses.jsp");
+         RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + "student_courses.jsp");
+        rd.forward(request, response);
+    }
     protected void showAllCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
          ArrayList<CourseBean> _courses = new ArrayList<CourseBean>();
         String targetURL = "";
