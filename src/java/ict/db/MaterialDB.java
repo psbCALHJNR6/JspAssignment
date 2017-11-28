@@ -115,6 +115,37 @@ public class MaterialDB {
         }
         return _cBean;
     }
+        
+        public boolean deleteMaterialByID(int id) {
+        boolean isSuccess=false;
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+       
+        try {
+            connect = getConnection();
+            String preQueryStatement = "DELETE FROM material WHERE mateID =?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, id);
+            ResultSet rs = null;
+            int count=pStmt.executeUpdate();
+            
+            if(count>0){
+            isSuccess=true;
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+        
+        
          public ArrayList<MaterialBean> queryMaterialByCID(int id) {
         Connection connect = null;
         PreparedStatement pStmt = null;
@@ -165,6 +196,7 @@ public class MaterialDB {
                 mBean = new MaterialBean();
                 // set the record detail to the customer bean
                 mBean.setCid(rs.getInt("cid"));
+                mBean.setMid(rs.getInt("mateID"));
                 mBean.setMateName(rs.getString("mateName"));
                 mBean.setMateDesc(rs.getString("mateDesc"));
                 //System.out.print(rs.getString("mateName"));
