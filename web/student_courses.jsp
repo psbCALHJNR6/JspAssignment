@@ -30,7 +30,7 @@
                             for(int j = 0; j< mate.size(); j++){
                                 MaterialBean m=new MaterialBean();
                                 m=mate.get(j);
-                                if(_c.getCid()==m.getCid()){
+                                if((_c.getCid()==m.getCid())&&(m.getVisibility()==1)){
                                     out.print("<li><a href='download.jsp?file="
                                     + m.getMateName()+"'>"+m.getMateName() + "</a></li>");
                                 }

@@ -65,7 +65,9 @@ public class MaterialController extends HttpServlet {
         if (action.equals("delete")) {
             delete(req, res);
         }
-
+        if (action.equals("change")) {
+            update(req, res);
+        }
         showAllCourse(req, res);
 
         //showMaterial(req,res);
@@ -84,7 +86,18 @@ public class MaterialController extends HttpServlet {
         
 
     }
+protected void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        int mid=Integer.parseInt(req.getParameter("id"));
+        int status=Integer.parseInt(req.getParameter("status"));
+        
+        
+        
 
+        boolean isSuccess = db.updateMaterialByID(mid,status);
+        //System.out.print(isSuccess);
+        
+
+    }
     protected void createMaterial(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         Part filePart = req.getPart("file"); // Retrieves <input type="file" name="file">
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
@@ -104,7 +117,7 @@ public class MaterialController extends HttpServlet {
         System.out.println(req.getParameter("cid"));
         int cid = Integer.parseInt(req.getParameter("cid"));
 
-        boolean isSuccess = db.createMaterial(cid, fileName, desc);
+        boolean isSuccess = db.createMaterial(cid, fileName, desc,1);
         //System.out.print(isSuccess);
         
     }

@@ -42,7 +42,7 @@ public class MaterialDB {
         return DriverManager.getConnection(dburl, dbUser, dbPassword);
 
     }
-        public boolean createMaterial(int cid,String mateName,String mateDesc){
+        public boolean createMaterial(int cid,String mateName,String mateDesc,int v){
            
          boolean success = false;
             Connection cnt = null;
@@ -52,12 +52,12 @@ public class MaterialDB {
             try
         {
             cnt = getConnection();
-            String preQueryStatement = "INSERT INTO material (cid,mateName,mateDesc) VALUES (?,?,?)";
+            String preQueryStatement = "INSERT INTO material (cid,mateName,mateDesc,Visibility) VALUES (?,?,?,?)";
             pre = cnt.prepareStatement(preQueryStatement);
             pre.setInt(1, cid);
             pre.setString(2, mateName);
             pre.setString(3, mateDesc);
-            
+            pre.setInt(4, v);
 
             int rowCount = pre.executeUpdate();
 
@@ -146,27 +146,21 @@ public class MaterialDB {
     }
         
         
-         public ArrayList<MaterialBean> queryMaterialByCID(int id) {
+         public boolean updateMaterialByID(int id,int status) {
         Connection connect = null;
         PreparedStatement pStmt = null;
-        ArrayList<MaterialBean> _cBean = new ArrayList<MaterialBean>();
-        MaterialBean mBean = null;
+        boolean isSuccess=false;
+        int count;
         try {
             connect = getConnection();
-            String preQueryStatement = "SELECT * FROM material WHERE cid =?";
+            String preQueryStatement = "UPDATE material SET Visibility=? WHERE mateID =?";
             pStmt = connect.prepareStatement(preQueryStatement);
-            pStmt.setInt(1, id);
+            pStmt.setInt(1, status);
+            pStmt.setInt(2, id);
             ResultSet rs = null;
-            rs = pStmt.executeQuery();
-
-            while(rs.next()) {
-                mBean = new MaterialBean();
-                // set the record detail to the customer bean
-                mBean.setCid(rs.getInt("cid"));
-                mBean.setMateName(rs.getString("mateName"));
-                mBean.setMateDesc(rs.getString("mateDesc"));
-                _cBean.add(mBean);
-            }
+            count= pStmt.executeUpdate();
+            if(count>0)
+                isSuccess=true;
             pStmt.close();
             connect.close();
         } catch (SQLException ex) {
@@ -177,7 +171,7 @@ public class MaterialDB {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return _cBean;
+        return isSuccess;
     }
          public ArrayList<MaterialBean> showAllMaterial() {
         Connection connect = null;
@@ -199,6 +193,7 @@ public class MaterialDB {
                 mBean.setMid(rs.getInt("mateID"));
                 mBean.setMateName(rs.getString("mateName"));
                 mBean.setMateDesc(rs.getString("mateDesc"));
+                mBean.setVisibility(Integer.parseInt(rs.getString("Visibility")));
                 //System.out.print(rs.getString("mateName"));
                 _cBean.add(mBean);
             }

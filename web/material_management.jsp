@@ -48,17 +48,7 @@
 
         </div>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-<div class="col-md-12 margin-bottom-30"><form>
-    Select Course<select id="course" name="course"onchange="display(this.value,this.form);"> <%
-                        for (int i = 0; i < courselist.size(); i++)
-                        {
-                            CourseBean _course = new CourseBean();
-                            _course = courselist.get(i);
-                            out.print("<option value='"+_course.getCid()+"'>"
-                                    +  _course.getcName() + "</option>");
-                        }
-                        %></select></form>
-            </div>
+
 <div class="container">
     <div class="row">
     
@@ -70,10 +60,22 @@
               <div class="panel-heading">
                 <div class="row">
                   <div class="col col-xs-6">
-                    <h3 class="panel-title">Panel Heading</h3>
+                    <h3 class="panel-title">Material List</h3>
                   </div>
                   <div class="col col-xs-6 text-right">
-                    <button type="button" class="btn btn-sm btn-primary btn-create">View Material</button>
+                      <div class="col-md-12 margin-bottom-30">
+    Select Course<select id="course" name="course"onchange="display(this.value,this.form);"> <%
+                        for (int i = 0; i < courselist.size(); i++)
+                        {
+                            CourseBean _course = new CourseBean();
+                            _course = courselist.get(i);
+                            out.print("<option value='"+_course.getCid()+"'>"
+                                    +  _course.getcName() + "</option>");
+                        }
+                        %></select>
+                        <button type="button" class="btn btn-sm btn-primary btn-create" onclick="search()">View Material</button>
+            </div>
+                    
                   </div>
                 </div>
               </div>
@@ -85,6 +87,7 @@
                        
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Visibility</th>
                     </tr> 
                   </thead>
                   <tbody>
@@ -103,7 +106,12 @@
                             out.print("<td class='hidden-xs'>"
                                     +  _mt.getMateName() + "</td>");
                             out.print("<td>"
-                                    +  _mt.getMateDesc() + "</td><tr>");
+                                    +  _mt.getMateDesc() + "</td>");
+                            if(_mt.getVisibility()==1)
+                            out.print("<td>Available    <a href='MaterialController?action=change&status=0&id="+_mt.getMid()+"'>Hide</a></td>");
+                            else 
+                                out.print("<td>Restricted      <a href='MaterialController?action=change&status=1&id="+_mt.getMid()+"'>Show</a></td>");
+                             out.print("</tr>");
                         }
                         %>
                              
