@@ -17,30 +17,38 @@
         <jsp:include page="navbar.jsp" />
 
         <div class="container">
-            <div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="..." alt="Card image cap">
-  <div class="card-body">
-    <h4 class="card-title">Card title</h4>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-            <div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="..." alt="Card image cap">
-  <div class="card-body">
-    <h4 class="card-title">Card title</h4>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-            <div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="..." alt="Card image cap">
-  <div class="card-body">
-    <h4 class="card-title">Card title</h4>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="#">Hong Kong to Taiwan</a>
+                        </h4>
+                        <h5>$500</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                    </div>
+                    <div class="card-footer"> <small class="text-muted">&#9733; &#9734; &#9734; &#9734; &#9734; HK Express</small> 
+                        <button class="btn btn-success btn-add float-right">Add</button></div>
+
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="#">Hong Kong to Taiwan</a>
+                        </h4>
+                        <h5>$500</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                    </div>
+                    <div class="card-footer"> <small class="text-muted">&#9733; &#9734; &#9734; &#9734; &#9734; HK Express</small> 
+                        <button class="btn btn-success btn-add float-right">Add</button></div>
+
+                </div>
+            </div>
+                <!--<ict:link href="" desc="" />-->
+            </div>
 
             <ul>
                 <li><h1><a href="CourseController?action=list">Existing courses</a></h1></li>
