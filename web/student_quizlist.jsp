@@ -45,10 +45,11 @@
                                     + "<td>" + _quiz.getEndDate()+ "</td>"
                                     + "<td>" + _quiz.getDuration()+ " minutes </td>"
                                     + "<td>" + _quiz.getAttemptTime()+ "</td>"
-                                    + "<td>" + "<a href=\"QuizController?action=startquiz&stuID=" + userInfo.getId() + "&quizID=" + _quiz.getQID()+ "\">Start</a>" +   "</td>"
+                                    + "<td>" + "<a href=\"QuizController?action=startquiz&stuID=" + userInfo.getId() + "&quizID=" + _quiz.getQID()+ "\">Start</a>" 
+                                    + "<a href=\"QuizController?action=quizresult&stuID="+ userInfo.getId() +"&quizID="+ _quiz.getQID()+"\">result</a>" + "</td>"
                                     + "</tr>");
                         }
-//                        "<a href=\"QuizController?action=stu_quizresult&quizID=4&stuID=3\">result</a>" +
+//                        
                     %>
                 
                 </tbody>

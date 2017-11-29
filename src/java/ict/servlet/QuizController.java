@@ -376,7 +376,7 @@ public class QuizController extends HttpServlet
         
         String targetURL = "";
 
-        targetURL = "student_quizresult.jsp";
+        targetURL = "quizresult.jsp";
 
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);

@@ -47,7 +47,7 @@
                                     + "<td>" + _quiz.getCid()+ "</td>"
                                     +"<td>"+"<a href=\"QuestionController?action=createForm\">Create new Quiz</a><br />"
                                     +"<a href=\"QuestionController?action=list&id="+_quiz.getQID()+"\">View all questions</a>"
-                                    +"<a href=\"QuestionController?action=quizresult&id="+_quiz.getQID()+"\">View quiz result</a>"
+                                    +"<a href=\"QuizController?action=quizresult&quizID="+_quiz.getQID()+"\">View quiz result</a>"
                                     +"</td>"
                                     + "</tr>");
                         }
