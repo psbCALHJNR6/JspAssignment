@@ -34,7 +34,7 @@
         }
         function search(){
             var v=document.getElementById("course").value;
-            window.location="MaterialController?action=mlist&id="+v;
+            window.location="MaterialController?action=mlist&iid="+v;
         }
     </script>
         <div class="container">
@@ -104,8 +104,8 @@
                         {
                             MaterialBean _mt = new MaterialBean();
                             _mt = matelist.get(i);
-                            if(request.getParameter("id")!=null){
-                                if(_mt.getCid()==Integer.parseInt(request.getParameter("id")))
+                            if(request.getParameter("iid")!=null){
+                                if(_mt.getCid()==Integer.parseInt(request.getParameter("iid")))
                                 {
                                      out.print("<tr id='"+_mt.getCid()+"' class='t'><td align='center'><a class='btn btn-danger' href='MaterialController?action=delete&id="+_mt.getMid()+"&file="+_mt.getMateName()+"'><em class='fa fa-trash'></em></a></td>");
                             
@@ -180,7 +180,7 @@
                         
             </div>
         <div class="col-md-12 margin-bottom-30">
-            Course ID:<input type="text" id="cid" name="cid"value="" readonly=readonly>
+            Course ID:<input type="text" id="cid" name="cid"value="1" readonly=readonly>
             <label for="exampleInputFile">File input</label>
             <input type="file" id="file" name="file" > <br>
             

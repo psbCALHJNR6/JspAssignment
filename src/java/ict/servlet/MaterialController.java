@@ -64,6 +64,7 @@ public class MaterialController extends HttpServlet {
         String action = req.getParameter("action");
         if (action.equals("delete")) {
             delete(req, res);
+            showAllCourse(req, res);
         }
         if (action.equals("change")) {
             update(req, res);
@@ -78,12 +79,16 @@ public class MaterialController extends HttpServlet {
         String filename = "";
         filename = req.getParameter("file");
         File f = new File(getServletContext().getRealPath("/uu") + File.separator + filename);
+       try{
         f.delete();
-        
+       }
+       catch(Exception ex){
+           
+       }
 
         boolean isSuccess = db.deleteMaterialByID(mid);
         //System.out.print(isSuccess);
-        
+        //res.sendRedirect("MaterialController?action=mlist");
 
     }
 protected void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -147,7 +152,7 @@ protected void update(HttpServletRequest req, HttpServletResponse res) throws Se
         _m = db.showAllMaterial();
         request.setAttribute("matelist", _m);
         targetURL = "material_management.jsp";
-
+        System.out.print("s");
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
