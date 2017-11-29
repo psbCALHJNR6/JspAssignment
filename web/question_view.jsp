@@ -52,7 +52,7 @@
                         }
                     %>
         </table>
-        <a href="QuestionController?action=create" style="float: right;">+ Add a new question</a>
+        <a href="QuestionController?action=makeForm" style="float: right;">+ Add a new question</a>
         </div>
          <jsp:include page="footer.jsp" />
     </body>
