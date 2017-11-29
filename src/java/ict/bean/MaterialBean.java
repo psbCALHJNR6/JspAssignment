@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class MaterialBean implements Serializable
 {
         private int cid = 0;
- 
+    private int mid=0;
     private String mateName = "";
     private String mateDesc ="";
     public MaterialBean(){}
@@ -26,8 +26,8 @@ public class MaterialBean implements Serializable
     public void setCid(int cid){this.cid=cid;}
      public void setMateName(String mateName){this.mateName=mateName;}
       public void setMateDesc(String mateDesc){this.mateDesc=mateDesc;}
-      
-      
+      public void setMid(int mid){this.mid=mid;}
+      public int getMid(){return mid;}
       public int getCid(){return cid;}
       public String getMateName(){return mateName;}
       public String getMateDesc(){return mateDesc;}

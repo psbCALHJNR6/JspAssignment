@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.nio.file.Paths;
 import javax.servlet.http.Part;
 import javax.servlet.annotation.*;
+
 /**
  *
  * @author hong
@@ -40,6 +41,7 @@ public class MaterialController extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         createMaterial(req, res);
+        showAllCourse(req, res);
     }
 
     @Override
@@ -59,9 +61,28 @@ public class MaterialController extends HttpServlet {
             throws ServletException, IOException {
         res.setContentType("text/html;charset=UTF-8");
 
-        System.out.println("MCp");
+        String action = req.getParameter("action");
+        if (action.equals("delete")) {
+            delete(req, res);
+        }
+
         showAllCourse(req, res);
+
         //showMaterial(req,res);
+    }
+
+    protected void delete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        int mid=Integer.parseInt(req.getParameter("id"));
+        String filename = "";
+        filename = req.getParameter("file");
+        File f = new File(getServletContext().getRealPath("/uu") + File.separator + filename);
+        f.delete();
+        
+
+        boolean isSuccess = db.deleteMaterialByID(mid);
+        //System.out.print(isSuccess);
+        
+
     }
 
     protected void createMaterial(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -71,13 +92,13 @@ public class MaterialController extends HttpServlet {
         System.out.print(uploadPath);
         InputStream fileContent = filePart.getInputStream();
         OutputStream out = new FileOutputStream(new File(uploadPath));
-         int read = 0;
+        int read = 0;
         final byte[] bytes = new byte[1024];
 
         while ((read = fileContent.read(bytes)) != -1) {
             out.write(bytes, 0, read);
         }
-        
+
         String desc = req.getParameter("desc");
         //String name = req.getParameter("name");
         System.out.println(req.getParameter("cid"));
@@ -85,9 +106,7 @@ public class MaterialController extends HttpServlet {
 
         boolean isSuccess = db.createMaterial(cid, fileName, desc);
         //System.out.print(isSuccess);
-        String redirectURL = "MaterialController?action=mlist";
-        res.sendRedirect(redirectURL);
-
+        
     }
 
     protected void showAllCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -105,9 +124,10 @@ public class MaterialController extends HttpServlet {
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
-        
+
     }
-     protected void showMaterial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    protected void showMaterial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<MaterialBean> _m = new ArrayList<MaterialBean>();
         String targetURL = "";
         //int id=Integer.parseInt(request.getParameter("id"));
@@ -119,6 +139,7 @@ public class MaterialController extends HttpServlet {
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

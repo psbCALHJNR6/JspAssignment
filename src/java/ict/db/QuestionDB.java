@@ -92,14 +92,18 @@ public class QuestionDB {
             
             try{
                 cnt = getConnection();
+<<<<<<< HEAD
                 String preQueString = "UPDATE question SET question=?,optA=?,optB=?,optC=?,ans=? where questID=?;";
+=======
+                String preQueString = "UPDATE question SET question=?,optA=?,optB=?,optC=?,ans=? WHERE questID=?";
+>>>>>>> cfcf23d775ea131c88c1acee7b3945ba7281d219
                 pre=cnt.prepareStatement(preQueString);
                 pre.setString(1,question);
                 pre.setString(2, optA);
                 pre.setString(3,optB);
                 pre.setString(4,optC);
                 pre.setString(5,corrAns);
-                pre.setString(6,questID);
+                pre.setInt(6,Integer.parseInt(questID));
                 
                 int rowCount= pre.executeUpdate();
                 if(rowCount==1)

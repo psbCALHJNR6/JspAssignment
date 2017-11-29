@@ -208,6 +208,43 @@ public class UserDB
         return _uBean;
     }
     
+    public ArrayList<UserInfo> queryUserByRole(String role) {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        UserInfo uBean = null;
+        ArrayList<UserInfo> _uBean = new ArrayList<UserInfo>();
+        
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM user WHERE role =?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setString(1, role);
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+
+            if (rs.next()) {
+                uBean = new UserInfo();
+                // set the record detail to the customer bean
+                uBean.setId(rs.getInt("id"));
+                uBean.setUsername(rs.getString("username"));
+                uBean.setPassword(rs.getString("password"));
+                uBean.setRole(rs.getString("role"));
+                uBean.setEmail(rs.getString("email"));
+                _uBean.add(uBean);
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return _uBean;
+    }
+    
     public UserInfo queryUserByUsername(String username) {
         Connection connect = null;
         PreparedStatement pStmt = null;
@@ -275,6 +312,8 @@ public class UserDB
         }
         return uBean;
     }
+    
+    
     
     public boolean updateUser(int id, String username,String password, String role, String email) {
         Connection connect = null;

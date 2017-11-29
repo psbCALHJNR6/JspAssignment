@@ -96,9 +96,10 @@
                         for (int i = 0; i < matelist.size(); i++)
                         {
                             MaterialBean _mt = new MaterialBean();
-                            out.print("<tr id='"+_mt.getCid()+"' class='t'><td align='center'><a class='btn btn-default'><em class='fa fa-pencil'></em></a><a class='btn btn-danger'><em class='fa fa-trash'></em></a></td>");
-                            
                             _mt = matelist.get(i);
+                            out.print("<tr id='"+_mt.getCid()+"' class='t'><td align='center'><a class='btn btn-danger' href='MaterialController?action=delete&id="+_mt.getMid()+"&file="+_mt.getMateName()+"'><em class='fa fa-trash'></em></a></td>");
+                            
+                            
                             out.print("<td class='hidden-xs'>"
                                     +  _mt.getMateName() + "</td>");
                             out.print("<td>"
