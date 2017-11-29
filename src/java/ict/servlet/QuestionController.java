@@ -72,7 +72,10 @@ public class QuestionController extends HttpServlet {
             boolean isSuccess = db.deleteQuestion(id);
             PrintWriter out = res.getWriter();
             if(isSuccess)
-                out.print("Delete successful");  
+                out.print("<script type='text/javascript'>alert('Delete successful');</script>");
+            else
+                out.print("<script type='text/javascript'>alert('Cannot delete question');</script>");
+            res.sendRedirect("QuestionController?action=list&id="+req.getParameter(id));
         }
         
         protected void updateQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
