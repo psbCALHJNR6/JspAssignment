@@ -11,6 +11,7 @@ import ict.bean.QuizBean;
 import ict.bean.UserInfo;
 import ict.db.CourseDB;
 import ict.db.QuizDB;
+import ict.db.ResultDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class QuizController extends HttpServlet
 
     QuizDB db;
     CourseDB cdb;
+    ResultDB rdb;
 
     @Override
     public void init() throws ServletException
@@ -43,6 +45,7 @@ public class QuizController extends HttpServlet
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new QuizDB(dbUrl, dbUser, dbPassword);
         cdb = new CourseDB(dbUrl, dbUser, dbPassword);
+        rdb = new ResultDB(dbUrl, dbUser, dbPassword);
     }
 
     /**
@@ -94,6 +97,10 @@ public class QuizController extends HttpServlet
         else if (action.equals("stu_quizresult"))
         {
             showStudentResult(request, response);
+        }
+        else if (action.equals("quizresult"))
+        {
+            showQuizResult(request, response);
         }
     }
 
@@ -340,13 +347,32 @@ public class QuizController extends HttpServlet
     {
         int stuID = Integer.parseInt(request.getParameter("stuID"));
         int quizID = Integer.parseInt(request.getParameter("quizID"));
-        int [] marks = db.queryQuizMarkByID(quizID);
+        int [] marks = rdb.queryStudentQuizMark(quizID, stuID);
         
         QuizBean qBean = db.queryQuizByID(quizID);
         request.setAttribute("highest", marks[0]);
         request.setAttribute("lowest", marks[1]);
         request.setAttribute("average", marks[2]);
         request.setAttribute("canAttemptTime", qBean.getAttemptTime() - db.attemptTime(quizID, stuID));
+        
+        String targetURL = "";
+
+        targetURL = "student_quizresult.jsp";
+
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(request, response);
+    }
+
+    private void showQuizResult(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        int quizID = Integer.parseInt(request.getParameter("quizID"));
+        int [] marks = rdb.queryQuizMarkByID(quizID);
+        
+        QuizBean qBean = db.queryQuizByID(quizID);
+        request.setAttribute("highest", marks[0]);
+        request.setAttribute("lowest", marks[1]);
+        request.setAttribute("average", marks[2]);
         
         String targetURL = "";
 
