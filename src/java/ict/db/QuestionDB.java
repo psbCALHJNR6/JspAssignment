@@ -92,7 +92,9 @@ public class QuestionDB {
             
             try{
                 cnt = getConnection();
+
                 String preQueString = "UPDATE question SET question=?,optA=?,optB=?,optC=?,ans=? WHERE questID=?";
+
                 pre=cnt.prepareStatement(preQueString);
                 pre.setString(1,question);
                 pre.setString(2, optA);

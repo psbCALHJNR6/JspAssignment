@@ -83,7 +83,7 @@ public class QuestionController extends HttpServlet {
      
            boolean isSuccess = db.updateQuestion(questid,question,optA,optB,optC,corrAns); 
            
-           out.print(isSuccess);
+          out.print("<script type='text/javascript'>alert('Update successful');</script>");
            
         }
         protected void createQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{

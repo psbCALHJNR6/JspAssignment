@@ -25,7 +25,7 @@
              <form action="QuestionController"  method="post" class="form-horizontal">
                  <input type="hidden" name="action" value="update">
                  <div class="form-group">
-                 Question ID:<input type="text" name="questid"readonly=readonly value="<%=qBean.getQuestID()%>">
+                 Question ID:<input type="text" name="questid" readonly="readonly" value="<%=qBean.getQuestID()%>">
                  </div>
                  <div class="form-group">
                  Question : <input type="text" name="question" value="<%=qBean.getQuestion()%>">
