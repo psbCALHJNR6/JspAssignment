@@ -91,6 +91,10 @@ public class QuizController extends HttpServlet
         {
             submitQuiz(request, response);
         }
+        else if (action.equals("stu_quizresult"))
+        {
+            showStudentResult(request, response);
+        }
     }
 
     protected void createQuiz(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -272,9 +276,6 @@ public class QuizController extends HttpServlet
         System.out.print(totalMark);
 //        
         int [] marks = db.queryQuizMarkByID(quizID);
-        System.out.println(marks[0]);
-        System.out.println(marks[1]);
-        System.out.println(marks[2]);
         
         request.setAttribute("highest", marks[0]);
         request.setAttribute("lowest", marks[1]);
@@ -334,5 +335,26 @@ public class QuizController extends HttpServlet
     {
         return "Short description";
     }// </editor-fold>
+
+    private void showStudentResult(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        int stuID = Integer.parseInt(request.getParameter("stuID"));
+        int quizID = Integer.parseInt(request.getParameter("quizID"));
+        int [] marks = db.queryQuizMarkByID(quizID);
+        
+        QuizBean qBean = db.queryQuizByID(quizID);
+        request.setAttribute("highest", marks[0]);
+        request.setAttribute("lowest", marks[1]);
+        request.setAttribute("average", marks[2]);
+        request.setAttribute("canAttemptTime", qBean.getAttemptTime() - db.attemptTime(quizID, stuID));
+        
+        String targetURL = "";
+
+        targetURL = "student_quizresult.jsp";
+
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(request, response);
+    }
 
 }
