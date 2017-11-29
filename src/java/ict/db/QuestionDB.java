@@ -39,7 +39,7 @@ public class QuestionDB {
         return DriverManager.getConnection(dburl, dbUser, dbPassword);
 
     }
-        public boolean createQuestion(String question,String optA,String optB,String optC,String ans){
+        public boolean createQuestion(String question,String optA,String optB,String optC,String ans,String quizID){
             boolean success = false;
             Connection cnt = null;
             PreparedStatement pre = null;
@@ -51,11 +51,12 @@ public class QuestionDB {
             String preQueryStatement = "INSERT INTO question (question,QID,optA, optB, optC,ans) VALUES (?,?,?,?,?,?)";
             pre = cnt.prepareStatement(preQueryStatement);
             pre.setString(1, question);
-            pre.setInt(2,1);
+            pre.setString(2,quizID);
             pre.setString(3, optA);
             pre.setString(4, optB);
             pre.setString(5, optC);
             pre.setString(6, ans);
+       
 
 
             int rowCount = pre.executeUpdate();

@@ -1,5 +1,6 @@
 
 
+<%@page import="ict.bean.QuizBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,8 +11,10 @@
     </head>
     <body>
         <jsp:include page="navbar.jsp" />
+        <jsp:useBean id="quizList" scope="request" class="java.util.ArrayList<ict.bean.QuizBean>" />
         <div class="container">
-        <form action="qController" method="post">
+            
+        <form action="QuestionController" method="post">
             <h1 class="my-4">Create question</h1>
             <input type="hidden" name="action" value="create">
             <label for="qName">Question:</label><input type="text" class="form-control" name="qName" id="qName" required> <br>
@@ -24,6 +27,16 @@
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
+            </select>
+            
+            <label for="quiz">Quiz : </label>
+            <select name="quiz" >
+                <%
+                for(int i =0;i<quizList.size();i++){
+                    QuizBean qBean = quizList.get(i);
+                    out.print("<option value=\""+qBean.getQID()+"\">"+qBean.getDescription()+"</option>");
+                }
+                %>
             </select>
             <br>
             <input type="submit" value="Submit" class="form-control" style="cursor:pointer;">

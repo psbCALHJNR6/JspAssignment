@@ -45,12 +45,16 @@
                                     + "<td>" + _que.getOptB()+ "</td>"
                                     + "<td>" + _que.getOptC()+ "</td>"
                                     + "<td>" + _que.getAns()+ "</td>"
-                                    +"<td><a href=\"QuestionController?action=delete&id="+_que.getQuestID()+"\">Delete</a>"
-                                    +" | <a href=\"QuestionController?action=view&id="+_que.getQuestID()+"\">Edit</a></td>"
+                                    +"<td><a href=\"QuestionController?action=view&id="+_que.getQuestID()+"\">Edit</a>"
+                                    +" | <a href=\"QuestionController?action=delete&id="+_que.getQuestID()+"\">Delete</a></td>"
+                                   
                                     + "</tr>");
                         }
                     %>
         </table>
+        <%
+        out.print(questionList.size());
+        %>
         </div>
          <jsp:include page="footer.jsp" />
     </body>

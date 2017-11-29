@@ -29,6 +29,7 @@
                         <th>Duration</th>
                         <th>Attempt time</th>
                         <th>Course</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +45,9 @@
                                     + "<td>" + _quiz.getDuration()+ "</td>"
                                     + "<td>" + _quiz.getAttemptTime()+ "</td>"
                                     + "<td>" + _quiz.getCid()+ "</td>"
+                                    +"<td>"+"<a href=\"QuestionController?action=createForm\">Create new Quiz</a><br />"
+                                    +"<a href=\"QuestionController?action=list&id="+_quiz.getQID())+"\"></a>"
+                                    +"</td>"
                                     + "</tr>");
                         }
                     %>

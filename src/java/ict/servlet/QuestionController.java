@@ -7,7 +7,9 @@ package ict.servlet;
  */
 
 import ict.bean.QuestionBean;
+import ict.bean.QuizBean;
 import ict.db.QuestionDB;
+import ict.db.QuizDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name="QuestionController",urlPatterns = {"/QuestionController"})
 public class QuestionController extends HttpServlet {
     QuestionDB db = null;
+    QuizDB qdb = null;
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         processRequest(req,res);
     }
@@ -40,6 +43,7 @@ public class QuestionController extends HttpServlet {
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new QuestionDB(dbUrl, dbUser, dbPassword);
+        qdb = new QuizDB(dbUrl, dbUser, dbPassword);
     }
 
 
@@ -58,7 +62,8 @@ public class QuestionController extends HttpServlet {
              else if(action.equals("view")){
                  this.showOneQuestion(req,res);
              }
-                     
+             else if(action.equals("makeForm"))
+                 makeForm(req,res);
         }
         
         
@@ -78,9 +83,6 @@ public class QuestionController extends HttpServlet {
            String optB = req.getParameter("optB");
            String optC = req.getParameter("optC");
            String corrAns = req.getParameter("corrAns");
-           
-           
-     
            boolean isSuccess = db.updateQuestion(questid,question,optA,optB,optC,corrAns); 
            
           out.print("<script type='text/javascript'>alert('Update successful');</script>");
@@ -92,11 +94,17 @@ public class QuestionController extends HttpServlet {
             String optB = req.getParameter("optB");
             String optC = req.getParameter("optC");
             String ans = req.getParameter("corrAns");
+            String quizID = req.getParameter("quiz");
             
-            boolean isSuccess = db.createQuestion(question, optA, optB, optC, ans);
+            boolean isSuccess = db.createQuestion(question, optA, optB, optC, ans,quizID);
             PrintWriter out = res.getWriter();
             if(isSuccess)
-                out.print("<script type='text/javascript'>alert('Added successful');</script>");                
+                out.print("<script type='text/javascript'>alert('Added successful');</script>");   
+            else{
+                out.print(isSuccess+"<br>");
+                out.print(req.getParameter("quiz"));
+            }
+            
         }
         
         protected void showOneQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
@@ -117,12 +125,28 @@ public class QuestionController extends HttpServlet {
         protected void showAllQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
             ArrayList<QuestionBean> _question = new ArrayList<QuestionBean>();
             String targetURL = "question_view.jsp";
-            _question = db.getAllQuestion("1");
+            _question = db.getAllQuestion("3");
             req.setAttribute("questionList",_question);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/" + targetURL);
             rd.forward(req, res);
         }
+        
+        protected void makeForm(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
+
+            String targetURL = "question_create.jsp";
+            ArrayList<QuizBean> _quizzes = new ArrayList<QuizBean>();
+        
+            
+            _quizzes = qdb.getAllQuiz();
+            req.setAttribute("quizList",_quizzes);
+            
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/" + targetURL);
+            rd.forward(req, res);
+            
+        }
+        
  }
         
 
