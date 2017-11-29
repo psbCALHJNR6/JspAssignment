@@ -27,6 +27,7 @@
                 <ict:tag1 link="QuizController?action=list" desc="Existing quiz"/>
                 <ict:tag1 link="QuizController?action=createForm" desc="Create Quiz"/>
                 <ict:tag1 link="MaterialController?action=mlist" desc="Materials"/>
+                <ict:tag1 link="getUser?action=maintainForm&id=${userInfo.getId()}" desc="Edit Profile"/>
             </ul>
             
 

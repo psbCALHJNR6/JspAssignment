@@ -24,8 +24,10 @@
              
             <ict:tag1 link="QuizController?action=stuquizlist&id=${userInfo.getId()}" desc="My Quiz"/>
                 <ict:tag1 link="CourseController?action=courses&id=${userInfo.getId()}" desc="Courses"/>
+                <ict:tag1 link="getUser?action=maintainForm&id=${userInfo.getId()}" desc="Edit Profile"/>
+                
             </ul>
-            
+                
         </div>
         
         <jsp:include page="footer.jsp" />

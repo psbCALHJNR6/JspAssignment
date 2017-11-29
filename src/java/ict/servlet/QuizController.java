@@ -8,6 +8,7 @@ package ict.servlet;
 import ict.bean.CourseBean;
 import ict.bean.QuestionBean;
 import ict.bean.QuizBean;
+import ict.bean.ResultBean;
 import ict.bean.UserInfo;
 import ict.db.CourseDB;
 import ict.db.QuizDB;
@@ -347,7 +348,13 @@ public class QuizController extends HttpServlet
     {
         int stuID = Integer.parseInt(request.getParameter("stuID"));
         int quizID = Integer.parseInt(request.getParameter("quizID"));
-        int [] marks = rdb.queryStudentQuizMark(quizID, stuID);
+        int [] marks = new int[3];
+        try{
+            marks = rdb.queryStudentQuizMark(quizID, stuID);
+        }catch(Exception ex){
+            response.sendRedirect("/noquizresult.jsp");
+            return;
+        }
         
         QuizBean qBean = db.queryQuizByID(quizID);
         request.setAttribute("highest", marks[0]);
@@ -367,7 +374,13 @@ public class QuizController extends HttpServlet
     private void showQuizResult(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         int quizID = Integer.parseInt(request.getParameter("quizID"));
-        int [] marks = rdb.queryQuizMarkByID(quizID);
+        int [] marks = new int[3];
+        try{
+            marks = rdb.queryQuizMarkByID(quizID);
+        }catch(Exception ex){
+            response.sendRedirect("/noquizresult.jsp");
+            return;
+        }
         
         QuizBean qBean = db.queryQuizByID(quizID);
         request.setAttribute("highest", marks[0]);

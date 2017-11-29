@@ -45,8 +45,8 @@
                                     + "<td>" + _quiz.getEndDate()+ "</td>"
                                     + "<td>" + _quiz.getDuration()+ " minutes </td>"
                                     + "<td>" + _quiz.getAttemptTime()+ "</td>"
-                                    + "<td>" + "<a href=\"QuizController?action=startquiz&stuID=" + userInfo.getId() + "&quizID=" + _quiz.getQID()+ "\">Start</a>" 
-                                    + "<a href=\"QuizController?action=quizresult&stuID="+ userInfo.getId() +"&quizID="+ _quiz.getQID()+"\">result</a>" + "</td>"
+                                    + "<td>" + "<a href=\"QuizController?action=startquiz&stuID=" + userInfo.getId() + "&quizID=" + _quiz.getQID()+ "\">Start | </a>" 
+                                    + "<a href=\"QuizController?action=stu_quizresult&stuID="+ userInfo.getId() +"&quizID="+ _quiz.getQID()+"\">result</a>" + "</td>"
                                     + "</tr>");
                         }
 //                        
@@ -54,7 +54,8 @@
                 
                 </tbody>
             </table>
-
+                    
+                    <a href="student_main.jsp">main page</a>
         </div>
 
         <jsp:include page="footer.jsp" />

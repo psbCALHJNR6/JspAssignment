@@ -194,7 +194,7 @@ public class ResultDB
         return _rBean;
     }
     
-    public int[] queryQuizMarkByID(int id)
+    public int[] queryQuizMarkByID(int id) throws ArithmeticException
     {
         Connection connect = null;
         PreparedStatement pStmt = null;
@@ -229,6 +229,7 @@ public class ResultDB
                 rowCount++;
             }
             average = totalMark / rowCount;
+            
             marks[0] = highest;
             marks[1] = lowest;
             marks[2] = average;
@@ -244,6 +245,9 @@ public class ResultDB
                 ex = ex.getNextException();
             }
         }
+        catch(ArithmeticException ex){
+            
+        }
         catch (IOException ex)
         {
             ex.printStackTrace();
@@ -251,7 +255,7 @@ public class ResultDB
         return marks;
     }
 
-    public int[] queryStudentQuizMark(int quizID, int stuID)
+    public int[] queryStudentQuizMark(int quizID, int stuID) throws ArithmeticException
     {
         Connection connect = null;
         PreparedStatement pStmt = null;
@@ -301,6 +305,9 @@ public class ResultDB
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
+        }
+        catch(ArithmeticException ex){
+            
         }
         catch (IOException ex)
         {

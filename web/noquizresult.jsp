@@ -1,27 +1,23 @@
 <%-- 
-    Document   : student_quizresult
-    Created on : Nov 29, 2017, 9:13:01 PM
+    Document   : noquizresult
+    Created on : Nov 30, 2017, 12:17:07 AM
     Author     : psb
 --%>
- <%@ page errorPage="noquizresult.jsp" %>
+<%@ page isErrorPage="true"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Quiz Result</title>
+        <title>Result not found</title>
         <jsp:include page="import.jsp" />
     </head>
     <body>
-
         <jsp:include page="navbar.jsp" />
         <div class="container">
-            <h1>Hello World!</h1>
-            <%= request.getAttribute("highest")%>
-            <%= request.getAttribute("lowest")%>
-            <%= request.getAttribute("average")%>
-            <%= request.getAttribute("canAttemptTime")%>
+            <h1>No Result Found</h1>
         </div>
+        <a href="QuizController?action=stuquizlist">Quiz List</a>
         <jsp:include page="footer.jsp" />
     </body>
 </html>
