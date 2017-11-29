@@ -3,7 +3,7 @@
     Created on : Nov 20, 2017, 10:54:29 PM
     Author     : psb
 --%>
-
+<%@ taglib uri="/WEB-INF/tlds/ict.taglib.tld" prefix="ict"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,47 +17,18 @@
         <jsp:include page="navbar.jsp" />
 
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Hong Kong to Taiwan</a>
-                        </h4>
-                        <h5>$500</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                    </div>
-                    <div class="card-footer"> <small class="text-muted">&#9733; &#9734; &#9734; &#9734; &#9734; HK Express</small> 
-                        <button class="btn btn-success btn-add float-right">Add</button></div>
-
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Hong Kong to Taiwan</a>
-                        </h4>
-                        <h5>$500</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                    </div>
-                    <div class="card-footer"> <small class="text-muted">&#9733; &#9734; &#9734; &#9734; &#9734; HK Express</small> 
-                        <button class="btn btn-success btn-add float-right">Add</button></div>
-
-                </div>
-            </div>
-                <!--<ict:link href="" desc="" />-->
-            </div>
+           
 
             <ul>
-                <li><h1><a href="CourseController?action=list">Existing courses</a></h1></li>
-                <li><h1><a href="teacher_createcourse.jsp">Create Course</a></h1></li>
-                <li><h1><a href="QuizController?action=list">Existing quiz</a></h1></li>
-                <li><h1><a href="QuizController?action=createForm">Create Quiz</a></h1></li>
-                <li><h1><a href="MaterialController?action=mlist">Materials</a></h1></li>
+                
+                
+                <ict:tag1 link="CourseController?action=list" desc="Existing courses"/>
+                <ict:tag1 link="teacher_createcourse.jsp" desc="Create Course"/>
+                <ict:tag1 link="QuizController?action=list" desc="Existing quiz"/>
+                <ict:tag1 link="QuizController?action=createForm" desc="Create Quiz"/>
+                <ict:tag1 link="MaterialController?action=mlist" desc="Materials"/>
             </ul>
-
+            
 
 
 

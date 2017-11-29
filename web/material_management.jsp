@@ -37,20 +37,7 @@
             window.location="MaterialController?action=mlist&iid="+v;
         }
     </script>
-        <div class="container">
-
-            <ul>
-                <li><h1><a href="">Existing courses</a></h1></li>
-                <li><h1><a href="">Create Course</a></h1></li>
-                <li><h1><a href="">Existing quiz</a></h1></li>
-                <li><h1><a href="">Create Quiz</a></h1></li>
-                <li><h1><a href="">Material Management</a></h1></li>
-            </ul>
-
-
-
-
-        </div>
+        
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
 
 <div class="container">

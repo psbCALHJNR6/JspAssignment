@@ -3,7 +3,7 @@
     Created on : Nov 19, 2017, 8:56:52 PM
     Author     : psb
 --%>
-
+<%@ taglib uri="/WEB-INF/tlds/ict.taglib.tld" prefix="ict"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,8 +20,10 @@
         <div class="container">
             
             <ul>
-                <li><h1><a href="QuizController?action=stuquizlist&id=<%= userInfo.getId() %>">My Quiz</a></h1></li>
-                 <li><h1><a href="CourseController?action=courses&id=<%= userInfo.getId() %>">Courses</a></h1></li>
+                
+             
+            <ict:tag1 link="QuizController?action=stuquizlist&id=${userInfo.getId()}" desc="My Quiz"/>
+                <ict:tag1 link="CourseController?action=courses&id=${userInfo.getId()}" desc="Courses"/>
             </ul>
             
         </div>
