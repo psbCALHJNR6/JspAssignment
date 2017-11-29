@@ -52,9 +52,7 @@
                         }
                     %>
         </table>
-        <%
-        out.print(questionList.size());
-        %>
+        <a href="QuestionController?action=create" style="float: right;">+ Add a new question</a>
         </div>
          <jsp:include page="footer.jsp" />
     </body>

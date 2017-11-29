@@ -4,6 +4,7 @@
     Author     : hong
 --%>
 
+<%@page import="ict.bean.QuizBean"%>
 <%@page import="ict.bean.QuestionBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,6 +15,7 @@
                 <jsp:include page="import.jsp" />
 
         <jsp:useBean id="qBean" scope="request" class="ict.bean.QuestionBean" />
+        <jsp:useBean id="quizList" scope="request" class="java.util.ArrayList<ict.bean.QuizBean>" />
    
     </head>
     
@@ -46,7 +48,18 @@
                      <option value="B">B</option>
                      <option value="C">C</option>
                  </select>
-                 </div>
+                  </div>
+                 <div class="form-group">
+                     Quiz: 
+                 <select name="quiz" id="quiz">
+                     <%
+                     for(int i=0;i<quizList.size();i++){
+                         QuizBean _qBean = quizList.get(i);
+                         out.print("<option value=\""+_qBean.getQID()+"\">"+_qBean.getDescription()+"</option>");
+                     }    
+                     %>
+                 </select>
+                </div>
                  <input type="submit" value="Submit">
                  <input type="reset" value="Reset">
              </form>
@@ -58,6 +71,9 @@
 <script type="text/javascript">
     $(document).ready(function(){
         var corrAns = "<%=qBean.getAns()%>";
+        var quiz = "<%=qBean.getQID()%>"
         $("select#corrAns").val(corrAns);
+        $("select#quiz").val(quiz);
+        
     })
 </script>

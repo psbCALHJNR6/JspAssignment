@@ -56,9 +56,6 @@ public class QuestionDB {
             pre.setString(4, optB);
             pre.setString(5, optC);
             pre.setString(6, ans);
-       
-
-
             int rowCount = pre.executeUpdate();
 
             if (rowCount >= 1)
@@ -86,7 +83,7 @@ public class QuestionDB {
             
             return success;
         }
-        public boolean updateQuestion(String questID,String question,String optA,String optB,String optC,String corrAns){
+        public boolean updateQuestion(String questID,String question,String optA,String optB,String optC,String corrAns,String quiz){
             boolean isSuccess = false;
             Connection cnt = null;
             PreparedStatement pre = null;
@@ -94,7 +91,7 @@ public class QuestionDB {
             try{
                 cnt = getConnection();
 
-                String preQueString = "UPDATE question SET question=?,optA=?,optB=?,optC=?,ans=? WHERE questID=?";
+                String preQueString = "UPDATE question SET question=?,optA=?,optB=?,optC=?,ans=?,QID=? WHERE questID=?";
 
                 pre=cnt.prepareStatement(preQueString);
                 pre.setString(1,question);
@@ -102,7 +99,8 @@ public class QuestionDB {
                 pre.setString(3,optB);
                 pre.setString(4,optC);
                 pre.setString(5,corrAns);
-                pre.setInt(6,Integer.parseInt(questID));
+                pre.setString(6,quiz);
+                pre.setInt(7,Integer.parseInt(questID));
                 
                 int rowCount= pre.executeUpdate();
                 if(rowCount==1)

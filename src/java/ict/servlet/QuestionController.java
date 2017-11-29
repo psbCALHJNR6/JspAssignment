@@ -83,7 +83,9 @@ public class QuestionController extends HttpServlet {
            String optB = req.getParameter("optB");
            String optC = req.getParameter("optC");
            String corrAns = req.getParameter("corrAns");
-           boolean isSuccess = db.updateQuestion(questid,question,optA,optB,optC,corrAns); 
+           String quiz = req.getParameter("quiz");
+           
+           boolean isSuccess = db.updateQuestion(questid,question,optA,optB,optC,corrAns,quiz); 
            
           out.print("<script type='text/javascript'>alert('Update successful');</script>");
            
@@ -110,12 +112,15 @@ public class QuestionController extends HttpServlet {
         protected void showOneQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
                         PrintWriter out = res.getWriter();
             QuestionBean qBean = new QuestionBean();
-            
+            ArrayList<QuizBean> _quizBean = new ArrayList<QuizBean>();
             String targetURL = "question_viewone.jsp";
             
+            _quizBean = qdb.getAllQuiz();
             String id = req.getParameter("id");  
             qBean = db.getOneQuestion(id);
+            req.setAttribute("quizList",_quizBean);
             req.setAttribute("qBean", qBean);
+            
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/" + targetURL);
            rd.forward(req, res);
@@ -125,7 +130,7 @@ public class QuestionController extends HttpServlet {
         protected void showAllQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
             ArrayList<QuestionBean> _question = new ArrayList<QuestionBean>();
             String targetURL = "question_view.jsp";
-            _question = db.getAllQuestion("3");
+            _question = db.getAllQuestion(req.getParameter("id"));
             req.setAttribute("questionList",_question);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/" + targetURL);
