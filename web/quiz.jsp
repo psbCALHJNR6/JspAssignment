@@ -83,10 +83,12 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <form action="QuizController?" method="post" id="examForm">
+                            <form action="QuizController" method="post" id="examForm">
                                 <input type="hidden" name="action" value="submitquiz">
                                 <input type="hidden" name="quizID" value="<%= quizDetail.getQID() %>">
                                 <input type="hidden" name="stuID" value="<%= userInfo.getId()  %>">
+                                <input type="hidden" name="qNum" value="<%= quizQuestions.size()  %>">
+                                
                                 <div class="tab-content">
                                     <!-- question content -->
                                     <input type="hidden" name="usedTime" id="usedTime" value="00:00:00">

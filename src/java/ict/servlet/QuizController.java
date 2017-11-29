@@ -12,6 +12,7 @@ import ict.bean.UserInfo;
 import ict.db.CourseDB;
 import ict.db.QuizDB;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -94,7 +95,7 @@ public class QuizController extends HttpServlet
 
     protected void createQuiz(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        
+
         int duration = Integer.parseInt(request.getParameter("duration"));
         int attemptTime = Integer.parseInt(request.getParameter("attemptime"));
         String startDate = request.getParameter("startdate");
@@ -103,10 +104,12 @@ public class QuizController extends HttpServlet
         String description = request.getParameter("description");
 
         boolean isSucces = db.addQuiz(duration, attemptTime, startDate, endDate, cid, description);
-
+        
+        PrintWriter out = response.getWriter();
+        out.print("<script type='text/javascript'>alert('Create successful');</script>");
         response.sendRedirect("QuizController?action=list");
     }
-    
+
     protected void showAllQuiz(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         ArrayList<QuizBean> _quizs = new ArrayList<QuizBean>();
@@ -119,7 +122,7 @@ public class QuizController extends HttpServlet
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
-    
+
     protected void createForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         ArrayList<CourseBean> _courses = new ArrayList<CourseBean>();
@@ -127,12 +130,12 @@ public class QuizController extends HttpServlet
         String targetURL = "";
         request.setAttribute("courselist", _courses);
         targetURL = "teacher_createquiz.jsp";
-        
+
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
-    
+
     protected void studentQuizList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         ArrayList<QuizBean> _quizs = new ArrayList<QuizBean>();
@@ -140,41 +143,41 @@ public class QuizController extends HttpServlet
         _quizs = db.getStudentQuiz(Integer.parseInt(request.getParameter("id")));
         request.setAttribute("quizlist", _quizs);
         targetURL = "student_quizlist.jsp";
-        
+
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
-    
+
     protected void editForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        
+
         int id = Integer.parseInt(req.getParameter("id"));
-        
+
         QuizBean _quizBean = new QuizBean();
         _quizBean = db.queryQuizByID(id);
-        
-         ArrayList<CourseBean> _courses = new ArrayList<CourseBean>();
+
+        ArrayList<CourseBean> _courses = new ArrayList<CourseBean>();
         _courses = cdb.getAllCourse();
-        
+
         String targetURL = "";
         req.setAttribute("quizDetail", _quizBean);
         req.setAttribute("courselist", _courses);
         //get quiz student..........
         ArrayList<UserInfo> quizStudent = db.getQuizStudent(id);
         req.setAttribute("quizstudent", quizStudent);
-        
+
         ArrayList<UserInfo> nQuizStudent = db.queryUserByRole("STUDENT");
         req.setAttribute("nQuizstudent", nQuizStudent);
-        
+
         targetURL = "teacher_editquiz.jsp";
 
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(req, resp);
-        
+
     }
-    
+
     protected void editQuiz(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException
     {
         int id = Integer.parseInt(request.getParameter("qid"));
@@ -184,58 +187,111 @@ public class QuizController extends HttpServlet
         String endDate = request.getParameter("enddate");
         int cid = Integer.parseInt(request.getParameter("cid"));
         String description = request.getParameter("description");
-        String [] _stuIDs = request.getParameterValues("student");
-        
+        String[] _stuIDs = request.getParameterValues("student");
+
         db.deleteAllStudent(id);
-        if(_stuIDs!=null){
-            
-            for(int i = 0; i < _stuIDs.length; i++){
+        if (_stuIDs != null)
+        {
+
+            for (int i = 0; i < _stuIDs.length; i++)
+            {
                 int stuID = Integer.parseInt(_stuIDs[i]);
-                
-                if(!db.isQuizStudent(id, stuID)){
+
+                if (!db.isQuizStudent(id, stuID))
+                {
                     db.addQuizStudent(id, stuID);
                 }
             }
         }
-        
+
         boolean isSuccess = false;
-        
+
         isSuccess = db.updateQuiz(id, duration, attemptTime, startDate, endDate, cid, description);
-        
-        if(isSuccess){
-            resp.sendRedirect("QuizController?action=editForm&id="+id);
+
+        if (isSuccess)
+        {
+            PrintWriter out = resp.getWriter();
+        out.print("<script type='text/javascript'>alert('Update successful');</script>");
+            resp.sendRedirect("QuizController?action=editForm&id=" + id);
         }
     }
-    
+
     private void startQuiz(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         int quizID = Integer.parseInt(req.getParameter("quizID"));
         int stuID = Integer.parseInt(req.getParameter("stuID"));
-        
+
         ArrayList<QuestionBean> _questions = new ArrayList<QuestionBean>();
         _questions = db.getQuizQuestions(quizID);
-        
+
         QuizBean _quizBean = new QuizBean();
         _quizBean = db.queryQuizByID(quizID);
-        
+
         String targetURL = "";
         req.setAttribute("quizDetail", _quizBean);
         req.setAttribute("quizQuestions", _questions);
-        
-        
+
         targetURL = "quiz.jsp";
 
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(req, resp);
     }
-    
-     private void submitQuiz(HttpServletRequest request, HttpServletResponse response)
+
+    private void submitQuiz(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int stuID = Integer.parseInt(request.getParameter("stuID"));
+        int quizID = Integer.parseInt(request.getParameter("quizID"));
+        int qNum = Integer.parseInt(request.getParameter("qNum"));
+        int qMark = 100 / qNum;
+        int totalMark = 0;
+        String stuAns = "";
+        String correctAns = "";
+        
+        for (int i = 1; i <= qNum; i++)
+        {
+            stuAns = request.getParameter("answer" + i);
+            correctAns = request.getParameter("correctAnswer" + i);
+            if(stuAns == null || correctAns == null){
+                continue;
+            }
+            if (stuAns.equals(correctAns))
+            {
+                totalMark += qMark;
+            }
+
+        }
+        
+        QuizBean qBean = db.queryQuizByID(quizID);
+        
+        if(db.attemptTime(quizID, stuID) < qBean.getAttemptTime()){
+            db.addQuizRecord(quizID, stuID, totalMark);
+        }
+        
+        System.out.print(stuID);
+        System.out.print(totalMark);
+//        
+        int [] marks = db.queryQuizMarkByID(quizID);
+        System.out.println(marks[0]);
+        System.out.println(marks[1]);
+        System.out.println(marks[2]);
+        
+        request.setAttribute("highest", marks[0]);
+        request.setAttribute("lowest", marks[1]);
+        request.setAttribute("average", marks[2]);
+        request.setAttribute("canAttemptTime", qBean.getAttemptTime() - db.attemptTime(quizID, stuID));
+        
+        String targetURL = "";
+
+        targetURL = "student_quizresult.jsp";
+
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/" + targetURL);
+        rd.forward(request, response);
+        
+        
+
     }
-    
-    
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -278,9 +334,5 @@ public class QuizController extends HttpServlet
     {
         return "Short description";
     }// </editor-fold>
-
-   
-
-    
 
 }

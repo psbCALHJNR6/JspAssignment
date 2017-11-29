@@ -49,24 +49,26 @@ public class QuizDB
         return DriverManager.getConnection(dburl, dbUser, dbPassword);
 
     }
-    
+
     public ArrayList<QuizBean> getAllQuiz()
     {
         Connection connect = null;
         PreparedStatement pStmt = null;
         QuizBean qBean = null;
         ArrayList<QuizBean> _qBean = new ArrayList<QuizBean>();
-        try {
+        try
+        {
             connect = getConnection();
             String preQueryStatement = "SELECT * FROM quiz";
             pStmt = connect.prepareStatement(preQueryStatement);
 
             ResultSet rs = null;
             rs = pStmt.executeQuery();
-            while (rs.next()) {
+            while (rs.next())
+            {
                 qBean = new QuizBean();
                 // set the record detail to the user bean
-                
+
                 qBean.setQID(rs.getInt("QID"));
                 qBean.setDuration(rs.getInt("duration"));
                 qBean.setStartDate(rs.getString("startDate"));
@@ -74,40 +76,47 @@ public class QuizDB
                 qBean.setAttemptTime(rs.getInt("attemptTime"));
                 qBean.setCid(rs.getInt("cid"));
                 qBean.setDescription(rs.getString("description"));
-                
+
                 _qBean.add(qBean);
             }
             pStmt.close();
             connect.close();
-        } catch (SQLException ex) {
-            while (ex != null) {
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
         return _qBean;
     }
-    
+
     public ArrayList<QuizBean> getStudentQuiz(int stuID)
     {
         Connection connect = null;
         PreparedStatement pStmt = null;
         QuizBean qBean = null;
         ArrayList<QuizBean> _qBean = new ArrayList<QuizBean>();
-        try {
+        try
+        {
             connect = getConnection();
             String preQueryStatement = "SELECT quiz.* FROM quizregistration, quiz where quizregistration.qid = quiz.QID and uid = ?";
             pStmt = connect.prepareStatement(preQueryStatement);
             pStmt.setInt(1, stuID);
-            
+
             ResultSet rs = null;
             rs = pStmt.executeQuery();
-            while (rs.next()) {
+            while (rs.next())
+            {
                 qBean = new QuizBean();
                 // set the record detail to the user bean
-                
+
                 qBean.setQID(rs.getInt("QID"));
                 qBean.setDuration(rs.getInt("duration"));
                 qBean.setStartDate(rs.getString("startDate"));
@@ -115,27 +124,34 @@ public class QuizDB
                 qBean.setAttemptTime(rs.getInt("attemptTime"));
                 qBean.setCid(rs.getInt("cid"));
                 qBean.setDescription(rs.getString("description"));
-                
+
                 _qBean.add(qBean);
             }
             pStmt.close();
             connect.close();
-        } catch (SQLException ex) {
-            while (ex != null) {
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
         return _qBean;
     }
-    
-    public QuizBean queryQuizByID(int id) {
+
+    public QuizBean queryQuizByID(int id)
+    {
         Connection connect = null;
         PreparedStatement pStmt = null;
         QuizBean qBean = null;
-        try {
+        try
+        {
             connect = getConnection();
             String preQueryStatement = "SELECT * FROM quiz WHERE QID =?";
             pStmt = connect.prepareStatement(preQueryStatement);
@@ -143,7 +159,8 @@ public class QuizDB
             ResultSet rs = null;
             rs = pStmt.executeQuery();
 
-            if (rs.next()) {
+            if (rs.next())
+            {
                 qBean = new QuizBean();
                 // set the record detail to the customer bean
                 qBean.setQID(rs.getInt("QID"));
@@ -156,17 +173,22 @@ public class QuizDB
             }
             pStmt.close();
             connect.close();
-        } catch (SQLException ex) {
-            while (ex != null) {
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
         return qBean;
     }
-    
+
     public boolean addQuiz(int duration, int attemptTime, String startDate, String endDate, int cid, String description)
     {
         Connection cnnct = null;
@@ -208,13 +230,15 @@ public class QuizDB
         }
         return isSuccess;
     }
-    
-    public boolean updateQuiz(int id, int duration, int attemptTime, String startDate, String endDate, int cid, String description) {
+
+    public boolean updateQuiz(int id, int duration, int attemptTime, String startDate, String endDate, int cid, String description)
+    {
         Connection connect = null;
         PreparedStatement pStmt = null;
         boolean isSuccess = false;
 
-        try {            
+        try
+        {
             connect = getConnection();
             String preQueryStatement = "UPDATE quiz set duration = ?, attemptTime=?, startDate=?, endDate=?, cid=?, description=? WHERE QID =?";
             pStmt = connect.prepareStatement(preQueryStatement);
@@ -226,45 +250,54 @@ public class QuizDB
             pStmt.setInt(5, cid);
             pStmt.setString(6, description);
             pStmt.setInt(7, id);
-            
-            if (pStmt.executeUpdate() >= 1) {
+
+            if (pStmt.executeUpdate() >= 1)
+            {
                 isSuccess = true;
             }
 
             pStmt.close();
             connect.close();
-        } catch (SQLException ex) {
-            while (ex != null) {
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
         return isSuccess;
     }
-    
+
     public ArrayList<UserInfo> getQuizStudent(int quizID)
     {
         Connection connect = null;
         PreparedStatement pStmt = null;
         UserInfo uBean = null;
         ArrayList<UserInfo> _uBean = new ArrayList<UserInfo>();
-        try {
+        try
+        {
             connect = getConnection();
             String preQueryStatement = "SELECT * FROM quizregistration where qid = ?";
             pStmt = connect.prepareStatement(preQueryStatement);
             pStmt.setInt(1, quizID);
-            
+
             ResultSet rs = null;
             rs = pStmt.executeQuery();
-            while (rs.next()) {
+            while (rs.next())
+            {
                 preQueryStatement = "SELECT * FROM user where id = ?";
                 pStmt = connect.prepareStatement(preQueryStatement);
                 pStmt.setInt(1, rs.getInt("uid"));
                 ResultSet rs2 = null;
                 rs2 = pStmt.executeQuery();
-                while(rs2.next()){
+                while (rs2.next())
+                {
                     uBean = new UserInfo();
                     // set the record detail to the user bean
                     uBean.setId(rs2.getInt("id"));
@@ -277,17 +310,22 @@ public class QuizDB
             }
             pStmt.close();
             connect.close();
-        } catch (SQLException ex) {
-            while (ex != null) {
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
         return _uBean;
     }
-    
+
     public boolean isQuizStudent(int quizID, int stuID)
     {
         Connection cnnct = null;
@@ -327,7 +365,7 @@ public class QuizDB
         }
         return isValid;
     }
-    
+
     public boolean addQuizStudent(int quizID, int stuID)
     {
         Connection cnnct = null;
@@ -365,7 +403,7 @@ public class QuizDB
         }
         return isSuccess;
     }
-    
+
     public ArrayList<UserInfo> getNonQuizStudent(int quizID)
     {
         Connection connect = null;
@@ -373,22 +411,25 @@ public class QuizDB
         Statement stmt = null;
         UserInfo uBean = null;
         ArrayList<UserInfo> _uBean = new ArrayList<UserInfo>();
-        try {
+        try
+        {
             connect = getConnection();
             stmt = connect.createStatement();
             String preQueryStatement = "SELECT * FROM quizregistration where qid = ?";
             pStmt = connect.prepareStatement(preQueryStatement);
             pStmt.setInt(1, quizID);
-            
+
             ResultSet rs = null;
             rs = pStmt.executeQuery();
-            while (rs.next()) {
+            while (rs.next())
+            {
                 preQueryStatement = "SELECT * FROM user where id = ?";
                 pStmt = connect.prepareStatement(preQueryStatement);
                 pStmt.setInt(1, rs.getInt("uid"));
                 ResultSet rs2 = null;
                 rs2 = pStmt.executeQuery();
-                while(rs2.next()){
+                while (rs2.next())
+                {
                     uBean = new UserInfo();
                     // set the record detail to the user bean
                     uBean.setId(rs2.getInt("id"));
@@ -401,53 +442,68 @@ public class QuizDB
             }
             pStmt.close();
             connect.close();
-        } catch (SQLException ex) {
-            while (ex != null) {
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
         return _uBean;
     }
-    
-    public boolean deleteAllStudent(int quizID) {
+
+    public boolean deleteAllStudent(int quizID)
+    {
         Connection connect = null;
         PreparedStatement pStmt = null;
         boolean isSuccess = false;
 
-        try {
+        try
+        {
             connect = getConnection();
             String preQueryStatement = "DELETE FROM quizregistration WHERE qid =?";
             pStmt = connect.prepareStatement(preQueryStatement);
 
             pStmt.setInt(1, quizID);
 
-            if (pStmt.execute()) {
+            if (pStmt.execute())
+            {
                 isSuccess = true;
             }
 
             pStmt.close();
             connect.close();
-        } catch (SQLException ex) {
-            while (ex != null) {
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
         return isSuccess;
     }
-    
-    public ArrayList<UserInfo> queryUserByRole(String role) {
+
+    public ArrayList<UserInfo> queryUserByRole(String role)
+    {
         Connection connect = null;
         PreparedStatement pStmt = null;
         UserInfo uBean = null;
         ArrayList<UserInfo> _uBean = new ArrayList<UserInfo>();
-        
-        try {
+
+        try
+        {
             connect = getConnection();
             String preQueryStatement = "SELECT * FROM user WHERE role =?";
             pStmt = connect.prepareStatement(preQueryStatement);
@@ -455,7 +511,8 @@ public class QuizDB
             ResultSet rs = null;
             rs = pStmt.executeQuery();
 
-            if (rs.next()) {
+            if (rs.next())
+            {
                 uBean = new UserInfo();
                 // set the record detail to the customer bean
                 uBean.setId(rs.getInt("id"));
@@ -467,34 +524,41 @@ public class QuizDB
             }
             pStmt.close();
             connect.close();
-        } catch (SQLException ex) {
-            while (ex != null) {
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
         return _uBean;
     }
-    
+
     public ArrayList<QuestionBean> getQuizQuestions(int quizID)
     {
         Connection connect = null;
         PreparedStatement pStmt = null;
         QuestionBean qBean = null;
         ArrayList<QuestionBean> _qBean = new ArrayList<QuestionBean>();
-        try {
+        try
+        {
             connect = getConnection();
             String preQueryStatement = "SELECT * FROM question where QID = ?";
             pStmt = connect.prepareStatement(preQueryStatement);
             pStmt.setInt(1, quizID);
-            
+
             ResultSet rs = null;
             rs = pStmt.executeQuery();
-            while (rs.next()) {
+            while (rs.next())
+            {
                 qBean = new QuestionBean();
-                
+
                 qBean.setQuestID(rs.getString("questID"));
                 qBean.setQID(rs.getInt("QID"));
                 qBean.setOptA(rs.getString("optA"));
@@ -502,22 +566,224 @@ public class QuizDB
                 qBean.setOptC(rs.getString("optC"));
                 qBean.setQuestion(rs.getString("question"));
                 qBean.setAns(rs.getString("ans"));
-                
+
                 _qBean.add(qBean);
             }
             pStmt.close();
             connect.close();
-        } catch (SQLException ex) {
-            while (ex != null) {
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
                 ex.printStackTrace();
                 ex = ex.getNextException();
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
         return _qBean;
     }
-    
-    
+
+    public boolean addQuizRecord(int quizID, int stuID, int score)
+    {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+
+        try
+        {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO result (qid, uid, score) VALUES (?,?,?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, quizID);
+            pStmnt.setInt(2, stuID);
+            pStmnt.setInt(3, score);
+
+            int rowCount = pStmnt.executeUpdate();
+
+            if (rowCount >= 1)
+            {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+
+    public int[] queryQuizMarkByID(int id)
+    {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        QuizBean qBean = null;
+
+        int[] marks = new int[3];
+        try
+        {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM result WHERE qid =?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, id);
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+            int rowCount = 0;
+            int totalMark = 0;
+            int highest = 0;
+            int average = 0;
+            int lowest = 100;
+
+            while (rs.next())
+            {
+                if (rs.getInt("score") > highest)
+                {
+                    highest = rs.getInt("score");
+                }
+                if (rs.getInt("score") < lowest)
+                {
+                    lowest = rs.getInt("score");
+                }
+                totalMark += rs.getInt("score");
+                rowCount++;
+            }
+            average = totalMark / rowCount;
+            marks[0] = highest;
+            marks[1] = lowest;
+            marks[2] = average;
+
+            pStmt.close();
+            connect.close();
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        return marks;
+    }
+
+    public int[] queryStudentQuizMark(int quizID, int stuID)
+    {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        QuizBean qBean = null;
+
+        int[] marks = new int[3];
+        try
+        {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM result WHERE qid =? and uid = ?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, quizID);
+            pStmt.setInt(2, stuID);
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+            int rowCount = 0;
+            int totalMark = 0;
+            int highest = 0;
+            int average = 0;
+            int lowest = 100;
+
+            while (rs.next())
+            {
+                if (rs.getInt("score") > highest)
+                {
+                    highest = rs.getInt("score");
+                }
+                if (rs.getInt("score") < lowest)
+                {
+                    lowest = rs.getInt("score");
+                }
+                totalMark += rs.getInt("score");
+                rowCount++;
+            }
+            average = totalMark / rowCount;
+            marks[0] = highest;
+            marks[1] = lowest;
+            marks[2] = average;
+
+            pStmt.close();
+            connect.close();
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        return marks;
+    }
+
+    public int attemptTime(int quizID, int stuID)
+    {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        QuizBean qBean = null;
+        int rowCount = 0;
+        int totalMark = 0;
+        int highest = 0;
+        int average = 0;
+        int lowest = 100;
+
+        int[] marks = new int[3];
+        try
+        {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM result WHERE qid =? and uid = ?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, quizID);
+            pStmt.setInt(2, stuID);
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+
+            while (rs.next())
+            {
+                rowCount++;
+            }
+
+            pStmt.close();
+            connect.close();
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        return rowCount;
+    }
 
 }

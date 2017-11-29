@@ -30,8 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 })
 public class CourseController extends HttpServlet
 {
+
     CourseDB db;
     MaterialDB db2;
+
     @Override
     public void init() throws ServletException
     {
@@ -39,7 +41,7 @@ public class CourseController extends HttpServlet
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new CourseDB(dbUrl, dbUser, dbPassword);
-        db2= new MaterialDB(dbUrl, dbUser, dbPassword);
+        db2 = new MaterialDB(dbUrl, dbUser, dbPassword);
     }
 
     /**
@@ -51,73 +53,83 @@ public class CourseController extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter())
         {
             String action = request.getParameter("action");
-            if(action.equals("create")){
+            if (action.equals("create"))
+            {
                 createCourse(request, response);
-            }else if(action.equals("list")){
+            }
+            else if (action.equals("list"))
+            {
                 showAllCourse(request, response);
-            }else if(action.equals("coursedetail")){
+            }
+            else if (action.equals("coursedetail"))
+            {
                 courseDetail(request, response);
             }
-            else if(action.equals("courses")){
-                
+            else if (action.equals("courses"))
+            {
+
                 courseForStudent(request, response);
             }
         }
     }
-    
-    protected void createCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+    protected void createCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
         String username = request.getParameter("coursename");
 
         boolean isSucces = db.addCourse(username);
-        
-        response.sendRedirect("CourseController?action=list");	
+        PrintWriter out = response.getWriter();
+        out.print("<script type='text/javascript'>alert('Create successful');</script>");
+        response.sendRedirect("CourseController?action=list");
     }
-    protected void courseForStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        int id=Integer.parseInt(request.getParameter("id"));
+
+    protected void courseForStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        int id = Integer.parseInt(request.getParameter("id"));
         ArrayList<CourseBean> _courses = new ArrayList<CourseBean>();
-         _courses=db.getCourseforStu(id);
-         ArrayList<MaterialBean> _mate = new ArrayList<MaterialBean>();
-        request.setAttribute("courses",_courses);
-        _mate=db2.showAllMaterial();
-        request.setAttribute("mate",_mate);
+        _courses = db.getCourseforStu(id);
+        ArrayList<MaterialBean> _mate = new ArrayList<MaterialBean>();
+        request.setAttribute("courses", _courses);
+        _mate = db2.showAllMaterial();
+        request.setAttribute("mate", _mate);
         //response.sendRedirect("student_courses.jsp");
-         RequestDispatcher rd;
+        RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + "student_courses.jsp");
         rd.forward(request, response);
     }
-    protected void showAllCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-         ArrayList<CourseBean> _courses = new ArrayList<CourseBean>();
+
+    protected void showAllCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        ArrayList<CourseBean> _courses = new ArrayList<CourseBean>();
         String targetURL = "";
         _courses = db.getAllCourse();
         request.setAttribute("courselist", _courses);
         targetURL = "teacher_courselist.jsp";
-        
+
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
-    
-    protected void courseDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+    protected void courseDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
         ArrayList<UserInfo> _students = new ArrayList<UserInfo>();
         String targetURL = "";
         _students = db.getAllCourseStu(Integer.parseInt(request.getParameter("courseID")));
         request.setAttribute("studentlist", _students);
         targetURL = "teacher_coursedetail.jsp";
-        
+
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
     }
-    
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
