@@ -32,6 +32,10 @@
           
             
         }
+        function search(){
+            var v=document.getElementById("course").value;
+            window.location="MaterialController?action=mlist&id="+v;
+        }
     </script>
         <div class="container">
 
@@ -64,7 +68,7 @@
                   </div>
                   <div class="col col-xs-6 text-right">
                       <div class="col-md-12 margin-bottom-30">
-    Select Course<select id="course" name="course"onchange="display(this.value,this.form);"> <%
+    Select Course<select id="course" name="course"> <%
                         for (int i = 0; i < courselist.size(); i++)
                         {
                             CourseBean _course = new CourseBean();
@@ -100,7 +104,10 @@
                         {
                             MaterialBean _mt = new MaterialBean();
                             _mt = matelist.get(i);
-                            out.print("<tr id='"+_mt.getCid()+"' class='t'><td align='center'><a class='btn btn-danger' href='MaterialController?action=delete&id="+_mt.getMid()+"&file="+_mt.getMateName()+"'><em class='fa fa-trash'></em></a></td>");
+                            if(request.getParameter("id")!=null){
+                                if(_mt.getCid()==Integer.parseInt(request.getParameter("id")))
+                                {
+                                     out.print("<tr id='"+_mt.getCid()+"' class='t'><td align='center'><a class='btn btn-danger' href='MaterialController?action=delete&id="+_mt.getMid()+"&file="+_mt.getMateName()+"'><em class='fa fa-trash'></em></a></td>");
                             
                             
                             out.print("<td class='hidden-xs'>"
@@ -112,6 +119,23 @@
                             else 
                                 out.print("<td>Restricted      <a href='MaterialController?action=change&status=1&id="+_mt.getMid()+"'>Show</a></td>");
                              out.print("</tr>");
+                                }
+                            }
+                            else{
+                                 out.print("<tr id='"+_mt.getCid()+"' class='t'><td align='center'><a class='btn btn-danger' href='MaterialController?action=delete&id="+_mt.getMid()+"&file="+_mt.getMateName()+"'><em class='fa fa-trash'></em></a></td>");
+                            
+                            
+                            out.print("<td class='hidden-xs'>"
+                                    +  _mt.getMateName() + "</td>");
+                            out.print("<td>"
+                                    +  _mt.getMateDesc() + "</td>");
+                            if(_mt.getVisibility()==1)
+                            out.print("<td>Available    <a href='MaterialController?action=change&status=0&id="+_mt.getMid()+"'>Hide</a></td>");
+                            else 
+                                out.print("<td>Restricted      <a href='MaterialController?action=change&status=1&id="+_mt.getMid()+"'>Show</a></td>");
+                             out.print("</tr>");
+                            }
+                           
                         }
                         %>
                              
@@ -143,7 +167,18 @@
 
 </div></div></div>
         <form action="MaterialController" method="POST" enctype="multipart/form-data">
-     
+            <div class="col-md-12 margin-bottom-30">
+    Select Course<select id="course" name="course"onchange="display(this.value,this.form);"> <%
+                        for (int i = 0; i < courselist.size(); i++)
+                        {
+                            CourseBean _course = new CourseBean();
+                            _course = courselist.get(i);
+                            out.print("<option value='"+_course.getCid()+"'>"
+                                    +  _course.getcName() + "</option>");
+                        }
+                        %></select>
+                        
+            </div>
         <div class="col-md-12 margin-bottom-30">
             Course ID:<input type="text" id="cid" name="cid"value="" readonly=readonly>
             <label for="exampleInputFile">File input</label>
