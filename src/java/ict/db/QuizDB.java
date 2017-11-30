@@ -7,6 +7,7 @@ package ict.db;
 
 import ict.bean.QuestionBean;
 import ict.bean.QuizBean;
+import ict.bean.ResultBean;
 import ict.bean.UserInfo;
 import java.io.IOException;
 import java.sql.Connection;
@@ -784,6 +785,48 @@ public class QuizDB
             ex.printStackTrace();
         }
         return rowCount;
+    }
+    
+    public ArrayList<ResultBean> getQuizScores(int quizID)
+    {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        ResultBean rBean = null;
+        ArrayList<ResultBean> _rBean = new ArrayList<ResultBean>();
+        try
+        {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM result where qid = ?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, quizID);
+
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+            while (rs.next())
+            {
+                rBean = new ResultBean();
+                rBean.setQid(rs.getInt("qid"));
+                rBean.setUid(rs.getInt("uid"));
+                rBean.setScore(rs.getInt("score"));
+
+                _rBean.add(rBean);
+            }
+            pStmt.close();
+            connect.close();
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        return _rBean;
     }
 
 }
