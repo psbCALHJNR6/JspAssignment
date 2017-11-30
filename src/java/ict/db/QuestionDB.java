@@ -47,7 +47,7 @@ public class QuestionDB {
             try
         {
             cnt = getConnection();
-            String preQueryStatement = "INSERT INTO question (question,optA, optB, optC,ans) VALUES (?,?,?,?,?)";
+            String preQueryStatement = "INSERT INTO question_pool (question,optA, optB, optC,ans) VALUES (?,?,?,?,?)";
             pre = cnt.prepareStatement(preQueryStatement);
             pre.setString(1, question);
            
@@ -80,6 +80,39 @@ public class QuestionDB {
                 e.printStackTrace();
             }  
            return isSuccess;
+        }
+        public QuestionBean getQuestionFromPool(String qid){
+            QuestionBean qBean =null;
+            Connection connect = null;
+            PreparedStatement pStmt = null;
+            try{
+                connect = getConnection();
+                String preQueString = "SELECT * FROM question_pool WHERE questID = ?;";
+                pStmt = connect.prepareStatement(preQueString);
+                pStmt.setString(1,qid);
+
+               
+                ResultSet rs = null;
+                rs=pStmt.executeQuery();
+                 
+               if(rs.next()) {
+                qBean = new QuestionBean();
+                qBean.setQuestID(rs.getString("questID"));
+                qBean.setOptA(rs.getString("optA"));
+                qBean.setOptB(rs.getString("optB"));
+                qBean.setOptC(rs.getString("optC"));
+                qBean.setQuestion(rs.getString("question"));
+                qBean.setAns(rs.getString("ans"));
+            }
+            pStmt.close();
+            connect.close();
+            connect.close();
+            }
+            
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            return qBean;
         }
         public boolean createQuestion(String question,String optA,String optB,String optC,String ans,String quizID){
             boolean success = false;
@@ -251,7 +284,7 @@ public class QuestionDB {
         return _qBean;
     }
         
-        public ArrayList<QuestionBean> getAllQuestion ()
+        public ArrayList<QuestionBean> getAllQuestionInPool ()
     {
         Connection connect = null;
         PreparedStatement pStmt = null;
@@ -259,7 +292,7 @@ public class QuestionDB {
         ArrayList<QuestionBean> _qBean = new ArrayList<QuestionBean>();
         try {
             connect = getConnection();
-            String preQueryStatement = "SELECT * FROM question ";
+            String preQueryStatement = "SELECT * FROM question_pool ";
             pStmt = connect.prepareStatement(preQueryStatement);
           
 
@@ -268,7 +301,7 @@ public class QuestionDB {
             while (rs.next()) {
                 qBean = new QuestionBean();
                 qBean.setQuestID(rs.getString("questID"));
-                qBean.setQID(rs.getInt("QID"));
+                
                 qBean.setOptA(rs.getString("optA"));
                 qBean.setOptB(rs.getString("optB"));
                 qBean.setOptC(rs.getString("optC"));

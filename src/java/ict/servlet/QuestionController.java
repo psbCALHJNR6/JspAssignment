@@ -70,12 +70,29 @@ public class QuestionController extends HttpServlet {
              
              else if(action.equals("stu_create")){
                  studentCreateQuestion(req,res);
-             }}
+             }
+             else if(action.equals("updateAssign"))
+                 updateAssign(req,res);
+        }
 
         
         
         
        
+        
+        protected void updateAssign(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
+            String [] allQ = req.getParameterValues("allQ");
+//            String quizid = req.getParameter("quizID");
+//            QuestionBean qBean;
+//            for(int i=0;i<allQ.length;i++){
+//                qBean = db.getQuestionFromPool(allQ[i]);
+//                db.createQuestion(qBean.getQuestion(), qBean.getOptA(), qBean.getOptB(), qBean.getOptC(), qBean.getAns(), quizid);
+//            }
+            PrintWriter out = res.getWriter();
+            out.print(db.getQuestionFromPool(allQ[0]).getQuestion());
+            
+        }
+        
         
         protected void deleteQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
             String id = req.getParameter("id");
@@ -177,7 +194,7 @@ public class QuestionController extends HttpServlet {
          protected void assignQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
                 ArrayList<QuestionBean> _question = new ArrayList<QuestionBean>();
                 String targetURL="question_assign.jsp";
-                _question = db.getAllQuestion();
+                _question = db.getAllQuestionInPool();
                 req.setAttribute("questionList",_question);
                  RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/" + targetURL);

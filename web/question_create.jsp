@@ -11,7 +11,7 @@
     </head>
     <body>
         <jsp:include page="navbar.jsp" />
-        <jsp:useBean id="quizList" scope="request" class="java.util.ArrayList<ict.bean.QuizBean>" />
+       
         <div class="container">
             
         <form action="QuestionController" method="post">
@@ -29,7 +29,7 @@
                 <option value="C">C</option>
             </select>
             
-            <label for="quiz">Quiz : </label>
+
             <br>
             <input type="submit" value="Submit" class="form-control" style="cursor:pointer;">
             <br>

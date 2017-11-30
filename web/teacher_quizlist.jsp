@@ -48,15 +48,13 @@
                                     +"<td>"+"<a href=\"QuestionController?action=createForm\">Create new Quiz</a><br />"
 
                                     +"<a href=\"QuestionController?action=list&id="+_quiz.getQID()+"\">View all questions</a><br />"
-                                    +""
-
-                                    +"<a href=\"QuizController?action=quizresult&quizID="+_quiz.getQID()+"\">View quiz result</a>"
-
+                                    +"<a href=\"QuizController?action=quizresult&quizID="+_quiz.getQID()+"\">View quiz result</a><br />"
+                                    +"<a href=\"QuestionController?action=assign&quizID="+_quiz.getQID()+"\">Assign question</a>"
                                     +"</td>"
                                     + "</tr>");
                         }
                     %>
-                    
+                    <!--QuestionController?action=assign-->
                 </tbody>
             </table>
                     
