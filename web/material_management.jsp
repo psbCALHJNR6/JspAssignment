@@ -152,7 +152,7 @@
               </div>
             </div>
 
-</div></div></div>
+</div></div>
         <form action="MaterialController" method="POST" enctype="multipart/form-data">
             <div class="col-md-12 margin-bottom-30">
     Select Course<select id="course" name="course"onchange="display(this.value,this.form);"> <%
@@ -175,7 +175,8 @@
             <button type="submit" class="btn btn-primary">Upload</button>
         </div>
         </form>
-      
+      <p><a href="teacher_main.jsp">main page</a></p>
+      </div>
     </body> 
     <footer></footer>
 </html>

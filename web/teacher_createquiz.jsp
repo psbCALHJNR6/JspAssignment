@@ -70,6 +70,7 @@
                     </div>
                 </div>
             </form>
+                        <p><a href="teacher_main.jsp">main page</a></p>
         </div>
 
         <jsp:include page="footer.jsp" />

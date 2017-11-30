@@ -10,6 +10,7 @@ import ict.bean.MaterialBean;
 import ict.bean.UserInfo;
 import ict.db.CourseDB;
 import ict.db.MaterialDB;
+import ict.db.UserDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class CourseController extends HttpServlet
 
     CourseDB db;
     MaterialDB db2;
+    UserDB udb;
 
     @Override
     public void init() throws ServletException
@@ -42,6 +44,7 @@ public class CourseController extends HttpServlet
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new CourseDB(dbUrl, dbUser, dbPassword);
         db2 = new MaterialDB(dbUrl, dbUser, dbPassword);
+        udb = new UserDB(dbUrl, dbUser, dbPassword);
     }
 
     /**
@@ -76,6 +79,11 @@ public class CourseController extends HttpServlet
             {
 
                 courseForStudent(request, response);
+            }
+            else if (action.equals("regcourse"))
+            {
+
+                regCourse(request, response);
             }
         }
     }
@@ -122,8 +130,16 @@ public class CourseController extends HttpServlet
     {
         ArrayList<UserInfo> _students = new ArrayList<UserInfo>();
         String targetURL = "";
+        CourseBean cBean = db.queryCourseByID(Integer.parseInt(request.getParameter("courseID")));
         _students = db.getAllCourseStu(Integer.parseInt(request.getParameter("courseID")));
         request.setAttribute("studentlist", _students);
+        request.setAttribute("coursedetail", cBean);
+       
+
+
+        ArrayList<UserInfo> nCourseStudent = udb.queryUserByRole("STUDENT");
+        request.setAttribute("nCourseStudent", nCourseStudent);
+
         targetURL = "teacher_coursedetail.jsp";
 
         RequestDispatcher rd;
@@ -172,5 +188,27 @@ public class CourseController extends HttpServlet
     {
         return "Short description";
     }// </editor-fold>
+
+    private void regCourse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        int id = Integer.parseInt(request.getParameter("cid"));
+        String[] _stuIDs = request.getParameterValues("student");
+
+        db.deleteAllStudent(id);
+        if (_stuIDs != null)
+        {
+
+            for (int i = 0; i < _stuIDs.length; i++)
+            {
+                int stuID = Integer.parseInt(_stuIDs[i]);
+
+                if (!db.isCourseStudent(id, stuID))
+                {
+                    db.addCourseStudent(id, stuID);
+                }
+            }
+        }
+        response.sendRedirect("CourseController?action=coursedetail&courseID=" + id);
+    }
 
 }

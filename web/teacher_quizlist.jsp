@@ -56,7 +56,8 @@
                 </tbody>
             </table>
                     
-            <a href="QuizController?action=createForm">Create new Quiz</a>
+                    <p><a href="QuizController?action=createForm">Create new Quiz</a></p>
+            <p><a href="teacher_main.jsp">main page</a></p>
         </div>
                 
         <jsp:include page="footer.jsp" />
