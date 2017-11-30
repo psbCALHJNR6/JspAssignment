@@ -369,10 +369,12 @@ public class QuizController extends HttpServlet
         }
         
         QuizBean qBean = db.queryQuizByID(quizID);
+        ArrayList<ResultBean> quizScores = db.getStudentQuizScores(quizID, stuID);
         request.setAttribute("highest", marks[0]);
         request.setAttribute("lowest", marks[1]);
         request.setAttribute("average", marks[2]);
         request.setAttribute("canAttemptTime", qBean.getAttemptTime() - db.attemptTime(quizID, stuID));
+        request.setAttribute("scores", quizScores);
         
         request.setAttribute("quizDetail", qBean);
         
@@ -397,11 +399,10 @@ public class QuizController extends HttpServlet
         }
         
         QuizBean qBean = db.queryQuizByID(quizID);
+        ArrayList<ResultBean> quizScores = db.getQuizScores(quizID);
         request.setAttribute("highest", marks[0]);
         request.setAttribute("lowest", marks[1]);
         request.setAttribute("average", marks[2]);
-        
-        ArrayList<ResultBean> quizScores = db.getQuizScores(quizID);
         request.setAttribute("quizDetail", qBean);
         request.setAttribute("scores", quizScores);
         

@@ -830,5 +830,48 @@ public class QuizDB
         }
         return _rBean;
     }
+    
+     public ArrayList<ResultBean> getStudentQuizScores(int quizID, int stuID)
+    {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        ResultBean rBean = null;
+        ArrayList<ResultBean> _rBean = new ArrayList<ResultBean>();
+        try
+        {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM result where qid = ? and uid = ?";
+            pStmt = connect.prepareStatement(preQueryStatement);
+            pStmt.setInt(1, quizID);
+            pStmt.setInt(2, stuID);
+
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+            while (rs.next())
+            {
+                rBean = new ResultBean();
+                rBean.setQid(rs.getInt("qid"));
+                rBean.setUid(udb.queryUserByID(rs.getInt("uid")));
+                rBean.setScore(rs.getInt("score"));
+
+                _rBean.add(rBean);
+            }
+            pStmt.close();
+            connect.close();
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        return _rBean;
+    }
 
 }
