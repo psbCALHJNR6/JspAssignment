@@ -32,7 +32,7 @@
                 for(int i=0;i<questionList.size();i++){
                     QuestionBean qBean = questionList.get(i);
                     out.print("<tr>");
-                    out.print("<td><input type=\"checkbox\" id="+qBean.getQuestID()+" name=\"allQ\" value=\""+qBean.getQID()+"\" /></td>"
+                    out.print("<td><input type=\"checkbox\" id="+qBean.getQuestID()+" name=\"allQ\" value=\""+qBean.getQuestID()+"\" /></td>"
                     +"<td>"+qBean.getQuestion()+"</td>"
                     +"<td>"+qBean.getOptA()+"</td>"
                     +"<td>"+qBean.getOptB()+"</td>"

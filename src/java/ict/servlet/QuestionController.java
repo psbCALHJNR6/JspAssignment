@@ -82,14 +82,14 @@ public class QuestionController extends HttpServlet {
         
         protected void updateAssign(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
             String [] allQ = req.getParameterValues("allQ");
-//            String quizid = req.getParameter("quizID");
-//            QuestionBean qBean;
-//            for(int i=0;i<allQ.length;i++){
-//                qBean = db.getQuestionFromPool(allQ[i]);
-//                db.createQuestion(qBean.getQuestion(), qBean.getOptA(), qBean.getOptB(), qBean.getOptC(), qBean.getAns(), quizid);
-//            }
+            String quizid = req.getParameter("quizID");
+            QuestionBean qBean;
+            for(int i=0;i<allQ.length;i++){
+                qBean = db.getQuestionFromPool(allQ[i]);
+                db.createQuestion(qBean.getQuestion(), qBean.getOptA(), qBean.getOptB(), qBean.getOptC(), qBean.getAns(), quizid);
+            }
             PrintWriter out = res.getWriter();
-            out.print(db.getQuestionFromPool(allQ[0]).getQuestion());
+            
             
         }
         
