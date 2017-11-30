@@ -46,7 +46,8 @@
                                     + "<td>" + _quiz.getAttemptTime()+ "</td>"
                                     + "<td>" + _quiz.getCid()+ "</td>"
                                     +"<td>"+"<a href=\"QuestionController?action=createForm\">Create new Quiz</a><br />"
-                                    +"<a href=\"QuestionController?action=list&id="+_quiz.getQID()+"\">View all questions</a>"
+                                    +"<a href=\"QuestionController?action=list&id="+_quiz.getQID()+"\">View all questions</a><br />"
+                                    +""
                                     +"</td>"
                                     + "</tr>");
                         }

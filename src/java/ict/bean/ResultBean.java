@@ -13,7 +13,7 @@ public class ResultBean
 {
     private int qid;
     private int uid;
-
+ private int score;
     public int getQid()
     {
         return qid;
@@ -43,6 +43,6 @@ public class ResultBean
     {
         this.score = score;
     }
-    private int score;
+   
     
 }

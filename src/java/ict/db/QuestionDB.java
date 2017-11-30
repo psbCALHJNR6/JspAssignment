@@ -208,6 +208,44 @@ public class QuestionDB {
         }
         return _qBean;
     }
+        
+        public ArrayList<QuestionBean> getAllQuestion ()
+    {
+        Connection connect = null;
+        PreparedStatement pStmt = null;
+        QuestionBean qBean = null;
+        ArrayList<QuestionBean> _qBean = new ArrayList<QuestionBean>();
+        try {
+            connect = getConnection();
+            String preQueryStatement = "SELECT * FROM question ";
+            pStmt = connect.prepareStatement(preQueryStatement);
+          
+
+            ResultSet rs = null;
+            rs = pStmt.executeQuery();
+            while (rs.next()) {
+                qBean = new QuestionBean();
+                qBean.setQuestID(rs.getString("questID"));
+                qBean.setQID(rs.getInt("QID"));
+                qBean.setOptA(rs.getString("optA"));
+                qBean.setOptB(rs.getString("optB"));
+                qBean.setOptC(rs.getString("optC"));
+                qBean.setQuestion(rs.getString("question"));
+                qBean.setAns(rs.getString("ans"));
+                _qBean.add(qBean);
+            }
+            pStmt.close();
+            connect.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return _qBean;
+    }
     
     
 }

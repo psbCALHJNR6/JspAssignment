@@ -64,8 +64,13 @@ public class QuestionController extends HttpServlet {
              }
              else if(action.equals("makeForm"))
                  makeForm(req,res);
+             else if(action.equals("assign"))
+                 assignQuestion(req,res);
+     
         }
         
+        
+       
         
         protected void deleteQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
             String id = req.getParameter("id");
@@ -77,6 +82,8 @@ public class QuestionController extends HttpServlet {
                 out.print("<script type='text/javascript'>alert('Cannot delete question');</script>");
             res.sendRedirect("QuestionController?action=list&id="+req.getParameter(id));
         }
+ 
+        
         
         protected void updateQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
             PrintWriter out = res.getWriter();
@@ -89,8 +96,10 @@ public class QuestionController extends HttpServlet {
            String quiz = req.getParameter("quiz");
            
            boolean isSuccess = db.updateQuestion(questid,question,optA,optB,optC,corrAns,quiz); 
-           
-          out.print("<script type='text/javascript'>alert('Update successful');</script>");
+           if(isSuccess)
+            out.print("<script type='text/javascript'>alert('Update successful');</script>");
+           else
+            out.print("<script type='text/javascript'>alert('Update successful');</script>");
            
         }
         protected void createQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
@@ -136,6 +145,16 @@ public class QuestionController extends HttpServlet {
             _question = db.getAllQuestion(req.getParameter("id"));
             req.setAttribute("questionList",_question);
             RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/" + targetURL);
+            rd.forward(req, res);
+        }
+        
+         protected void assignQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
+                ArrayList<QuestionBean> _question = new ArrayList<QuestionBean>();
+                String targetURL="question_assign.jsp";
+                _question = db.getAllQuestion();
+                req.setAttribute("questionList",_question);
+                 RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/" + targetURL);
             rd.forward(req, res);
         }
