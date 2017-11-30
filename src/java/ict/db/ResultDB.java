@@ -26,12 +26,14 @@ public class ResultDB
     private String dburl = "";
     private String dbUser = "";
     private String dbPassword = "";
+    UserDB udb = null;
 
     public ResultDB(String dburl, String dbUser, String dbPassword)
     {
         this.dburl = dburl;
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
+        udb = new UserDB(dburl, dbUser, dbPassword);
     }
 
     public Connection getConnection() throws SQLException, IOException
@@ -105,7 +107,7 @@ public class ResultDB
                 rBean = new ResultBean();
                 // set the record detail to the user bean
                 rBean.setQid(rs.getInt("qid"));
-                rBean.setUid(rs.getInt("uid"));
+                rBean.setUid(udb.queryUserByID(rs.getInt("uid")));
                 rBean.setScore(rs.getInt("score"));
                 _rBean.add(rBean);
             }
@@ -141,7 +143,7 @@ public class ResultDB
                 rBean = new ResultBean();
                 // set the record detail to the user bean
                 rBean.setQid(rs.getInt("qid"));
-                rBean.setUid(rs.getInt("uid"));
+                rBean.setUid(udb.queryUserByID(rs.getInt("uid")));
                 rBean.setScore(rs.getInt("score"));
                 _rBean.add(rBean);
             }
@@ -177,7 +179,7 @@ public class ResultDB
                 rBean = new ResultBean();
                 // set the record detail to the user bean
                 rBean.setQid(rs.getInt("qid"));
-                rBean.setUid(rs.getInt("uid"));
+                rBean.setUid(udb.queryUserByID(rs.getInt("uid")));
                 rBean.setScore(rs.getInt("score"));
                 _rBean.add(rBean);
             }

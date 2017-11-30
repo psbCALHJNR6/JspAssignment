@@ -12,8 +12,9 @@ package ict.bean;
 public class ResultBean
 {
     private int qid;
-    private int uid;
- private int score;
+    private UserInfo uid;
+    private int score;
+ 
     public int getQid()
     {
         return qid;
@@ -24,12 +25,12 @@ public class ResultBean
         this.qid = qid;
     }
 
-    public int getUid()
+    public UserInfo getUid()
     {
         return uid;
     }
 
-    public void setUid(int uid)
+    public void setUid(UserInfo uid)
     {
         this.uid = uid;
     }
@@ -43,6 +44,7 @@ public class ResultBean
     {
         this.score = score;
     }
+    
    
     
 }
