@@ -19,7 +19,7 @@
         
         <div class="container">
             <ul>
-                <%out.print(courses.size());
+                <%
              for (int i = 0; i < courses.size(); i++)
                         {
                             CourseBean _c = new CourseBean();

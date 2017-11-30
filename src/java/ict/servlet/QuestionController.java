@@ -62,11 +62,17 @@ public class QuestionController extends HttpServlet {
              else if(action.equals("view")){
                  this.showOneQuestion(req,res);
              }
-             else if(action.equals("makeForm"))
+             else if(action.equals("makeForm")){
                  makeForm(req,res);
+<<<<<<< HEAD
              else if(action.equals("assign"))
                  assignQuestion(req,res);
      
+=======
+             }else if(action.equals("stu_create")){
+                 studentCreateQuestion(req,res);
+             }
+>>>>>>> 7d797856d8a5073fa7c45f6a5202ec49c8b8c047
         }
         
         
@@ -118,6 +124,27 @@ public class QuestionController extends HttpServlet {
                 out.print(isSuccess+"<br>");
                 out.print(req.getParameter("quiz"));
             }
+            
+        }
+        
+        protected void studentCreateQuestion(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
+            String question = req.getParameter("qName");
+            String stuid = req.getParameter("stuid");
+            String optA = req.getParameter("optA");
+            String optB = req.getParameter("optB");
+            String optC = req.getParameter("optC");
+            String ans = req.getParameter("corrAns");
+            String quizID = req.getParameter("quiz");
+            
+            boolean isSuccess = db.createQuestion(question, optA, optB, optC, ans,quizID);
+            PrintWriter out = res.getWriter();
+            if(isSuccess)
+                out.print("<script type='text/javascript'>alert('Added successful');</script>");   
+            else{
+                out.print(isSuccess+"<br>");
+                out.print(req.getParameter("quiz"));
+            }
+            res.sendRedirect("QuizController?action=stuquizlist&id=" + stuid);
             
         }
         
