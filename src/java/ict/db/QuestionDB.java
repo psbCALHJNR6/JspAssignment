@@ -39,6 +39,51 @@ public class QuestionDB {
         return DriverManager.getConnection(dburl, dbUser, dbPassword);
 
     }
+        public boolean createIntoPool(String question,String optA,String optB,String optC,String ans){
+            boolean isSuccess = false;
+            Connection cnt = null;
+            PreparedStatement pre = null;
+            
+            try
+        {
+            cnt = getConnection();
+            String preQueryStatement = "INSERT INTO question (question,optA, optB, optC,ans) VALUES (?,?,?,?,?)";
+            pre = cnt.prepareStatement(preQueryStatement);
+            pre.setString(1, question);
+           
+            pre.setString(2, optA);
+            pre.setString(3, optB);
+            pre.setString(4, optC);
+            pre.setString(5, ans);
+            int rowCount = pre.executeUpdate();
+
+            if (rowCount >= 1)
+            {
+                isSuccess = true;
+            }
+            pre.close();
+            cnt.close();
+        }
+        catch (SQLException ex)
+        {
+            while (ex != null)
+            {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            
+            return success;
+            
+            return isSuccess;
+        }
         public boolean createQuestion(String question,String optA,String optB,String optC,String ans,String quizID){
             boolean success = false;
             Connection cnt = null;

@@ -64,16 +64,15 @@ public class QuestionController extends HttpServlet {
              }
              else if(action.equals("makeForm")){
                  makeForm(req,res);
-<<<<<<< HEAD
+             }
              else if(action.equals("assign"))
                  assignQuestion(req,res);
-     
-=======
-             }else if(action.equals("stu_create")){
+             
+             else if(action.equals("stu_create")){
                  studentCreateQuestion(req,res);
-             }
->>>>>>> 7d797856d8a5073fa7c45f6a5202ec49c8b8c047
-        }
+             }}
+
+        
         
         
        
@@ -114,9 +113,8 @@ public class QuestionController extends HttpServlet {
             String optB = req.getParameter("optB");
             String optC = req.getParameter("optC");
             String ans = req.getParameter("corrAns");
-            String quizID = req.getParameter("quiz");
             
-            boolean isSuccess = db.createQuestion(question, optA, optB, optC, ans,quizID);
+            boolean isSuccess = db.createIntoPool(question, optA, optB, optC, ans);
             PrintWriter out = res.getWriter();
             if(isSuccess)
                 out.print("<script type='text/javascript'>alert('Added successful');</script>");   
@@ -189,11 +187,6 @@ public class QuestionController extends HttpServlet {
         protected void makeForm(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException{
 
             String targetURL = "question_create.jsp";
-            ArrayList<QuizBean> _quizzes = new ArrayList<QuizBean>();
-        
-            
-            _quizzes = qdb.getAllQuiz();
-            req.setAttribute("quizList",_quizzes);
             
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/" + targetURL);
@@ -202,6 +195,7 @@ public class QuestionController extends HttpServlet {
         }
         
  }
+
         
 
 

@@ -30,14 +30,6 @@
             </select>
             
             <label for="quiz">Quiz : </label>
-            <select name="quiz" >
-                <%
-                for(int i =0;i<quizList.size();i++){
-                    QuizBean qBean = quizList.get(i);
-                    out.print("<option value=\""+qBean.getQID()+"\">"+qBean.getDescription()+"</option>");
-                }
-                %>
-            </select>
             <br>
             <input type="submit" value="Submit" class="form-control" style="cursor:pointer;">
             <br>

@@ -17,7 +17,7 @@
             <%
                 for(int i=0;i<questionList.size();i++){
                     out.print("<tr>");
-                    out.print("<td></td>");
+                    out.print("<td>"+""+"</td>");
                     out.print("</tr>");
                 }
                 %>
