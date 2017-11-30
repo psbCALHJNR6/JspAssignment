@@ -259,6 +259,7 @@ public class QuizController extends HttpServlet
         int totalMark = 0;
         String stuAns = "";
         String correctAns = "";
+        String targetURL = "";
         
         for (int i = 1; i <= qNum; i++)
         {
@@ -280,6 +281,17 @@ public class QuizController extends HttpServlet
             db.addQuizRecord(quizID, stuID, totalMark);
         }
         
+        if(totalMark >= 75){
+            targetURL = "student_createquestion.jsp";
+            request.setAttribute("mark", totalMark);
+            request.setAttribute("quizID", quizID);
+            request.setAttribute("quizDetail", qBean);
+
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/" + targetURL);
+            rd.forward(request, response);
+        }
+        
         System.out.print(stuID);
         System.out.print(totalMark);
 //        
@@ -290,7 +302,7 @@ public class QuizController extends HttpServlet
         request.setAttribute("average", marks[2]);
         request.setAttribute("canAttemptTime", qBean.getAttemptTime() - db.attemptTime(quizID, stuID));
         
-        String targetURL = "";
+        
 
         targetURL = "student_quizresult.jsp";
 
