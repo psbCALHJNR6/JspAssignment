@@ -1,14 +1,5 @@
-<<<<<<< HEAD
 
  <%@ page language="java" errorPage="noquizresult.jsp" %>
-=======
-<%-- 
-    Document   : student_quizresult
-    Created on : Nov 29, 2017, 9:13:01 PM
-    Author     : psb
---%>
- <%@ page errorPage="noquizresult.jsp" %>
->>>>>>> 7d797856d8a5073fa7c45f6a5202ec49c8b8c047
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

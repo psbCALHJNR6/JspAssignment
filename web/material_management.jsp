@@ -37,7 +37,20 @@
             window.location="MaterialController?action=mlist&iid="+v;
         }
     </script>
-        
+        <div class="container">
+
+            <ul>
+                <li><h1><a href="">Existing courses</a></h1></li>
+                <li><h1><a href="">Create Course</a></h1></li>
+                <li><h1><a href="">Existing quiz</a></h1></li>
+                <li><h1><a href="">Create Quiz</a></h1></li>
+                <li><h1><a href="">Material Management</a></h1></li>
+            </ul>
+
+
+
+
+        </div>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
 
 <div class="container">
@@ -152,7 +165,7 @@
               </div>
             </div>
 
-</div></div>
+</div></div></div>
         <form action="MaterialController" method="POST" enctype="multipart/form-data">
             <div class="col-md-12 margin-bottom-30">
     Select Course<select id="course" name="course"onchange="display(this.value,this.form);"> <%
@@ -175,8 +188,7 @@
             <button type="submit" class="btn btn-primary">Upload</button>
         </div>
         </form>
-      <p><a href="teacher_main.jsp">main page</a></p>
-      </div>
+      
     </body> 
     <footer></footer>
 </html>

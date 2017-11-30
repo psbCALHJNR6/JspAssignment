@@ -626,7 +626,7 @@ public class QuizDB
         return isSuccess;
     }
 
-    public int[] queryQuizMarkByID(int id) throws ArithmeticException
+    public int[] queryQuizMarkByID(int id)
     {
         Connection connect = null;
         PreparedStatement pStmt = null;
@@ -683,7 +683,7 @@ public class QuizDB
         return marks;
     }
 
-    public int[] queryStudentQuizMark(int quizID, int stuID) throws ArithmeticException
+    public int[] queryStudentQuizMark(int quizID, int stuID)
     {
         Connection connect = null;
         PreparedStatement pStmt = null;

@@ -61,8 +61,7 @@
                     </div>
                 </div>
             </form>
-                        
-                        <a href="admin_main.jsp">main page</a>
+
         </div>
 
         <jsp:include page="footer.jsp" />

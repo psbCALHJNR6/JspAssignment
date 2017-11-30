@@ -46,7 +46,6 @@
             </table>
                 <a
             <a href="admin_createuser.jsp">Create new user</a>
-                    <a href="admin_main.jsp">main page</a>
         </div>
                 
         <jsp:include page="footer.jsp" />

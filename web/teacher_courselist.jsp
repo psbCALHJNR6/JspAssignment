@@ -38,9 +38,8 @@
                     %>
                 </tbody>
             </table>
-             
-                <p><a href="teacher_createcourse.jsp">Create new course</a></p>
-                <p><a href="teacher_main.jsp">main page</a></p>
+                
+            <a href="teacher_createcourse.jsp">Create new course</a>
         </div>
                 
         <jsp:include page="footer.jsp" />
