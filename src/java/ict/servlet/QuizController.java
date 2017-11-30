@@ -232,6 +232,11 @@ public class QuizController extends HttpServlet
     {
         int quizID = Integer.parseInt(req.getParameter("quizID"));
         int stuID = Integer.parseInt(req.getParameter("stuID"));
+        
+//        QuizBean qBean = db.queryQuizByID(quizID);
+//        if(db.attemptTime(quizID, stuID) >= qBean.getAttemptTime()){        //no attemptTimt
+//            return;
+//        }
 
         ArrayList<QuestionBean> _questions = new ArrayList<QuestionBean>();
         _questions = db.getQuizQuestions(quizID);
