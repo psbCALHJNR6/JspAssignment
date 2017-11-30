@@ -78,11 +78,8 @@ public class QuestionDB {
         }
             catch(Exception e){
                 e.printStackTrace();
-            }
-            
-            return success;
-            
-            return isSuccess;
+            }  
+           return isSuccess;
         }
         public boolean createQuestion(String question,String optA,String optB,String optC,String ans,String quizID){
             boolean success = false;
