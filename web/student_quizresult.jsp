@@ -9,6 +9,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Quiz Result</title>
         <jsp:include page="import.jsp" />
+        <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserInfo" />
     </head>
     <body>
 
@@ -22,6 +23,10 @@
         
         <h3>Your average mark is : <%=request.getAttribute("average")%></h3>
             Remaining attempt times : <%= request.getAttribute("canAttemptTime")%>
+            
+            <p>
+                <a href="QuizController?action=stuquizlist&id=<%= userInfo.getId() %>">quiz list</a>
+            </p>
         </div>
         
        
