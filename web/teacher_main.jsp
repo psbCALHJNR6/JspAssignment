@@ -20,14 +20,13 @@
            
 
             <ul>
-                
-                
                 <ict:tag1 link="CourseController?action=list" desc="Existing courses"/>
                 <ict:tag1 link="teacher_createcourse.jsp" desc="Create Course"/>
                 <ict:tag1 link="QuizController?action=list" desc="Existing quiz"/>
                 <ict:tag1 link="QuizController?action=createForm" desc="Create Quiz"/>
                 <ict:tag1 link="MaterialController?action=mlist" desc="Materials"/>
                 <ict:tag1 link="getUser?action=maintainForm&id=${userInfo.getId()}" desc="Edit Profile"/>
+                <ict:tag1 link="QuestionController?action=makeForm" desc="Create question"/>
             </ul>
             
 

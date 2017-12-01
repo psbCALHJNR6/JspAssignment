@@ -1,6 +1,6 @@
 <!-- Navigation -->
 <jsp:useBean id="userInfo" scope="session" class="ict.bean.UserInfo" />
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
 
     <div class="container">
 

@@ -232,7 +232,7 @@ public class QuizController extends HttpServlet
     {
         int quizID = Integer.parseInt(req.getParameter("quizID"));
         int stuID = Integer.parseInt(req.getParameter("stuID"));
-        
+        PrintWriter out = resp.getWriter();
 //        QuizBean qBean = db.queryQuizByID(quizID);
 //        if(db.attemptTime(quizID, stuID) >= qBean.getAttemptTime()){        //no attemptTimt
 //            return;

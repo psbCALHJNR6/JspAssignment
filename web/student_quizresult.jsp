@@ -17,7 +17,10 @@
           
      
             <canvas id="myChart"></canvas>
-            
+             <h3>Your highest score is : <%=request.getAttribute("highest")%></h3>
+        <h3>Your lowest score is : <%=request.getAttribute("lowest")%></h3>
+        
+        <h3>Your average mark is : <%=request.getAttribute("average")%></h3>
             Remaining attempt times : <%= request.getAttribute("canAttemptTime")%>
         </div>
         
