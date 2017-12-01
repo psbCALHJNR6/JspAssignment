@@ -120,6 +120,8 @@ public class QuizController extends HttpServlet
         PrintWriter out = response.getWriter();
         out.print("<script type='text/javascript'>alert('Create successful');</script>");
         response.sendRedirect("QuizController?action=list");
+        
+               
     }
 
     protected void showAllQuiz(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -233,10 +235,12 @@ public class QuizController extends HttpServlet
         int quizID = Integer.parseInt(req.getParameter("quizID"));
         int stuID = Integer.parseInt(req.getParameter("stuID"));
         PrintWriter out = resp.getWriter();
-//        QuizBean qBean = db.queryQuizByID(quizID);
-//        if(db.attemptTime(quizID, stuID) >= qBean.getAttemptTime()){        //no attemptTimt
-//            return;
-//        }
+        
+        out.print("<script type=\"text/javascript\">alert('Hello');</script>");
+        QuizBean qBean = db.queryQuizByID(quizID);
+        if(db.attemptTime(quizID, stuID) >= qBean.getAttemptTime()){        //no attemptTimt
+             resp.sendRedirect("QuizController?action=stuquizlist&id="+stuID);
+        }
 
         ArrayList<QuestionBean> _questions = new ArrayList<QuestionBean>();
         _questions = db.getQuizQuestions(quizID);
