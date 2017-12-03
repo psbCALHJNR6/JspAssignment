@@ -51,3 +51,4 @@ nbproject/project.properties
 nbproject/project.xml
 /dist/
 nbproject/project.properties
+*.properties
